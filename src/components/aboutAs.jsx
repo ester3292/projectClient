@@ -5,6 +5,10 @@ export const AboutAs = () => {
     return <div className="aboutAs">
         <div className="aboutAsDiv">
             <h1>--wellcome-- </h1>
+            <h1>--wellcome-- </h1>
+            <h1>--wellcome-- </h1>
+            <h1>--wellcome-- </h1>
+            <h1>--wellcome-- </h1>
             <h1>we are so exciting </h1>
             <h1>that you choose </h1>
             <h1>to be</h1>
