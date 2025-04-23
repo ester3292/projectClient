@@ -15,6 +15,12 @@ export const AboutAs = () => {
             <h1> a perfesional teacher 👩‍🏫</h1>
             <h1>enjoy at our best platform! </h1>
             <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
+            <h1>Esty & Chaya </h1>
             <h1>🏫 🏫 🏫</h1>
         </div>
         <img className="imgSchool" src={process.env.PUBLIC_URL + "/ביהס.png"} alt="school"></img>
