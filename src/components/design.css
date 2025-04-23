@@ -1,0 +1,265 @@
+* {
+    font-size: x-large;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.loginAba {
+    background-image: url(../../public/finally.jpg);
+    background-repeat: no-repeat;
+    width: 80vh;
+    height: 72vh;
+    margin-left: 28%;
+    /* background-color: rgba(255, 255, 255, 0);   */
+    -webkit-animation: animatezoom 0.5s;
+    animation: animatezoom 0.80s;
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+.loginInput, .loginInput2 {
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    background-color: rgb(57, 81, 115);
+    display: table-row;
+    width: 270px;
+    height: 46px;
+
+}
+
+.loginInput2 {
+    top: 60%;
+}
+
+.picloginpass {
+    background-image: url(../../public/password.jpg);
+    top: 60%;
+}
+
+.picloginman {
+    background-image: url(../../public/man.jpg);
+    top: 50%;
+}
+
+.picloginpass, .picloginman {
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    left: 33%;
+
+}
+
+.loginButton {
+    background-color: rgba(255, 255, 255, 0);
+    position: absolute;
+    top: 83%;
+    left: 45%;
+    border: none;
+
+}
+
+.wrapper {
+    background-color: black;
+    height: 100%;
+}
+
+.menuDiv {
+    width: 10%;
+    /* height: 20vh; */
+    flex: 10%;
+    margin: 5%;
+}
+
+.menuDiv button {
+    height: 25vh;
+    width: 100%;
+    border-radius: 3%;
+    /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+
+}
+
+.menu {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 70%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-left: 16%;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2rem;
+}
+
+th {
+    background: linear-gradient(135deg, #4f38e5 0%, #686de0 100%);
+    color: white;
+    padding: 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+}
+
+td {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 1rem;
+    color: #2d3436;
+}
+
+tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+tr {
+    transition: all 0.3s ease;
+}
+
+.inputDetails {
+    width: 30vh;
+}
+
+.newTeacher, .newStudent, .addMarkDialog ,.studentDetails{
+    height: 75vh;
+    width: 450px;
+    align-items: center;
+    margin-left: 90px;
+    font-size: 50px;
+}
+.studentDetails{
+    height: 55vh;
+}
+.updateMark {
+    height: 45vh;
+    width: 400px;
+    align-items: center;
+    margin-left: 100px;
+
+}
+
+.halfButton, .buttonAtHome, .manageMenu {
+    background: linear-gradient(135deg, #667eea 0%, #a24b89 100%);
+    color: white;
+    /* padding: 1.5rem; */
+    border: none;
+    border-radius: 12px;
+    /* font-size: 18px; */
+    font-weight: 600;
+    /* /* cursor: pointer; */
+    transition: transform 0.3s ease;
+    min-height: 50px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 18%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: uppercase ; */
+}
+
+.halfButton:hover, .buttonAtHome:hover, .manageMenu:hover {
+    height: 25px;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.buttonAtHome {
+    background: #667eea;
+}
+
+.halfButton {
+    width: 31%;
+}
+
+.manageMenu {
+        /* align-self: self-end; */
+    /* align-content: start; */
+    width: 30%;
+    height: 100px;
+  
+}
+
+.manageMenu:hover {
+    height: 100px;
+        
+}
+.manageMenueAba{
+    display: flex;
+    margin-left: 22%;
+}
+.userName {
+    border-radius: 80%;
+    border: none;
+    width: 90px;
+    height: 90px;
+    margin-left: 2%;
+    background: #667eea;
+    transition: transform 0.3s ease;
+    color: white;
+}
+
+.userName:hover {
+    transform: translateY(-5px);
+
+}
+
+.title {
+    margin-left: 32%;
+    /* text-shadow: black  1px 1px; */
+    font-size: 30px;
+    /* color:#4f38e5; */
+}
+
+.menuAba {
+    display: flex;
+    /* flex-wrap: wrap; */
+}
+
+.imgSchool {
+    width: 22.6%;
+}
+
+.aboutAs {
+    margin-top: 14%;
+    display: flex;
+}
+
+.aboutAsDiv {
+    width: 455px;
+    height: 375px;
+    border: solid 3px #0555a4;
+    background-color: white;
+    margin-left: 25%;
+    text-align: center;
+    overflow: auto;
+}
