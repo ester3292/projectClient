@@ -19,7 +19,10 @@ export const Diploma = () => {
   const [shoeTable, setShoeTable] = useState(false);
   const [shoeDialog, setShoeDialog] = useState(true);
   const navigate = useNavigate();
-  const achivments = useSelector(state=>state.student.achivments);
+  const achivments = useSelector(state => state.student.achivments);
+  const firstNameStudent = useSelector(state => state.student.firstName);
+  const lastNameStudent = useSelector(state => state.student.lastName);
+  const classStudent = useSelector(state => state.class.name);
 
 
   useEffect(() => {
@@ -30,14 +33,12 @@ export const Diploma = () => {
 
 
   const getStudentsAchievement = (id, firstName, lastName) => {
-if(id)
-{
-  dispatch(getAchivmentsById({id}));
-}
-else if(firstName !== "" && lastName !== "")
-  {
-    dispatch(getAchivmentsByFullName(firstName,lastName));
-  }
+    if (id) {
+      dispatch(getAchivmentsById({ id }));
+    }
+    else if (firstName !== "" && lastName !== "") {
+      dispatch(getAchivmentsByFullName(firstName, lastName));
+    }
     setShoeDialog(false);
     setShoeTable(true);
   }
@@ -78,8 +79,9 @@ else if(firstName !== "" && lastName !== "")
     </Dialog>
 
     {shoeTable && <div className="achivment">
-      <div className="achivmentHeader">{firstName && firstName}</div>
-<br />
+      <br />
+      <div className="diplomaDetails">{firstNameStudent}   {lastNameStudent}  |  {classStudent}</div>
+      <br />
       <table className="manageTable">
         <thead>
           <tr>
@@ -93,10 +95,10 @@ else if(firstName !== "" && lastName !== "")
           {achivments.completeMark && <h1>aa</h1> &&
             achivments.completeMark.map(x => <><tr key={x.id}>
               <td >{x.subject}</td>
-              <td >{x.markA ?x.markA.mark:0}</td>
-              <td >{x.markB ?x.markB.mark:0}</td>
+              <td >{x.markA ? x.markA.mark : 0}</td>
+              <td >{x.markB ? x.markB.mark : 0}</td>
               <td >{x.avg}</td>
-           </tr></>
+            </tr></>
             )}
         </tbody>
       </table>

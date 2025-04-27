@@ -263,3 +263,9 @@ tr {
     text-align: center;
     overflow: auto;
 }
+.diplomaDetails{
+    border: 1px solid black;
+    width: 69%;
+    margin-left: 16%;
+    text-align: center;
+}
