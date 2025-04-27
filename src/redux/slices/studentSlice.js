@@ -78,7 +78,6 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
 //deleteStudentThunk
        // הוספת מקרה שהט'נק התחיל
        builder.addCase(deleteStudentThunk.pending, (state) => {
-
     });
     // הוספת מקרה שהט'נק הסתיים בהצלחה
     builder.addCase(deleteStudentThunk.fulfilled, (state, action) => {
