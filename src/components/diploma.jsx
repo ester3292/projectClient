@@ -21,8 +21,7 @@ export const Diploma = () => {
   const achivments = useSelector(state => state.student.achivments);
   const firstNameStudent = useSelector(state => state.student.firstName);
   const lastNameStudent = useSelector(state => state.student.lastName);
-  const classStudent = useSelector(state => state.student.class);
-  // const classStudent = useSelector(state => state.class.name);
+  const classStudent = useSelector(state => state.student.className);
 
 
   useEffect(() => {

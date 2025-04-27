@@ -14,6 +14,7 @@ export const INITAIL_STATE_STUDENT = {
     lastName:"",
     phone:"",
     class:-1,
+    className:"",
     marks:[],
     arr:[],
     achivments:[]
@@ -126,7 +127,7 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
     state.id=action.payload.id;
     state.firstName=action.payload.firstName;
     state.lastName=action.payload.lastName;
-    state.class=action.payload.class;
+    state.className=action.payload.class;
         
     });
     // הוספת מקרה שהט'נק נכשל 
