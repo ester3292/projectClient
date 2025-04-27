@@ -34,7 +34,6 @@ export const classSlice = createSlice({
         builder.addCase(GetClassNameByIdThunk.rejected, (state, action) => {
             console.log("action: ", action);
         });
-
     }
 });
 
