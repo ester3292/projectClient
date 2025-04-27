@@ -84,7 +84,7 @@ const navigate = useNavigate()
                     <th> mark</th>
                     <th> notes</th>
                     <th> teacherId</th>
-                    <th> halfA</th>
+                    <th> Half</th>
                 </tr>
             </thead>
             <tbody>
