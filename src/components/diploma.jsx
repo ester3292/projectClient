@@ -80,7 +80,7 @@ export const Diploma = () => {
 
     {shoeTable && <div className="achivment">
       <br />
-      <div className="diplomaDetails">{firstNameStudent}   {lastNameStudent}  |  {classStudent}</div>
+      <div className="diplomaDetails">{firstNameStudent && firstNameStudent }{ lastNameStudent && lastNameStudent} | { classStudent & classStudent}</div>
       <br />
       <table className="manageTable">
         <thead>
