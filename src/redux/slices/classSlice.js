@@ -21,7 +21,7 @@ export const classSlice = createSlice({
     extraReducers: (builder) => {
 
 
-        //getAchivmentsById
+//GetClassNameByIdThunk
         // הוספת מקרה שהט'נק התחיל
         builder.addCase(GetClassNameByIdThunk.pending, (state) => {
         });
@@ -32,7 +32,7 @@ export const classSlice = createSlice({
         });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(GetClassNameByIdThunk.rejected, (state, action) => {
-            console.log("action: ", action);
+            console.log("GetClassNameByIdThunk faild: ", action);
         });
 
     }

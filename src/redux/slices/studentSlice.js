@@ -123,6 +123,10 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
     //  הוספת מקרה שהט'נק הסתיים בהצלחה
     builder.addCase(getAchivmentsById.fulfilled, (state, action) => {
     state.achivments = action.payload;
+    state.id=action.payload.id;
+    state.firstName=action.payload.firstName;
+    state.lastName=action.payload.lastName;
+    state.class=action.payload.class;
         
     });
     // הוספת מקרה שהט'נק נכשל 

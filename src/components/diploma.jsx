@@ -1,4 +1,4 @@
-import { Button, Dialog, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material"
+import { Button, Dialog, TextField } from "@mui/material"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SaveIcon from '@mui/icons-material/Save';
@@ -6,7 +6,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import KeyIcon from '@mui/icons-material/Key';
 import { useNavigate } from "react-router-dom";
-import { getStudentThunk } from "../redux/slices/getStudentThunk";
 import { getAchivmentsById } from "../redux/slices/getAchivmentsById";
 import { getAchivmentsByFullName } from "../redux/slices/getAchivmentsByFullName";
 
@@ -22,7 +21,8 @@ export const Diploma = () => {
   const achivments = useSelector(state => state.student.achivments);
   const firstNameStudent = useSelector(state => state.student.firstName);
   const lastNameStudent = useSelector(state => state.student.lastName);
-  const classStudent = useSelector(state => state.class.name);
+  const classStudent = useSelector(state => state.student.class);
+  // const classStudent = useSelector(state => state.class.name);
 
 
   useEffect(() => {
@@ -80,7 +80,9 @@ export const Diploma = () => {
 
     {shoeTable && <div className="achivment">
       <br />
-      <div className="diplomaDetails">{firstNameStudent && firstNameStudent }{ lastNameStudent && lastNameStudent} | { classStudent & classStudent}</div>
+      <div className="diplomaDetails"><label >
+        {firstNameStudent}   {lastNameStudent }  |  {classStudent}</label>
+      </div>
       <br />
       <table className="manageTable">
         <thead>

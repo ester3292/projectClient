@@ -266,6 +266,8 @@ tr {
 .diplomaDetails{
     border: 1px solid black;
     width: 69%;
+    height: 100%;
     margin-left: 16%;
     text-align: center;
+   
 }
