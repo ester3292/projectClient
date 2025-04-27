@@ -5,6 +5,7 @@ import { getAllStudentsThunk } from "./getAllStudents";
 import { addStudentThunk } from "./addStudentThunk";
 import { getAchivmentsByFullName } from "./getAchivmentsByFullName";
 import { getAchivmentsById } from "./getAchivmentsById";
+import { GetClassNameByIdThunk } from "./getClassNameByCodeThunk";
 
 export const INITAIL_STATE_STUDENT = {
     loading:false,
@@ -128,7 +129,8 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
     // הוספת מקרה שהט'נק נכשל 
     builder.addCase(getAchivmentsById.rejected, (state, action) => {
         console.log("action: ", action);
-    });   
+    });  
+      
     }
 });
 

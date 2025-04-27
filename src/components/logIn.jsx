@@ -27,7 +27,6 @@ export const LogIn = () => {
 
   useEffect(() => {
     if (id === -1 && firstName === "bad") {
-      // navigate(`newTeacher`)
     }
     if (id !== -1) {
       navigate(`menu`)
@@ -36,25 +35,25 @@ export const LogIn = () => {
 
   return <div>
 
-    
-      <div className="wrapper">
-        <dialog className="loginAba" ref={ref}>
-          <div className="picloginman"></div>
-          <input className="loginInput" type="text" onChange={(e) => setDetails({ ...details, firstName: e.target.value })} placeholder="press your firstName:" />
-          <div className="picloginpass"></div>
-          <input className="loginInput2" type="text" onChange={(e) => setDetails({ ...details, id: e.target.value })} placeholder="press your id:" />
-          <button className="loginButton" onClick={async () => {
-           
-            await dispatch(logInThunk(details.id));
-            await dispatch(editFirstName(details.username))
-           
-            debugger
-          }}
 
-          ></button >
-                 </dialog>
-      </div>
-    
+    <div className="wrapper">
+      <dialog className="loginAba" ref={ref}>
+        <div className="picloginman"></div>
+        <input className="loginInput" type="text" onChange={(e) => setDetails({ ...details, firstName: e.target.value })} placeholder="press your firstName:" />
+        <div className="picloginpass"></div>
+        <input className="loginInput2" type="text" onChange={(e) => setDetails({ ...details, id: e.target.value })} placeholder="press your id:" />
+        <button className="loginButton" onClick={async () => {
+
+          await dispatch(logInThunk(details.id));
+          await dispatch(editFirstName(details.username))
+
+          debugger
+        }}
+
+        ></button >
+      </dialog>
+    </div>
+
 
     {id === -1 && firstName === "bad" && <h1> not correct id !!</h1>}
 
