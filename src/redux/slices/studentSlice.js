@@ -98,6 +98,9 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
         builder.addCase(addStudentThunk.fulfilled, (state, action) => {
             console.log("wowaddStudent");
             state.loading=false;
+            // state.arr.push(action.payload)
+            //state.arr = [...state.arr,action.payload]
+             state = {  ...state, arr:[...state.arr, action.payload]}
         });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(addStudentThunk.rejected, (state, action) => {

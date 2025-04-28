@@ -36,12 +36,13 @@ export const markSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-
+//addMarkForStudentThunk
        // הוספת מקרה שהט'נק התחיל
        builder.addCase(addMarkForStudentThunk.pending, (state) => {
        });
        // הוספת מקרה שהט'נק הסתיים בהצלחה
        builder.addCase(addMarkForStudentThunk.fulfilled, (state, action) => {
+        
       state.success = 1;
        });
        // הוספת מקרה שהט'נק נכשל 
@@ -64,7 +65,7 @@ export const markSlice = createSlice({
      state.success = 0;
         console.log("action: ", action);
     });  
-      //updateMarkThunk
+//updateMarkThunk
         // הוספת מקרה שהט'נק התחיל
         builder.addCase(updateMarkThunk.pending, (state) => {
         });
