@@ -11,7 +11,7 @@ import { getAchivmentsByFullName } from "../redux/slices/getAchivmentsByFullName
 
 export const Diploma = () => {
   const dispatch = useDispatch();
-  const [id, setId] = useState(0)
+  const [id, setId] = useState("")
   const [firstName, setfirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [returnToAboutAs, setReturnToAboutAs] = useState(false);
@@ -32,12 +32,15 @@ export const Diploma = () => {
 
 
   const getStudentsAchievement = (id, firstName, lastName) => {
-    if (id) {
+    if (id!=="") {
       dispatch(getAchivmentsById({ id }));
     }
     else if (firstName !== "" && lastName !== "") {
       dispatch(getAchivmentsByFullName(firstName, lastName));
     }
+    setId("");
+    setfirstName("");
+    setLastName("")
     setShoeDialog(false);
     setShoeTable(true);
   }

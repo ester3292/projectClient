@@ -1,7 +1,6 @@
 import { Button, Checkbox, Dialog, List, TextField } from "@mui/material"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import * as React from 'react';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import ComputerIcon from '@mui/icons-material/Computer';
@@ -13,7 +12,6 @@ import { getAllStudentsThunk } from "../redux/slices/getAllStudents";
 import { deleteStudentThunk } from "../redux/slices/deleteStudentThunk";
 import { addStudentThunk } from "../redux/slices/addStudentThunk";
 import SaveIcon from '@mui/icons-material/Save';
-import { useEffect } from "react";
 
 export const ShowStudents = () => {
 
@@ -27,14 +25,12 @@ export const ShowStudents = () => {
     const [viewAllStudents, setViewAllStudents] = useState(false)
     const [addStudent, setAddStudent] = useState(false)
     const loading = useSelector(state => state.student.loading)
- 
-  const  refreshTable=()=>{
-    dispatch(getAllStudentsThunk);
-  }
 
+    const refreshTable = () => {
+        dispatch(getAllStudentsThunk);
+    }
 
     return <div>
-
         <br />
         <br />
         <Button onClick={() => {
@@ -108,7 +104,7 @@ export const ShowStudents = () => {
                 <tbody>
 
                     {students && <h1>aa</h1> &&
-                        students.map(x => <><tr key={x.id}>
+                        students.map(x => <><tr key={x.id} >
                             <td >{x.id}</td>
                             <td >{x.firstName}</td>
                             <td >{x.lastName}</td>
