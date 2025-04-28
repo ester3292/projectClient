@@ -8,9 +8,9 @@
 .loginAba {
     background-image: url(../../public/finally.jpg);
     background-repeat: no-repeat;
-    width: 80vh;
-    height: 72vh;
-    margin-left: 28%;
+    width: 87vh;
+    height: 79vh;
+    margin-left: 25%;
     /* background-color: rgba(255, 255, 255, 0);   */
     -webkit-animation: animatezoom 0.5s;
     animation: animatezoom 0.80s;
