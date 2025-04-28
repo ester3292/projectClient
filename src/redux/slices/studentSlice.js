@@ -97,12 +97,13 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(addStudentThunk.fulfilled, (state, action) => {
             console.log("wowaddStudent");
-            state.loading=false;
+            state.arr.push(action.payload);
         });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(addStudentThunk.rejected, (state, action) => {
             console.log("addStudent נכשל");
             state.loading=false;
+            
         });
 //getAchivmentsByFullName
     // הוספת מקרה שהט'נק התחיל

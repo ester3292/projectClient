@@ -28,7 +28,11 @@ export const ShowStudents = () => {
     const [addStudent, setAddStudent] = useState(false)
     const loading = useSelector(state => state.student.loading)
  
-   
+  const  refreshTable=()=>{
+    dispatch(getAllStudentsThunk);
+  }
+
+
     return <div>
 
         <br />
@@ -113,6 +117,7 @@ export const ShowStudents = () => {
                             <td onClick={async () => {
                                 debugger
                                 await dispatch(deleteStudentThunk({ details: x }))
+                                refreshTable()
                             }}>
 
                                 <RestoreFromTrashSharpIcon color="error" /></td>
