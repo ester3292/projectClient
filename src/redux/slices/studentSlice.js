@@ -82,7 +82,7 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
     });
     // הוספת מקרה שהט'נק הסתיים בהצלחה
     builder.addCase(deleteStudentThunk.fulfilled, (state, action) => {
-        state.arr=action.payload;
+        state.arr.filter(x=>x.id)
     });
     // הוספת מקרה שהט'נק נכשל 
     builder.addCase(deleteStudentThunk.rejected, (state, action) => {
@@ -98,6 +98,7 @@ builder.addCase(getAllStudentsThunk.rejected, (state, action) => {
         builder.addCase(addStudentThunk.fulfilled, (state, action) => {
             console.log("wowaddStudent");
             state.loading=false;
+            state.arr.push(action.payload);
         });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(addStudentThunk.rejected, (state, action) => {
