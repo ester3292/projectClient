@@ -96,6 +96,8 @@ export const studentSlice = createSlice({
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(addStudentThunk.fulfilled, (state, action) => {
             console.log("wowaddStudent");
+            state.loading = false;
+
             // state.arr.push(action.payload);
         });
         // הוספת מקרה שהט'נק נכשל 
