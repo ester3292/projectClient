@@ -26,21 +26,25 @@ export const Diploma = () => {
 
   useEffect(() => {
     if (returnToAboutAs === true)
-      navigate(`../aboutAs`)
-  }, [returnToAboutAs]);
+      {navigate(`../aboutAs`)
+    setfirstName("");
+    setLastName("")}
+  }, []);
 
 
 
   const getStudentsAchievement = (id, firstName, lastName) => {
-    if (id!=="") {
+    if (id !== "") {
       dispatch(getAchivmentsById({ id }));
+      setId("");
     }
     else if (firstName !== "" && lastName !== "") {
-      dispatch(getAchivmentsByFullName(firstName, lastName));
+      dispatch(getAchivmentsByFullName({ lastName: lastName, firstName: firstName }));
+      setId("");
+     debugger
+
     }
     setId("");
-    setfirstName("");
-    setLastName("")
     setShoeDialog(false);
     setShoeTable(true);
   }
@@ -83,7 +87,7 @@ export const Diploma = () => {
     {shoeTable && <div className="achivment">
       <br />
       <div className="diplomaDetails"><label >
-        {firstNameStudent}   {lastNameStudent }  |  {classStudent}</label>
+        {firstNameStudent}   {lastNameStudent}  |  {classStudent}</label>
       </div>
       <br />
       <table className="manageTable">

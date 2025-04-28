@@ -2,9 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAchivmentsByFullName= createAsyncThunk(
    'getAchivmentsByFullName', 
-   async (firstName,lastName) => {
+   async (details) => {
         debugger
-       const res = await fetch(`http://localhost:5244/api/Student/GetFullAchivmentForStudentByFullName?firstName=${firstName}&lastName=${lastName}`, {
+       const res = await fetch(`http://localhost:5244/api/Student/GetFullAchivmentForStudentByFullName?firstName=${details.firstName}&lastName=${details.lastName}`, {
         method: 'GET',
     })
        if (res.ok) {
