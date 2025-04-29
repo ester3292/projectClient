@@ -113,7 +113,7 @@ export const ShowStudents = () => {
                             <td onClick={async () => {
                                 debugger
                                 await dispatch(deleteStudentThunk({ details: x }))
-                                refreshTable()
+                                //refreshTable()
                             }}>
 
                                 <RestoreFromTrashSharpIcon color="error" /></td>

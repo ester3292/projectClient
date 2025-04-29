@@ -81,7 +81,7 @@ export const studentSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(deleteStudentThunk.fulfilled, (state, action) => {
-            state.arr.filter(x => x.id)
+            state.arr=action.payload;
         });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(deleteStudentThunk.rejected, (state, action) => {
@@ -96,6 +96,7 @@ export const studentSlice = createSlice({
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(addStudentThunk.fulfilled, (state, action) => {
             console.log("wowaddStudent");
+            state.arr=action.payload;
             state.loading = false;
 
             // state.arr.push(action.payload);
