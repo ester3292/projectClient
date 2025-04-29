@@ -1,127 +1,352 @@
-import { Button, Checkbox, Dialog, List, TextField } from "@mui/material"
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as React from 'react';
-import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
-import ComputerIcon from '@mui/icons-material/Computer';
-import PersonIcon from '@mui/icons-material/Person';
-import BadgeIcon from '@mui/icons-material/Badge';
-import KeyIcon from '@mui/icons-material/Key';
-import RestoreFromTrashSharpIcon from '@mui/icons-material/RestoreFromTrashSharp';
 import { getAllStudentsThunk } from "../redux/slices/getAllStudents";
 import { deleteStudentThunk } from "../redux/slices/deleteStudentThunk";
 import { addStudentThunk } from "../redux/slices/addStudentThunk";
-import SaveIcon from '@mui/icons-material/Save';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Tooltip,
+  Fade,
+  Alert,
+  CircularProgress,
+  Divider,
+  Grid,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import AddIcon from "@mui/icons-material/Add";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
+import PersonIcon from "@mui/icons-material/Person";
+import BadgeIcon from "@mui/icons-material/Badge";
+import PhoneIcon from "@mui/icons-material/Phone";
+import ClassIcon from "@mui/icons-material/Class";
+import KeyIcon from "@mui/icons-material/Key";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: "bold",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:hover": {
+    backgroundColor: "rgba(26, 35, 126, 0.05)",
+  },
+  transition: "background-color 0.2s",
+}));
+
+const FormField = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  marginBottom: theme.spacing(2),
+}));
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginLeft: theme.spacing(1),
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  backgroundColor: "rgba(26, 35, 126, 0.1)",
+}));
 
 export const ShowStudents = () => {
+  const dispatch = useDispatch();
+  const [id, setId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [myclass, setClass] = useState("");
+  const students = useSelector(state => state.student.arr);
+  const [viewAllStudents, setViewAllStudents] = useState(false);
+  const [addStudent, setAddStudent] = useState(false);
+  const loading = useSelector(state => state.student.loading);
+  const error = useSelector(state => state.student.error);
+  const success = useSelector(state => state.student.success);
 
-    const dispatch = useDispatch();
-    const [id, setId] = useState(0)
-    const [firstName, setfirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [myclass, setClass] = useState(0)
-    const students = useSelector(state => state.student.arr)
-    const [viewAllStudents, setViewAllStudents] = useState(false)
-    const [addStudent, setAddStudent] = useState(false)
-    const loading = useSelector(state => state.student.loading)
+  const refreshTable = () => {
+    dispatch(getAllStudentsThunk());
+  };
 
-    const refreshTable = () => {
-        dispatch(getAllStudentsThunk);
+  const handleAddStudent = () => {
+    if (id && phone && firstName && lastName && myclass) {
+      dispatch(addStudentThunk({
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        class: parseInt(myclass, 10)
+      }));
+      setAddStudent(false);
+      clearForm();
     }
+  };
 
-    return <div>
-        <br />
-        <br />
-        <Button onClick={() => {
-            setAddStudent(true);
-        }}>add student
-        </Button>
+  const clearForm = () => {
+    setId("");
+    setFirstName("");
+    setLastName("");
+    setPhone("");
+    setClass("");
+  };
 
-        <Button onClick={async () => {
-            setViewAllStudents(!viewAllStudents)
-            dispatch(getAllStudentsThunk());
-        }}>{viewAllStudents ? "hide" : "view all Students"}</Button>
+  const handleDeleteStudent = async (student) => {
+    await dispatch(deleteStudentThunk({ details: student }));
+    refreshTable();
+  };
 
-        <Dialog open={addStudent} >
-            <div className="newStudent">
-                <h6>Add New Student:</h6>
-                <TextField id="standard-basic" label="StudentId" required type="number"
-                    variant="standard" onChange={async d => {
-                        setId(d.target.value)
-                    }} ></TextField><KeyIcon htmlColor="#1f51f7" />
-                <br />
+  return (
+    <Fade in={true} timeout={800}>
+      <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4 }}>
+          <Typography variant="h5" component="h2" fontWeight="bold" color="primary">
+            ניהול תלמידים
+          </Typography>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() => setAddStudent(true)}
+              sx={{ mr: 2, borderRadius: "8px" }}
+            >
+              הוספת תלמיד
+            </Button>
 
-                <TextField id="standard-basic" label="FirstName" required variant="standard" onChange={async d => {
-                    setfirstName(d.target.value)
-                }} ></TextField><PersonIcon color="primary" />
-                <br />
-                <TextField id="standard-basic" label="LastName" required variant="standard" onChange={async d => {
-                    setLastName(d.target.value)
-                }} ></TextField><BadgeIcon htmlColor="#667eea" />
-                <br />
-                <TextField id="standard-basic" label="Phone" required variant="standard" onChange={async d => {
-                    setPhone(d.target.value)
-                }} ></TextField><PhoneInTalkIcon htmlColor="#7141d2" />
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={viewAllStudents ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              onClick={() => {
+                setViewAllStudents(!viewAllStudents);
+                if (!viewAllStudents) {
+                  dispatch(getAllStudentsThunk());
+                }
+              }}
+              sx={{ borderRadius: "8px" }}
+            >
+              {viewAllStudents ? "הסתר תלמידים" : "הצג כל התלמידים"}
+            </Button>
+          </Box>
+        </Box>
 
-                <br />
-                <TextField id="standard-basic" label="Class" required variant="standard" onChange={async d => {
-                    setClass(d.target.value)
-                }} ></TextField><ComputerIcon htmlColor="#a24b89" />
-                <br />
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
 
-                <br />
+        {success && (
+          <Alert severity="success" sx={{ mb: 3 }}>
+            הפעולה בוצעה בהצלחה
+          </Alert>
+        )}
 
-                <Button onClick={() => {
-                    if (id && phone && firstName !== "" && lastName !== "" && myclass) {
-                        dispatch(addStudentThunk({ id: id, firstName: firstName, lastName: lastName, phone: phone, class: parseInt(myclass, 10) }))
-                        setAddStudent(false);
-                    }
-                }} color="primary"
-                    loading={loading}
-                    loadingPosition="start"
-                    startIcon={<SaveIcon />}
-                    variant="contained"
-                >Save</Button>
-                <Button onClick={() => {
-                    setAddStudent(false);
-                }}>cancel</Button>
-            </div>
+        <Dialog 
+          open={addStudent} 
+          onClose={() => setAddStudent(false)}
+          maxWidth="sm"
+          fullWidth
+          PaperProps={{
+            sx: {
+              borderRadius: "16px",
+              p: 1
+            }
+          }}
+        >
+          <DialogTitle>
+            <Typography variant="h5" component="div" fontWeight="bold" color="primary">
+              הוספת תלמיד חדש
+            </Typography>
+          </DialogTitle>
+          <Divider />
+          <DialogContent sx={{ py: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormField>
+                  <TextField
+                    fullWidth
+                    label="מספר זהות"
+                    required
+                    type="number"
+                    variant="outlined"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                  />
+                  <IconWrapper>
+                    <KeyIcon color="primary" />
+                  </IconWrapper>
+                </FormField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormField>
+                  <TextField
+                    fullWidth
+                    label="שם פרטי"
+                    required
+                    variant="outlined"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <IconWrapper>
+                    <PersonIcon color="primary" />
+                  </IconWrapper>
+                </FormField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormField>
+                  <TextField
+                    fullWidth
+                    label="שם משפחה"
+                    required
+                    variant="outlined"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                  <IconWrapper>
+                    <BadgeIcon color="primary" />
+                  </IconWrapper>
+                </FormField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormField>
+                  <TextField
+                    fullWidth
+                    label="טלפון"
+                    required
+                    variant="outlined"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                  <IconWrapper>
+                    <PhoneIcon color="primary" />
+                  </IconWrapper>
+                </FormField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormField>
+                  <TextField
+                    fullWidth
+                    label="כיתה"
+                    required
+                    type="number"
+                    variant="outlined"
+                    value={myclass}
+                    onChange={(e) => setClass(e.target.value)}
+                  />
+                  <IconWrapper>
+                    <ClassIcon color="primary" />
+                  </IconWrapper>
+                </FormField>
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions sx={{ px: 3, pb: 3 }}>
+            <Button 
+              variant="outlined" 
+              onClick={() => {
+                setAddStudent(false);
+                clearForm();
+              }}
+            >
+              ביטול
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+              onClick={handleAddStudent}
+              disabled={!id || !firstName || !lastName || !phone || !myclass || loading}
+            >
+              שמירה
+            </Button>
+          </DialogActions>
         </Dialog>
 
-        {viewAllStudents &&
-            <table className="manageTable">
-                <thead>
-                    <tr>
-                        <th> Id</th>
-                        <th> FirstName</th>
-                        <th> LastName</th>
-                        <th> Phone</th>
-                        <th> Class</th>
-                        <th> delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {students && <h1>aa</h1> &&
-                        students.map(x => <><tr key={x.id} >
-                            <td >{x.id}</td>
-                            <td >{x.firstName}</td>
-                            <td >{x.lastName}</td>
-                            <td >{x.phone}</td>
-                            <td >{x.class}</td>
-                            <td onClick={async () => {
-                                debugger
-                                await dispatch(deleteStudentThunk({ details: x }))
-                                //refreshTable()
-                            }}>
-
-                                <RestoreFromTrashSharpIcon color="error" /></td>
-                        </tr></>
-                        )}
-                </tbody>
-            </table>
-
-        }
-    </div>
-}
+        {viewAllStudents && (
+          <Box sx={{ position: "relative" }}>
+            {loading ? (
+              <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+                <CircularProgress />
+              </Box>
+            ) : students && students.length > 0 ? (
+              <TableContainer component={Paper} sx={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>מספר זהות</StyledTableCell>
+                      <StyledTableCell>שם פרטי</StyledTableCell>
+                      <StyledTableCell>שם משפחה</StyledTableCell>
+                      <StyledTableCell>טלפון</StyledTableCell>
+                      <StyledTableCell>כיתה</StyledTableCell>
+                      <StyledTableCell align="center">פעולות</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {students.map((student) => (
+                      <StyledTableRow key={student.id}>
+                        <TableCell>{student.id}</TableCell>
+                        <TableCell>{student.firstName}</TableCell>
+                        <TableCell>{student.lastName}</TableCell>
+                        <TableCell>{student.phone}</TableCell>
+                        <TableCell>{student.class}</TableCell>
+                        <TableCell align="center">
+                          <Tooltip title="מחיקת תלמיד">
+                            <IconButton
+                              color="error"
+                              onClick={() => handleDeleteStudent(student)}
+                              size="small"
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Alert severity="info">
+                לא נמצאו תלמידים במערכת
+              </Alert>
+            )}
+            
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Button
+                startIcon={<RefreshIcon />}
+                onClick={refreshTable}
+                disabled={loading}
+              >
+                רענון נתונים
+              </Button>
+            </Box>
+          </Box>
+        )}
+      </Box>
+    </Fade>
+  );
+};
