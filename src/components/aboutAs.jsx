@@ -173,10 +173,10 @@ export const AboutAs = () => {
       bio: "יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
     {
-      name: "מיכל לוי",
+      name:  "אסתר מורגנשטרן",
       role: "מנהלת פיתוח מוצר",
       image: "https://randomuser.me/api/portraits/women/44.jpg",
-      bio: "מומחית UX/UI עם התמחות במערכות חינוכיות ופלטפורמות למידה",
+      bio: "מפתח Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
     },
     {
       name: "חיה זנדר",
@@ -185,7 +185,7 @@ export const AboutAs = () => {
       bio: "מפתח Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
     },
     {
-      name: "רונית שלום",
+      name: "חיה זנדר",
       role: "מנהלת קשרי לקוחות",
       image: "https://randomuser.me/api/portraits/women/68.jpg",
       bio: "בעלת רקע בחינוך ומומחיות בהטמעת מערכות טכנולוגיות בבתי ספר",
@@ -371,7 +371,7 @@ export const AboutAs = () => {
 
           <Grid container spacing={4}>
             {teamMembers.map((member, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
+              <Grid item xs={22} sm={20} md={6} key={index}>
                 <Zoom in={true} style={{ transitionDelay: `${index * 150}ms` }}>
                   <TeamMemberCard>
                     <LargeAvatar src={member.image} alt={member.name} />
