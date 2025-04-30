@@ -167,10 +167,10 @@ export const AboutAs = () => {
 
   const teamMembers = [
     {
-      name: "אסתר מורגנשטרן",
+      name: "דניאל כהן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: "יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
+      bio: "יזם טכנולוגי עם ניסיון של 15 שנה בתחום החינוך והטכנולוגיה",
     },
     {
       name: "מיכל לוי",
@@ -231,11 +231,15 @@ export const AboutAs = () => {
               <Typography variant="h2" component="div" gutterBottom sx={{ fontWeight: "bold" }}>
                 מערכת ניהול ציונים
               </Typography>
-              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold"></Typography>
-
+              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
                 אודות המערכת
-                <Button
-                onClick={() => navigate("/logIn")}
+              
+              </Typography>
+              <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
+                מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
+              </Typography>
+              <Button
+                  onClick={() => navigate("/logIn")}
                   variant="contained"
                   color="secondary"
                   size="large"
