@@ -82,16 +82,16 @@ const IconWrapper = styled(Box)(({ theme }) => ({
 
 const MarkChip = styled(Chip)(({ theme, mark }) => ({
   fontWeight: "bold",
-  backgroundColor: 
+  backgroundColor:
     mark >= 90 ? theme.palette.success.light :
-    mark >= 70 ? theme.palette.info.light :
-    mark >= 55 ? theme.palette.warning.light :
-    theme.palette.error.light,
-  color: 
+      mark >= 70 ? theme.palette.info.light :
+        mark >= 55 ? theme.palette.warning.light :
+          theme.palette.error.light,
+  color:
     mark >= 90 ? theme.palette.success.contrastText :
-    mark >= 70 ? theme.palette.info.contrastText :
-    mark >= 55 ? theme.palette.warning.contrastText :
-    theme.palette.error.contrastText,
+      mark >= 70 ? theme.palette.info.contrastText :
+        mark >= 55 ? theme.palette.warning.contrastText :
+          theme.palette.error.contrastText,
 }));
 
 export const StudentsByClassSub = () => {
@@ -99,7 +99,7 @@ export const StudentsByClassSub = () => {
   const IdTeacher = useSelector(state => state.teacher.id);
   const loading = useSelector(state => state.teacher.loading);
   const error = useSelector(state => state.teacher.error);
-  
+
   const [myclass, setClass] = useState("");
   const [selected, setSelected] = useState(-1);
   const [sub, setSub] = useState("");
@@ -110,7 +110,7 @@ export const StudentsByClassSub = () => {
   const [markToUpdate2, setMarkToUpdate2] = useState({});
   const [showDialog, setShowDialog] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -122,15 +122,15 @@ export const StudentsByClassSub = () => {
   const refreshTable = async () => {
     setSearchPerformed(true);
     if (halfA !== -1)
-      await dispatch(getStudentsByClassSubHalfThunk({ 
-        sub: sub, 
-        myclass: parseInt(myclass, 10), 
-        halfA: parseInt(halfA, 10) 
+      await dispatch(getStudentsByClassSubHalfThunk({
+        sub: sub,
+        myclass: parseInt(myclass, 10),
+        halfA: parseInt(halfA, 10)
       }));
-    else 
-      dispatch(getStudentsByClassSubThunk({ 
-        sub: sub, 
-        myclass: parseInt(myclass, 10) 
+    else
+      dispatch(getStudentsByClassSubThunk({
+        sub: sub,
+        myclass: parseInt(myclass, 10)
       }));
   };
 
@@ -145,14 +145,14 @@ export const StudentsByClassSub = () => {
     setPerfectMark(student.marksForStudent);
     setMarkToUpdate2({ ...markToUpdate2, studentId: student.id });
     setSelected(student.id);
-    
+
     if (student.marksForStudent) {
-      setMarkToUpdate({ 
-        ...markToUpdate, 
-        id: student.marksForStudent.id, 
-        mark: student.marksForStudent.mark, 
-        notes: student.marksForStudent.notes, 
-        halfA: student.marksForStudent.halfA 
+      setMarkToUpdate({
+        ...markToUpdate,
+        id: student.marksForStudent.id,
+        mark: student.marksForStudent.mark,
+        notes: student.marksForStudent.notes,
+        halfA: student.marksForStudent.halfA
       });
     }
     setShowDialog(true);
@@ -169,13 +169,13 @@ export const StudentsByClassSub = () => {
   const handleSaveMark = async () => {
     setMarkToUpdate({ ...markToUpdate, halfA: halfA });
     setMarkToUpdate2({ ...markToUpdate2, halfA: halfA });
-    
+
     if (perfectMark) {
       await dispatch(updateMarkThunk({ details: { ...markToUpdate, studentId: selected } }));
     } else {
       await dispatch(addMarkForStudentThunk(markToUpdate2));
     }
-    
+
     refreshTable();
     setShowDialog(false);
   };
@@ -193,21 +193,21 @@ export const StudentsByClassSub = () => {
               בחירת מחצית
             </Typography>
             <ButtonGroup variant="contained" color="primary" sx={{ mb: 3 }}>
-              <Button 
+              <Button
                 onClick={() => handleSelectHalf(1)}
                 variant={halfA === 1 ? "contained" : "outlined"}
                 startIcon={<EventAvailableIcon />}
               >
                 מחצית ב'
               </Button>
-              <Button 
+              <Button
                 onClick={() => handleSelectHalf(0)}
                 variant={halfA === 0 ? "contained" : "outlined"}
                 startIcon={<EventAvailableIcon />}
               >
                 מחצית א'
               </Button>
-              <Button 
+              <Button
                 onClick={() => handleSelectHalf(-1)}
                 variant={halfA === -1 ? "contained" : "outlined"}
                 startIcon={<EventAvailableIcon />}
@@ -279,7 +279,7 @@ export const StudentsByClassSub = () => {
         {searchPerformed && myclass && (
           <Box>
             <Typography variant="h6" color="primary" gutterBottom>
-              ציונים לכיתה {myclass} במקצוע: {sub} 
+              ציונים לכיתה {myclass} במקצוע: {sub}
               {halfA === 0 ? " (מחצית א')" : halfA === 1 ? " (מחצית ב')" : " (כל המחציות)"}
             </Typography>
 
@@ -311,10 +311,10 @@ export const StudentsByClassSub = () => {
                         <TableCell>{student.class}</TableCell>
                         <TableCell>
                           {student.marksForStudent ? (
-                            <MarkChip 
-                              label={student.marksForStudent.mark} 
-                              mark={student.marksForStudent.mark} 
-                              size="small" 
+                            <MarkChip
+                              label={student.marksForStudent.mark}
+                              mark={student.marksForStudent.mark}
+                              size="small"
                             />
                           ) : (
                             <Chip label="אין ציון" variant="outlined" size="small" />
@@ -345,8 +345,8 @@ export const StudentsByClassSub = () => {
           </Box>
         )}
 
-        <Dialog 
-          open={showDialog} 
+        <Dialog
+          open={showDialog}
           maxWidth="sm"
           fullWidth
           PaperProps={{
@@ -444,8 +444,8 @@ export const StudentsByClassSub = () => {
             </Grid>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 3 }}>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               startIcon={<CloseIcon />}
               onClick={() => setShowDialog(false)}
             >
