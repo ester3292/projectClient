@@ -32,7 +32,8 @@ function App() {
           <Provider store={STORE}>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<AboutAs />} />
+                <Route path="/logIn" element={<Login />} />
                 <Route path="/menu" element={<Menu />}>
                   <Route path="home" element={<Home />} />
                   <Route path="aboutAs" element={<AboutAs />} />
@@ -46,7 +47,7 @@ function App() {
                   <Route path="diploma" element={<Diploma />} />
                   <Route index element={<Navigate to="home" replace />} />
                 </Route>
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<Navigate to="/logIn" replace />} />
               </Routes>
 
             </BrowserRouter>
