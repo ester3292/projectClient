@@ -33,6 +33,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = styled(Box)(({ theme }) => ({
   background: `linear-gradient(rgba(26, 35, 126, 0.9), rgba(26, 35, 126, 0.9)), url(https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)`,
@@ -135,7 +136,7 @@ const ContactCard = styled(Paper)(({ theme }) => ({
 export const AboutAs = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const navigate = useNavigate();
   const features = [
     {
       title: "ניהול ציונים מתקדם",
@@ -492,12 +493,13 @@ export const AboutAs = () => {
               </Typography>
               <Box sx={{ mt: 3 }}>
                 <Button
+                onClick={() => navigate("/logIn")}
                   variant="contained"
                   color="secondary"
                   size="large"
                   sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
                 >
-                  צור קשר עכשיו
+                  התחבר עכשיו
                 </Button>
                 <Button
                   variant="outlined"
