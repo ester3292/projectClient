@@ -182,7 +182,7 @@ export const AboutAs = () => {
       name: "חיה זנדר",
       role: "ראש צוות פיתוח",
       image: "https://randomuser.me/api/portraits/men/62.jpg",
-      bio: "מפתח Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
+      bio: "מפתחת Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
     },
     {
       name: "חיה זנדר",
@@ -443,10 +443,10 @@ export const AboutAs = () => {
                     דוא"ל
                   </Typography>
                   <Typography variant="body1">
-                    info@schoolgrade.co.il
+                    chaya123@schoolgrade.co.il
                   </Typography>
                   <Typography variant="body1">
-                    support@schoolgrade.co.il
+                    ester12344@schoolgrade.co.il
                   </Typography>
                 </Box>
               </ContactCard>
