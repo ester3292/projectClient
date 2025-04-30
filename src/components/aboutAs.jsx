@@ -234,7 +234,7 @@ export const AboutAs = () => {
               <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
                 אודות המערכת
                 <Button
-                  onClick={() => navigate("/logIn")}
+                onClick={() => navigate("/logIn")}
                   variant="contained"
                   color="secondary"
                   size="large"
@@ -242,10 +242,6 @@ export const AboutAs = () => {
                 >
                   התחבר עכשיו
                 </Button>
-              </Typography>
-              <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
-                מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
-              </Typography>
             </Box>
           </Fade>
         </Container>
