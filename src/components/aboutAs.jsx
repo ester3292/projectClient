@@ -167,10 +167,10 @@ export const AboutAs = () => {
 
   const teamMembers = [
     {
-      name: "דניאל כהן",
+      name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: "יזם טכנולוגי עם ניסיון של 15 שנה בתחום החינוך והטכנולוגיה",
+      bio: "יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
     {
       name: "מיכל לוי",
@@ -226,12 +226,12 @@ export const AboutAs = () => {
         <Container>
           <Fade in={true} timeout={1000}>
             <Box>
-              
-           
-            <Typography variant="h2" component="div" gutterBottom  sx={{ fontWeight: "bold" }}>
-          מערכת ניהול ציונים
-        </Typography>
-                   <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+
+
+              <Typography variant="h2" component="div" gutterBottom sx={{ fontWeight: "bold" }}>
+                מערכת ניהול ציונים
+              </Typography>
+              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
                 אודות המערכת
               </Typography>
               <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
@@ -507,7 +507,7 @@ export const AboutAs = () => {
               </Typography>
               <Box sx={{ mt: 3 }}>
                 <Button
-                onClick={() => navigate("/logIn")}
+                  onClick={() => navigate("/logIn")}
                   variant="contained"
                   color="secondary"
                   size="large"
