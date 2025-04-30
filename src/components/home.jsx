@@ -283,7 +283,7 @@ export const Home = () => {
                     variant="contained"
                     color="secondary"
                     size="large"
-                    onClick={() => navigate("/menu")}
+                    onClick={() => navigate("/logIn")}
                     sx={{ mx: 1 }}
                   >
                     התחל עכשיו
