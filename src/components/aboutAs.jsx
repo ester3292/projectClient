@@ -167,10 +167,10 @@ export const AboutAs = () => {
 
   const teamMembers = [
     {
-      name: "דניאל כהן",
+      name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: "יזם טכנולוגי עם ניסיון של 15 שנה בתחום החינוך והטכנולוגיה",
+      bio: "יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
     {
       name: "מיכל לוי",
