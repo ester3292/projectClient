@@ -168,28 +168,18 @@ export const AboutAs = () => {
   const teamMembers = [
     {
       name: "אסתר מורגנשטרן",
-      role: "מנכ\"ל ומייסד",
+      role: " מנכ\" designer ל ומייסד",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: "יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
+      bio: " מפתחת Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
-    {
-      name:  "אסתר מורגנשטרן",
-      role: "מנהלת פיתוח מוצר",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
-      bio: "מפתח Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
-    },
+    
     {
       name: "חיה זנדר",
       role: "ראש צוות פיתוח",
       image: "https://randomuser.me/api/portraits/men/62.jpg",
       bio: "מפתחת Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
     },
-    {
-      name: "חיה זנדר",
-      role: "מנהלת קשרי לקוחות",
-      image: "https://randomuser.me/api/portraits/women/68.jpg",
-      bio: "בעלת רקע בחינוך ומומחיות בהטמעת מערכות טכנולוגיות בבתי ספר",
-    },
+   
   ];
 
   const timeline = [
