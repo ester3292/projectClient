@@ -18,6 +18,7 @@ import {
   Zoom,
   useTheme,
   useMediaQuery,
+  Link,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SchoolIcon from "@mui/icons-material/School";
@@ -173,12 +174,12 @@ export const AboutAs = () => {
       image: "https://randomuser.me/api/portraits/men/32.jpg",
       bio: " מפתחת Full Stack מעצבת מערכות מוכרת עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
-    
+
     {
       name: "חיה זנדר",
       role: "ראש צוות פיתוח",
       image: "https://randomuser.me/api/portraits/men/62.jpg",
-      bio:   "מפתחת Full Stack  עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, ניסיון עשיר בהטמעת מערכות טכנולוגיות במוסדות חינוך וידע טכנולוגי - חינוכי רב"
+      bio: "מפתחת Full Stack  עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, ניסיון עשיר בהטמעת מערכות טכנולוגיות במוסדות חינוך וידע טכנולוגי - חינוכי רב"
       ,
     },
   ];
@@ -229,14 +230,14 @@ export const AboutAs = () => {
                 מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
               </Typography>
               <Button
-                  onClick={() => navigate("/logIn")}
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
-                >
-                  התחבר עכשיו
-                </Button>
+                onClick={() => navigate("/logIn")}
+                variant="contained"
+                color="secondary"
+                size="large"
+                sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
+              >
+                התחבר עכשיו
+              </Button>
             </Box>
           </Fade>
         </Container>
@@ -377,13 +378,22 @@ export const AboutAs = () => {
                     </Typography>
                     <Box>
                       <SocialButton color="primary" variant="outlined">
-                        <LinkedInIcon fontSize="small"/>
+                        <LinkedInIcon fontSize="small" />
+                          {/* <Link href="https://github.com/ester3292/projectClient">
+                        <TwitterIcon fontSize="small" />
+                        </Link> */}
                       </SocialButton>
                       <SocialButton color="primary" variant="outlined">
                         <TwitterIcon fontSize="small" />
+                        {/* <Link href="https://github.com/ester3292/projectClient">
+                        <TwitterIcon fontSize="small" />
+                        </Link> */}
                       </SocialButton>
                       <SocialButton color="primary" variant="outlined" >
-                        <EmailIcon fontSize="small"/>
+                        <EmailIcon fontSize="small" />
+                          {/* <Link href="https://github.com/ester3292/projectClient">
+                        <TwitterIcon fontSize="small" />
+                        </Link> */}
                       </SocialButton>
                     </Box>
                   </TeamMemberCard>
