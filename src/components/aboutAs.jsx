@@ -231,7 +231,8 @@ export const AboutAs = () => {
               <Typography variant="h2" component="div" gutterBottom sx={{ fontWeight: "bold" }}>
                 מערכת ניהול ציונים
               </Typography>
-              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold"></Typography>
+
                 אודות המערכת
                 <Button
                 onClick={() => navigate("/logIn")}
