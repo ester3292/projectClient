@@ -179,7 +179,7 @@ export const AboutAs = () => {
       bio: "מומחית UX/UI עם התמחות במערכות חינוכיות ופלטפורמות למידה",
     },
     {
-      name: "אבי ישראלי",
+      name: "חיה זנדר",
       role: "ראש צוות פיתוח",
       image: "https://randomuser.me/api/portraits/men/62.jpg",
       bio: "מפתח Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
