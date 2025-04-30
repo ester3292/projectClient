@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentThunk } from "../redux/slices/getStudentThunk";
+import { GetClassNameByIdThunk } from "../redux/slices/getClassNameByCodeThunk";
 import {
   Box,
   Paper,
@@ -41,22 +42,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const MarkChip = styled(Chip)(({ theme, mark }) => ({
   fontWeight: "bold",
-  backgroundColor: 
+  backgroundColor:
     mark >= 90 ? theme.palette.success.light :
-    mark >= 70 ? theme.palette.info.light :
-    mark >= 55 ? theme.palette.warning.light :
-    theme.palette.error.light,
-  color: 
+      mark >= 70 ? theme.palette.info.light :
+        mark >= 55 ? theme.palette.warning.light :
+          theme.palette.error.light,
+  color:
     mark >= 90 ? theme.palette.success.contrastText :
-    mark >= 70 ? theme.palette.info.contrastText :
-    mark >= 55 ? theme.palette.warning.contrastText :
-    theme.palette.error.contrastText,
+      mark >= 70 ? theme.palette.info.contrastText :
+        mark >= 55 ? theme.palette.warning.contrastText :
+          theme.palette.error.contrastText,
 }));
 
 export const ShowStudentMarks = () => {
   const success = useSelector(state => state.mark.success);
   const marks = useSelector(state => state.student.marks);
   const id = useSelector(state => state.student.id);
+  const firstName = useSelector(state => state.student.firstName);
+  const lastName = useSelector(state => state.student.lastName);
   const loading = useSelector(state => state.student.loading);
   const error = useSelector(state => state.student.error);
   const dispatch = useDispatch();
@@ -72,7 +75,6 @@ export const ShowStudentMarks = () => {
       </Box>
     );
   }
-
   if (error) {
     return (
       <Alert severity="error" sx={{ mt: 2 }}>
@@ -86,11 +88,12 @@ export const ShowStudentMarks = () => {
       <Box>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h5" component="h2" fontWeight="bold" color="primary" gutterBottom>
-            ציוני התלמיד
+            ציוני התלמיד {firstName} {lastName}
           </Typography>
           <Typography variant="body1" color="textSecondary">
             מספר זהות: {id}
           </Typography>
+
         </Box>
 
         {success && (
@@ -141,20 +144,20 @@ export const ShowStudentMarks = () => {
                   <StyledTableRow key={index}>
                     <TableCell>{mark.subject}</TableCell>
                     <TableCell>
-                      <MarkChip 
-                        label={mark.mark} 
-                        mark={mark.mark} 
-                        size="small" 
+                      <MarkChip
+                        label={mark.mark}
+                        mark={mark.mark}
+                        size="small"
                       />
                     </TableCell>
                     <TableCell>{mark.notes || "-"}</TableCell>
                     <TableCell>{mark.teacherId}</TableCell>
                     <TableCell>
-                      <Chip 
-                        label={mark.halfA ? "כן" : "לא"} 
-                        color={mark.halfA ? "primary" : "default"} 
-                        size="small" 
-                        variant={mark.halfA ? "filled" : "outlined"} 
+                      <Chip
+                        label={mark.halfA ? "כן" : "לא"}
+                        color={mark.halfA ? "primary" : "default"}
+                        size="small"
+                        variant={mark.halfA ? "filled" : "outlined"}
                       />
                     </TableCell>
                   </StyledTableRow>

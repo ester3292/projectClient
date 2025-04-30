@@ -42,8 +42,7 @@ export const markSlice = createSlice({
        });
        // הוספת מקרה שהט'נק הסתיים בהצלחה
        builder.addCase(addMarkForStudentThunk.fulfilled, (state, action) => {
-        
-      state.success = 1;
+        state.success = 1;
        });
        // הוספת מקרה שהט'נק נכשל 
        builder.addCase(addMarkForStudentThunk.rejected, (state, action) => {
@@ -71,7 +70,6 @@ export const markSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(updateMarkThunk.fulfilled, (state, action) => {
-            debugger
             // state.find = action.payload;
         });
         // הוספת מקרה שהט'נק נכשל 
