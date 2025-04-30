@@ -226,17 +226,23 @@ export const AboutAs = () => {
         <Container>
           <Fade in={true} timeout={1000}>
             <Box>
-              
-           
-            <Typography variant="h2" component="div" gutterBottom  sx={{ fontWeight: "bold" }}>
-          מערכת ניהול ציונים
-        </Typography>
-                   <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+
+
+              <Typography variant="h2" component="div" gutterBottom sx={{ fontWeight: "bold" }}>
+                מערכת ניהול ציונים
+              </Typography>
+              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold"></Typography>
+
                 אודות המערכת
-              </Typography>
-              <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
-                מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
-              </Typography>
+                <Button
+                onClick={() => navigate("/logIn")}
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
+                >
+                  התחבר עכשיו
+                </Button>
             </Box>
           </Fade>
         </Container>
