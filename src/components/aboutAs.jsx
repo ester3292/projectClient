@@ -177,9 +177,9 @@ export const AboutAs = () => {
       name: "חיה זנדר",
       role: "ראש צוות פיתוח",
       image: "https://randomuser.me/api/portraits/men/62.jpg",
-      bio: "מפתחת Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות",
+      bio:   "מפתחת Full Stack עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות,עם ניסיון עשיר בהטמעת מערכות טכנולוגיות במוסדות חינוך"
+      ,
     },
-   
   ];
 
   const timeline = [
