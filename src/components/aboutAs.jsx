@@ -443,10 +443,10 @@ export const AboutAs = () => {
                     דוא"ל
                   </Typography>
                   <Typography variant="body1">
-                    info@schoolgrade.co.il
+                    chaya123@schoolgrade.co.il
                   </Typography>
                   <Typography variant="body1">
-                    support@schoolgrade.co.il
+                    ester12344@schoolgrade.co.il
                   </Typography>
                 </Box>
               </ContactCard>
