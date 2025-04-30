@@ -237,6 +237,15 @@ export const AboutAs = () => {
               <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
                 מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
               </Typography>
+              <Button
+                  onClick={() => navigate("/logIn")}
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
+                >
+                  התחבר עכשיו
+                </Button>
             </Box>
           </Fade>
         </Container>
