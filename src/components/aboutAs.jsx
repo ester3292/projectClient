@@ -226,7 +226,12 @@ export const AboutAs = () => {
         <Container>
           <Fade in={true} timeout={1000}>
             <Box>
-              <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
+              
+           
+            <Typography variant="h2" component="div" gutterBottom  sx={{ fontWeight: "bold" }}>
+          מערכת ניהול ציונים
+        </Typography>
+                   <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
                 אודות המערכת
                 <Button
                 onClick={() => navigate("/logIn")}
