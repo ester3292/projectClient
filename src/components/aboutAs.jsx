@@ -33,7 +33,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { useNavigate } from "react-router-dom";
+import { matchPath, NavLink, useNavigate } from "react-router-dom";
+import { NavigateNext } from "@mui/icons-material";
 
 const HeroSection = styled(Box)(({ theme }) => ({
   background: `linear-gradient(rgba(26, 35, 126, 0.9), rgba(26, 35, 126, 0.9)), url(https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)`,
@@ -376,13 +377,13 @@ export const AboutAs = () => {
                     </Typography>
                     <Box>
                       <SocialButton color="primary" variant="outlined">
-                        <LinkedInIcon fontSize="small" />
+                        <LinkedInIcon fontSize="small"/>
                       </SocialButton>
                       <SocialButton color="primary" variant="outlined">
                         <TwitterIcon fontSize="small" />
                       </SocialButton>
-                      <SocialButton color="primary" variant="outlined">
-                        <EmailIcon fontSize="small" />
+                      <SocialButton color="primary" variant="outlined" >
+                        <EmailIcon fontSize="small"/>
                       </SocialButton>
                     </Box>
                   </TeamMemberCard>
