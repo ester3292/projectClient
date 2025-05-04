@@ -27,6 +27,14 @@ import {
   createTheme,
   CssBaseline,
   Grid,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
@@ -52,6 +60,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import ClassIcon from "@mui/icons-material/Class";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import SearchIcon from "@mui/icons-material/Search";
+import GradeIcon from "@mui/icons-material/Grade";
+import PrintIcon from "@mui/icons-material/Print";
 
 const drawerWidth = 280;
 
@@ -67,8 +80,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
   transition: "all 0.3s ease",
-  background: theme.palette.mode === 'dark' 
-    ? 'linear-gradient(90deg, #001064 0%, #0d2c94 100%)' 
+  background: theme.palette.mode === 'dark'
+    ? 'linear-gradient(90deg, #001064 0%, #0d2c94 100%)'
     : 'linear-gradient(90deg, #001064 0%, #0d47a1 100%)',
 }));
 
@@ -128,8 +141,8 @@ const StyledListItem = styled(ListItem)(({ theme, active }) => ({
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.12) : "transparent",
   transition: "all 0.2s",
   "&:hover": {
-    backgroundColor: active 
-      ? alpha(theme.palette.primary.main, 0.18) 
+    backgroundColor: active
+      ? alpha(theme.palette.primary.main, 0.18)
       : alpha(theme.palette.primary.main, 0.08),
   },
 }));
@@ -138,17 +151,19 @@ export const Menu = () => {
   // Get teacher details from Redux store
   const teacherData = useSelector((state) => state.teacher);
   const { firstName, lastName, email, phone, classes } = teacherData;
-  
+ 
   const navigate = useNavigate();
   const location = useLocation();
-  
+ 
   // State
   const [darkMode, setDarkMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
-  
+  // New state for help dialog
+  const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+ 
   // Create theme based on dark mode preference with navy blue color scheme
   const theme = useMemo(
     () =>
@@ -200,7 +215,7 @@ export const Menu = () => {
       }),
     [darkMode]
   );
-  
+ 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
   const notificationsOpen = Boolean(notificationsAnchorEl);
@@ -222,6 +237,35 @@ export const Menu = () => {
     { text: "ציונים לפי כיתה ומקצוע", icon: <AssessmentIcon />, path: "studentsByClassSub" },
     { text: "תפריט ניהול", icon: <SettingsIcon />, path: "manageMenu" },
     { text: "תעודות", icon: <SchoolIcon />, path: "diploma" },
+  ];
+
+  // Help topics for the help dialog
+  const helpTopics = [
+    {
+      title: "ניווט במערכת",
+      icon: <HomeIcon color="primary" />,
+      content: "ניתן לנווט בין המסכים השונים באמצעות התפריט הצדדי או כפתורי הניווט בחלק העליון של המסך. לחיצה על לוגו המערכת תחזיר אותך תמיד לדף הבית."
+    },
+    {
+      title: "חיפוש תלמידים",
+      icon: <SearchIcon color="primary" />,
+      content: "במסך 'חיפוש תלמידים' ניתן לחפש תלמידים לפי שם, כיתה או מספר זהות. לאחר בחירת תלמיד, ניתן לצפות בפרטיו המלאים ובציוניו."
+    },
+    {
+      title: "הזנת ציונים",
+      icon: <GradeIcon color="primary" />,
+      content: "במסך 'הוספת ציון' ניתן להזין ציונים לתלמידים. יש לבחור כיתה, מקצוע, סוג מבחן ותאריך, ולאחר מכן להזין את הציונים לכל תלמיד. ניתן גם להוסיף הערות אישיות."
+    },
+    {
+      title: "הפקת תעודות",
+      icon: <PrintIcon color="primary" />,
+      content: "במסך 'תעודות' ניתן להפיק תעודות לתלמידים. יש לבחור כיתה ותקופה, ולאחר מכן ניתן להפיק תעודות לכל הכיתה או לתלמידים נבחרים. התעודות ניתנות להדפסה או לשמירה כקובץ PDF."
+    },
+    {
+      title: "ניהול פרופיל",
+      icon: <AccountCircleIcon color="primary" />,
+      content: "ניתן לצפות בפרטי הפרופיל שלך על ידי לחיצה על האייקון בפינה השמאלית העליונה. משם ניתן גם להתנתק מהמערכת."
+    }
   ];
 
   // Handlers
@@ -267,6 +311,15 @@ export const Menu = () => {
     setNotificationsAnchorEl(null);
   };
 
+  // New handlers for help dialog
+  const handleHelpClick = () => {
+    setHelpDialogOpen(true);
+  };
+
+  const handleHelpClose = () => {
+    setHelpDialogOpen(false);
+  };
+
   useEffect(() => {
     // On initial load, navigate to home
     navigate("home");
@@ -296,10 +349,10 @@ export const Menu = () => {
       <Divider />
       
       <Box sx={{ p: 2 }}>
-        <Paper 
-          elevation={2} 
-          sx={{ 
-            p: 2, 
+        <Paper
+          elevation={2}
+          sx={{
+            p: 2,
             borderRadius: 2,
             backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
             border: '1px solid',
@@ -307,6 +360,7 @@ export const Menu = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+           
             <UserAvatar sx={{ width: 50, height: 50, mr: 2 }}>
               {firstName ? firstName.charAt(0).toUpperCase() : <AccountCircleIcon />}
             </UserAvatar>
@@ -350,8 +404,8 @@ export const Menu = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <ClassIcon sx={{ fontSize: 18, mr: 1, color: 'primary.main' }} />
                   <Typography variant="body2">
-                    {classes.length === 1 
-                      ? `כיתה: ${classes[0]}` 
+                    {classes.length === 1
+                      ? `כיתה: ${classes[0]}`
                       : `כיתות: ${classes.join(', ')}`}
                   </Typography>
                 </Box>
@@ -375,7 +429,7 @@ export const Menu = () => {
             }}
             sx={{ py: 1.2 }} // Added more vertical padding
           >
-            <ListItemIcon sx={{ 
+            <ListItemIcon sx={{
               color: isActive(item.path) ? "primary.main" : "inherit",
               minWidth: '56px' // Increased spacing for icons
             }}>
@@ -389,15 +443,15 @@ export const Menu = () => {
               }}
             />
             {isActive(item.path) && (
-              <Box 
-                sx={{ 
-                  width: 4, 
-                  height: 35, 
+              <Box
+                sx={{
+                  width: 4,
+                  height: 35,
                   backgroundColor: 'primary.main',
-                
+                  
                   borderRadius: 4,
                   ml: 1
-                }} 
+                }}
               />
             )}
           </StyledListItem>
@@ -415,8 +469,8 @@ export const Menu = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: theme => 
-              darkMode 
+            backgroundColor: theme =>
+              darkMode
                 ? alpha(theme.palette.primary.main, 0.15)
                 : alpha(theme.palette.primary.main, 0.08),
           }}
@@ -471,7 +525,6 @@ export const Menu = () => {
                 </Typography>
               </Box>
             </Box>
-
             {/* Top Navigation for larger screens */}
             {!isMobile && (
               <Box sx={{ display: "flex", alignItems: "center", mx: 2, flexGrow: 1, justifyContent: 'center' }}>
@@ -490,7 +543,7 @@ export const Menu = () => {
                   endIcon={<KeyboardArrowDownIcon />}
                   color="inherit"
                   onClick={handleMoreMenuClick}
-                  sx={{ 
+                  sx={{
                     borderRadius: '8px',
                     padding: theme => theme.spacing(0.8, 1.5),
                     transition: "all 0.2s",
@@ -510,7 +563,7 @@ export const Menu = () => {
                   TransitionComponent={Fade}
                 >
                   {menuItems.slice(5).map((item) => (
-                    <MenuItem 
+                    <MenuItem
                       key={item.text}
                       onClick={() => {
                         navigate(item.path);
@@ -521,13 +574,13 @@ export const Menu = () => {
                         backgroundColor: isActive(item.path) ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
                       }}
                     >
-                      <ListItemIcon sx={{ 
+                      <ListItemIcon sx={{
                         color: isActive(item.path) ? "primary.main" : "inherit",
                         minWidth: '56px' // Increased spacing for icons
                       }}>
                         {item.icon}
                       </ListItemIcon>
-                      <ListItemText 
+                      <ListItemText
                         primary={item.text}
                         primaryTypographyProps={{
                           fontWeight: isActive(item.path) ? "bold" : "normal",
@@ -538,12 +591,11 @@ export const Menu = () => {
                 </MuiMenu>
               </Box>
             )}
-
             <Box sx={{ display: "flex", alignItems: "center" }}>
               {/* Notifications */}
               <Tooltip title="התראות">
-                <IconButton 
-                  color="inherit" 
+                <IconButton
+                  color="inherit"
                   onClick={handleNotificationsClick}
                   sx={{ mx: 1 }}
                 >
@@ -559,7 +611,7 @@ export const Menu = () => {
                 onClose={handleNotificationsClose}
                 PaperProps={{
                   elevation: 3,
-                  sx: { 
+                  sx: {
                     width: 320,
                     maxHeight: 400,
                     mt: 1,
@@ -573,15 +625,15 @@ export const Menu = () => {
                 {notifications.length > 0 ? (
                   <List sx={{ p: 0 }}>
                     {notifications.map((notification) => (
-                      <ListItem 
+                      <ListItem
                         key={notification.id}
-                        sx={{ 
-                          borderBottom: '1px solid', 
+                        sx={{
+                          borderBottom: '1px solid',
                           borderColor: 'divider',
                           backgroundColor: notification.read ? 'transparent' : alpha(theme.palette.primary.main, 0.08),
                         }}
                       >
-                        <ListItemText 
+                        <ListItemText
                           primary={notification.text}
                           secondary={notification.read ? "נקרא" : "חדש"}
                         />
@@ -605,10 +657,86 @@ export const Menu = () => {
 
               {/* Help */}
               <Tooltip title="עזרה">
-                <IconButton color="inherit" sx={{ mx: 1 }}>
+                <IconButton 
+                  color="inherit" 
+                  sx={{ mx: 1 }}
+                  onClick={handleHelpClick}
+                >
                   <HelpOutlineIcon />
                 </IconButton>
               </Tooltip>
+
+              {/* Help Dialog */}
+              <Dialog
+                open={helpDialogOpen}
+                onClose={handleHelpClose}
+                maxWidth="md"
+                fullWidth
+                PaperProps={{
+                  sx: {
+                    borderRadius: 2,
+                    maxHeight: '80vh'
+                  }
+                }}
+              >
+                <DialogTitle sx={{ 
+                  bgcolor: 'primary.main', 
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1
+                }}>
+                  <LiveHelpIcon />
+                  <Typography variant="h6" component="div">
+                    עזרה ומדריך שימוש במערכת
+                  </Typography>
+                </DialogTitle>
+                <DialogContent dividers>
+                  <DialogContentText paragraph sx={{ mb: 3 }}>
+                    ברוכים הבאים למערכת ניהול הציונים והתעודות. להלן מידע שיעזור לך להשתמש במערכת ביעילות:
+                  </DialogContentText>
+                  
+                  {helpTopics.map((topic, index) => (
+                    <Accordion key={index} sx={{ mb: 1 }}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        sx={{ 
+                          '&.Mui-expanded': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08)
+                          }
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                          {topic.icon}
+                          <Typography variant="subtitle1" fontWeight="bold">
+                            {topic.title}
+                          </Typography>
+                        </Box>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography paragraph>
+                          {topic.content}
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+                  
+                  <Box sx={{ mt: 3, p: 2, bgcolor: alpha(theme.palette.primary.main, 0.05), borderRadius: 2 }}>
+                    <Typography variant="subtitle2" fontWeight="bold" color="primary.main" gutterBottom>
+                      צריכים עזרה נוספת?
+                    </Typography>
+                    <Typography variant="body2">
+                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית בטלפון 03-1234567
+                      או בדוא"ל support@school-system.com
+                    </Typography>
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleHelpClose} variant="contained" color="primary">
+                    סגור
+                  </Button>
+                </DialogActions>
+              </Dialog>
 
               {/* Dark Mode Toggle (mobile only) */}
               {isMobile && (
@@ -618,7 +746,6 @@ export const Menu = () => {
                   </IconButton>
                 </Tooltip>
               )}
-
               {/* User Menu */}
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="body1" sx={{ mr: 2, display: { xs: "none", sm: "block" }, color: '#ffffff' }}>
@@ -640,9 +767,11 @@ export const Menu = () => {
                     vertical: "top",
                     horizontal: "right",
                   }}
+                 
+
                   PaperProps={{
                     elevation: 3,
-                    sx: { 
+                    sx: {
                       width: 280,
                       maxHeight: 400,
                       mt: 1,
@@ -686,8 +815,8 @@ export const Menu = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <ClassIcon sx={{ fontSize: 18, mr: 1, color: 'primary.main' }} />
                         <Typography variant="body2">
-                          {classes.length === 1 
-                            ? `כיתה: ${classes[0]}` 
+                          {classes.length === 1
+                            ? `כיתה: ${classes[0]}`
                             : `כיתות: ${classes.join(', ')}`}
                         </Typography>
                       </Box>
@@ -754,7 +883,7 @@ export const Menu = () => {
               py: 2,
               px: 2,
               mt: "auto",
-              backgroundColor: (theme) => 
+              backgroundColor: (theme) =>
                 darkMode ? alpha(theme.palette.background.paper, 0.6) : theme.palette.grey[100],
               textAlign: "center",
               borderTop: '1px solid',
