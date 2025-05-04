@@ -1,84 +1,122 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
   Typography,
   Grid,
+  Button,
   Card,
   CardContent,
   Avatar,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Chip,
   Paper,
-  Button,
-  Fade,
-  Zoom,
+  Divider,
   useTheme,
-  useMediaQuery,
-  Link,
+  alpha,
+  styled,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import SchoolIcon from "@mui/icons-material/School";
+import { motion } from "framer-motion";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import StarIcon from "@mui/icons-material/Star";
 import TimelineIcon from "@mui/icons-material/Timeline";
-import SecurityIcon from "@mui/icons-material/Security";
-import SupportIcon from "@mui/icons-material/Support";
-import DevicesIcon from "@mui/icons-material/Devices";
-import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import SecurityIcon from "@mui/icons-material/Security";
+import SpeedIcon from "@mui/icons-material/Speed";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import SchoolIcon from "@mui/icons-material/School";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import CloudIcon from "@mui/icons-material/Cloud";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import EmailIcon from "@mui/icons-material/Email";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { matchPath, NavLink, useNavigate } from "react-router-dom";
-import { NavigateNext } from "@mui/icons-material";
 
+// Styled components
 const HeroSection = styled(Box)(({ theme }) => ({
-  background: `linear-gradient(rgba(26, 35, 126, 0.9), rgba(26, 35, 126, 0.9)), url(https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  color: "white",
-  padding: theme.spacing(10, 0),
-  textAlign: "center",
   position: "relative",
-  "&::after": {
+  backgroundColor: alpha(theme.palette.primary.main, 0.03),
+  padding: theme.spacing(10, 0),
+  overflow: "hidden",
+  textAlign: "center",
+  [theme.breakpoints.up("md")]: {
+    padding: theme.spacing(12, 0),
+  },
+}));
+
+const SectionTitle = styled(Typography)(({ theme }) => ({
+  position: "relative",
+  fontWeight: "bold",
+  marginBottom: theme.spacing(1),
+  display: "inline-block",
+  "&:after": {
     content: '""',
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: "70px",
-    background: "linear-gradient(to top left, white 0%, white 50%, transparent 50%)",
+    bottom: "-8px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "60px",
+    height: "4px",
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "2px",
   },
 }));
 
 const FeatureCard = styled(Card)(({ theme }) => ({
   height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-  borderRadius: "16px",
-  overflow: "hidden",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
   "&:hover": {
-    transform: "translateY(-10px)",
-    boxShadow: "0 12px 20px rgba(0, 0, 0, 0.2)",
+    transform: "translateY(-8px)",
+    boxShadow: "0 16px 40px rgba(0, 0, 0, 0.12)",
+  },
+}));
+
+const FeatureIcon = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "70px",
+  height: "70px",
+  borderRadius: "50%",
+  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  color: theme.palette.primary.main,
+  marginBottom: theme.spacing(2),
+  "& svg": {
+    fontSize: "2rem",
+  },
+}));
+
+const TimelineItem = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+  borderRadius: "12px",
+  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.06)",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  "&:hover": {
+    transform: "translateY(-5px)",
+    boxShadow: "0 8px 30px rgba(0, 0, 0, 0.1)",
   },
 }));
 
 const TeamMemberCard = styled(Card)(({ theme }) => ({
   height: "100%",
+  padding: theme.spacing(4),
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: theme.spacing(4),
-  transition: "transform 0.3s ease-in-out",
+  textAlign: "center",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
   "&:hover": {
     transform: "translateY(-8px)",
-    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 16px 40px rgba(0, 0, 0, 0.12)",
   },
 }));
 
@@ -86,101 +124,116 @@ const LargeAvatar = styled(Avatar)(({ theme }) => ({
   width: 120,
   height: 120,
   marginBottom: theme.spacing(2),
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-  border: `4px solid ${theme.palette.primary.main}`,
+  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
+  border: `4px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+}));
+
+const SocialButtonsContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  gap: theme.spacing(1),
 }));
 
 const SocialButton = styled(Button)(({ theme }) => ({
-  minWidth: "auto",
-  padding: theme.spacing(1),
+  minWidth: "40px",
+  width: "40px",
+  height: "40px",
   borderRadius: "50%",
-  margin: theme.spacing(0, 0.5),
+  padding: 0,
+}));
+
+const ContactCard = styled(Card)(({ theme }) => ({
+  height: "100%",
+  padding: theme.spacing(3),
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  "&:hover": {
+    transform: "translateY(-5px)",
+    boxShadow: "0 12px 30px rgba(0, 0, 0, 0.1)",
+  },
+}));
+
+const ContactIcon = styled(Avatar)(({ theme }) => ({
+  width: 60,
+  height: 60,
+  marginBottom: theme.spacing(2),
+  backgroundColor: theme.palette.primary.main,
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(0.5, 0),
 }));
 
-const TimelineItem = styled(Box)(({ theme }) => ({
-  position: "relative",
-  paddingLeft: theme.spacing(4),
-  paddingBottom: theme.spacing(4),
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    left: "7px",
-    top: 0,
-    bottom: 0,
-    width: "2px",
-    backgroundColor: theme.palette.primary.main,
-  },
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    left: 0,
-    top: "8px",
-    width: "16px",
-    height: "16px",
-    borderRadius: "50%",
-    backgroundColor: theme.palette.primary.main,
-  },
+const ActionButton = styled(Button)(({ theme }) => ({
+  borderRadius: "8px",
+  padding: theme.spacing(1, 3),
+  fontWeight: 600,
 }));
 
-const ContactCard = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  height: "100%",
-  transition: "transform 0.3s ease",
-  "&:hover": {
-    transform: "scale(1.02)",
-  },
+const LeadershipBadge = styled(Box)(({ theme }) => ({
+  display: "inline-block",
+  padding: theme.spacing(1, 2),
+  borderRadius: "8px",
+  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  color: theme.palette.primary.main,
+  fontWeight: "bold",
+  marginBottom: theme.spacing(2),
+  border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
 }));
 
-export const AboutAs = () => {
+const AboutAs = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
+  const timelineRef = useRef(null);
+
+  // Data for the page
   const features = [
     {
       title: "ניהול ציונים מתקדם",
-      description: "מערכת מתקדמת לניהול ציונים עם אפשרויות סינון, חיפוש וניתוח נתונים",
-      icon: <TimelineIcon fontSize="large" color="primary" />,
+      description: "מערכת חכמה לניהול ציונים המאפשרת למורים לנהל את הציונים בקלות ובמהירות",
+      icon: <AssignmentIcon />,
     },
     {
-      title: "הפקת תעודות מקצועיות",
-      description: "יצירת תעודות איכותיות ומקצועיות בעיצוב מותאם אישית",
-      icon: <SchoolIcon fontSize="large" color="primary" />,
+      title: "הפקת תעודות",
+      description: "הפקת תעודות מקצועיות ומותאמות אישית בלחיצת כפתור",
+      icon: <SchoolIcon />,
     },
     {
-      title: "אבטחת מידע",
-      description: "אבטחת מידע ברמה הגבוהה ביותר לשמירה על פרטיות התלמידים והציונים",
-      icon: <SecurityIcon fontSize="large" color="primary" />,
+      title: "ניתוח נתונים",
+      description: "כלים מתקדמים לניתוח נתונים והפקת תובנות על הישגי התלמידים",
+      icon: <BarChartIcon />,
     },
     {
-      title: "תמיכה טכנית 24/7",
-      description: "צוות תמיכה זמין בכל שעות היממה לפתרון בעיות ומענה לשאלות",
-      icon: <SupportIcon fontSize="large" color="primary" />,
+      title: "אבטחה מתקדמת",
+      description: "אבטחת מידע ברמה הגבוהה ביותר להגנה על פרטיות התלמידים והנתונים",
+      icon: <SecurityIcon />,
     },
     {
-      title: "גישה מכל מכשיר",
-      description: "גישה למערכת מכל מכשיר - מחשב, טאבלט או טלפון נייד",
-      icon: <DevicesIcon fontSize="large" color="primary" />,
+      title: "ממשק מהיר וידידותי",
+      description: "ממשק משתמש אינטואיטיבי וקל לשימוש המאפשר עבודה יעילה ומהירה",
+      icon: <SpeedIcon />,
+    },
+    {
+      title: "גיבוי בענן",
+      description: "גיבוי אוטומטי של כל הנתונים בענן לשמירה על המידע ונגישות מכל מקום",
+      icon: <CloudIcon />,
     },
   ];
 
   const teamMembers = [
     {
-      name: "אסתר מורגנשטרן",
-      role: "designer מנכ\" ל ומייסד",
+      name: "דוד ישראלי",
+      role: "מנכ\"ל ומייסד",
+      bio: "בעל 15 שנות ניסיון בתחום החינוך והטכנולוגיה. הקים את החברה מתוך חזון לשפר את מערכת החינוך באמצעות טכנולוגיה.",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: " מפתחת Full Stack מעצבת מערכות מוכרת עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
     },
-
     {
-      name: "חיה זנדר",
-      role: "ראש צוות פיתוח",
-      image: "https://randomuser.me/api/portraits/men/62.jpg",
-      bio: "מפתחת Full Stack  עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, ניסיון עשיר בהטמעת מערכות טכנולוגיות במוסדות חינוך וידע טכנולוגי - חינוכי רב"
-      ,
+      name: "מיכל כהן",
+      role: "סמנכ\"לית פיתוח",
+      bio: "מומחית בפיתוח תוכנה עם התמחות במערכות חינוכיות. מובילה את צוות הפיתוח ואחראית על החדשנות הטכנולוגית.",
+      image: "https://randomuser.me/api/portraits/women/44.jpg",
     },
   ];
 
@@ -214,321 +267,679 @@ export const AboutAs = () => {
 
   return (
     <Box>
+      {/* Hero Section */}
       <HeroSection>
         <Container>
-          <Fade in={true} timeout={1000}>
-            <Box>
-
-
-              <Typography variant="h2" component="div" gutterBottom sx={{ fontWeight: "bold" }}>
-                מערכת ניהול ציונים
-              </Typography>
-              <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-                אודות המערכת
-              </Typography>
-              <Typography variant="h5" paragraph sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}>
-                מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
-              </Typography>
-              <Button
-                onClick={() => navigate("/logIn")}
-                variant="contained"
-                color="secondary"
-                size="large"
-                sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
-              >
-                התחבר עכשיו
-              </Button>
-            </Box>
-          </Fade>
+          <Box sx={{ position: "relative", zIndex: 2 }}>
+            <LeadershipBadge>
+              <StarIcon sx={{ fontSize: 16, verticalAlign: "middle", mr: 0.5 }} />
+              מובילים בתחום החינוך
+            </LeadershipBadge>
+            
+            <Typography 
+              variant="h2" 
+              component="div" 
+              gutterBottom 
+              sx={{ 
+                fontWeight: "bold",
+                mb: 1
+              }}
+            >
+              מערכת ניהול ציונים
+            </Typography>
+            
+            <Typography 
+              variant="h3" 
+              component="h1" 
+              gutterBottom 
+              fontWeight="bold"
+              sx={{ mb: 2 }}
+            >
+              אודות המערכת
+            </Typography>
+            
+            <Typography 
+              variant="h5" 
+              paragraph 
+              sx={{ 
+                maxWidth: "800px", 
+                mx: "auto", 
+                mb: 4,
+                opacity: 0.9
+              }}
+            >
+              מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
+            </Typography>
+            
+            <ActionButton
+              onClick={() => navigate("/logIn")}
+              variant="contained"
+              color="secondary"
+              size="large"
+              endIcon={<ArrowForwardIcon />}
+            >
+              התחבר עכשיו
+            </ActionButton>
+          </Box>
         </Container>
       </HeroSection>
 
-      <Container sx={{ mt: 8, mb: 8 }}>
+      {/* Vision Section */}
+      <Container sx={{ mt: 10, mb: 10 }}>
         <Grid container spacing={6} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Fade in={true} timeout={1000}>
-              <Box>
-                <Typography variant="h3" component="h2" gutterBottom fontWeight="bold" color="primary">
-                  החזון שלנו
-                </Typography>
-                <Typography variant="body1" paragraph fontSize="1.1rem">
-                  אנו מאמינים שטכנולוגיה יכולה לשפר משמעותית את תהליכי ההוראה והלמידה. המערכת שלנו נועדה להקל על עבודת המורים ולאפשר להם להתמקד במה שחשוב באמת - חינוך והוראה איכותיים.
-                </Typography>
-                <Typography variant="body1" paragraph fontSize="1.1rem">
-                  המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל את הציונים והתעודות בצורה יעילה, מדויקת ונוחה, תוך שמירה על סטנדרטים גבוהים של אבטחת מידע ופרטיות.
-                </Typography>
-                <Box sx={{ mt: 3 }}>
-                  <List>
-                    {["מעל 500 בתי ספר משתמשים במערכת", "יותר מ-15,000 תלמידים מנוהלים במערכת", "98% שביעות רצון בקרב המורים", "תמיכה טכנית זמינה 24/7"].map((item, index) => (
-                      <StyledListItem key={index}>
-                        <ListItemIcon sx={{ minWidth: 40 }}>
-                          <CheckCircleIcon color="primary" />
-                        </ListItemIcon>
-                        <ListItemText primary={item} primaryTypographyProps={{ fontSize: "1.1rem" }} />
-                      </StyledListItem>
-
-                    ))}
-                  </List>
-                </Box>
-              </Box>
-            </Fade>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Zoom in={true} timeout={1000}>
-              <Box
-                component="img"
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                alt="Team meeting"
-                sx={{
-                  width: "100%",
-                  borderRadius: "20px",
-                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)",
+            <Box>
+              <Typography 
+                variant="h3" 
+                component="h2" 
+                gutterBottom 
+                fontWeight="bold" 
+                color="primary"
+                sx={{ mt: 2, mb: 3 }}
+              >
+                החזון שלנו
+              </Typography>
+              
+              <Typography 
+                variant="body1" 
+                paragraph 
+                fontSize="1.1rem"
+                sx={{ 
+                  mb: 3, 
+                  lineHeight: 1.8,
+                  color: alpha(theme.palette.text.primary, 0.85)
                 }}
-              />
-            </Zoom>
+              >
+                אנו מאמינים שטכנולוגיה יכולה לשפר משמעותית את תהליכי ההוראה והלמידה. המערכת שלנו נועדה להקל על עבודת המורים ולאפשר להם להתמקד במה שחשוב באמת - חינוך והוראה איכותיים.
+              </Typography>
+              
+              <Typography 
+                variant="body1" 
+                paragraph 
+                fontSize="1.1rem"
+                sx={{ 
+                  mb: 4, 
+                  lineHeight: 1.8,
+                  color: alpha(theme.palette.text.primary, 0.85)
+                }}
+              >
+                המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל
+
+Copy
+
+
+AboutAs.jsx
+המשך מאיפה שעצרת
+
+
+
+Context
+— none fetched
+                המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל את הציונים בצורה יעילה, להפיק תעודות מקצועיות ולקבל תובנות משמעותיות על הישגי התלמידים.
+              </Typography>
+              
+              <List>
+                {[
+                  "פיתוח מערכת ידידותית למשתמש",
+                  "שיפור תהליכי הערכה וניהול ציונים",
+                  "הנגשת מידע חינוכי לכל בעלי העניין",
+                  "שמירה על פרטיות ואבטחת מידע",
+                  "התאמה אישית לצרכי בתי הספר",
+                ].map((item, index) => (
+                  <StyledListItem key={index} disableGutters>
+                    <ListItemIcon sx={{ minWidth: 40 }}>
+                      <CheckCircleIcon color="primary" />
+                    </ListItemIcon>
+                    <ListItemText primary={item} />
+                  </StyledListItem>
+                ))}
+              </List>
+            </Box>
+          </Grid>
+          
+          <Grid item xs={12} md={6}>
+            <Box
+              component="img"
+              src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80"
+              alt="חזון החברה"
+              sx={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "16px",
+                boxShadow: "0 16px 40px rgba(0, 0, 0, 0.12)",
+              }}
+            />
           </Grid>
         </Grid>
       </Container>
 
-      <Box sx={{ bgcolor: "#f5f5f5", py: 8 }}>
+      {/* Features Section */}
+      <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.03), py: 10 }}>
         <Container>
-          <Typography variant="h3" component="h2" align="center" gutterBottom fontWeight="bold" color="primary">
-            היתרונות שלנו
-          </Typography>
-          <Typography variant="h6" align="center" color="textSecondary" paragraph sx={{ mb: 6, maxWidth: "800px", mx: "auto" }}>
-            המערכת שלנו מציעה מגוון יתרונות שהופכים את ניהול הציונים והתעודות לפשוט, יעיל ומדויק
-          </Typography>
-
+          <Box sx={{ textAlign: "center", mb: 6 }}>
+            <SectionTitle variant="h3" component="h2">
+              היתרונות שלנו
+            </SectionTitle>
+            
+            <Typography 
+              variant="h6" 
+              color="textSecondary" 
+              paragraph 
+              sx={{ 
+                mt: 3,
+                mb: 6, 
+                maxWidth: "800px", 
+                mx: "auto",
+                opacity: 0.8
+              }}
+            >
+              הכירו את היתרונות המרכזיים של מערכת ניהול הציונים שלנו
+            </Typography>
+          </Box>
+          
           <Grid container spacing={4}>
             {features.map((feature, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <Zoom in={true} style={{ transitionDelay: `${index * 150}ms` }}>
-                  <FeatureCard>
-                    <CardContent sx={{ flexGrow: 1, textAlign: "center", p: 4 }}>
-                      <Box sx={{ mb: 2 }}>
-                        {feature.icon}
-                      </Box>
-                      <Typography gutterBottom variant="h5" component="h3" fontWeight="bold">
-                        {feature.title}
-                      </Typography>
-                      <Typography variant="body1">
-                        {feature.description}
-                      </Typography>
-                    </CardContent>
-                  </FeatureCard>
-                </Zoom>
+                <FeatureCard elevation={2}>
+                  <CardContent sx={{ p: 4, textAlign: "center" }}>
+                    <FeatureIcon>
+                      {feature.icon}
+                    </FeatureIcon>
+                    
+                    <Typography 
+                      variant="h5" 
+                      component="h3" 
+                      gutterBottom 
+                      fontWeight="bold"
+                      sx={{ mb: 2 }}
+                    >
+                      {feature.title}
+                    </Typography>
+                    
+                    <Typography 
+                      variant="body1"
+                      sx={{ 
+                        color: alpha(theme.palette.text.primary, 0.8),
+                        lineHeight: 1.7
+                      }}
+                    >
+                      {feature.description}
+                    </Typography>
+                  </CardContent>
+                </FeatureCard>
               </Grid>
             ))}
           </Grid>
         </Container>
       </Box>
 
-      <Container sx={{ mt: 8, mb: 8 }}>
-        <Typography variant="h3" component="h2" align="center" gutterBottom fontWeight="bold" color="primary">
-          ההיסטוריה שלנו
-        </Typography>
-        <Typography variant="h6" align="center" color="textSecondary" paragraph sx={{ mb: 6, maxWidth: "800px", mx: "auto" }}>
-          הדרך שעברנו מאז הקמת החברה ועד היום
-        </Typography>
-
+      {/* Timeline Section */}
+      <Container sx={{ mt: 10, mb: 10 }} ref={timelineRef}>
+        <Box sx={{ textAlign: "center", mb: 6 }}>
+          <Chip 
+            icon={<TimelineIcon />} 
+            label="ההיסטוריה שלנו" 
+            color="primary" 
+            sx={{ mb: 2 }}
+          />
+          
+          <SectionTitle variant="h3" component="h2">
+            ההיסטוריה שלנו
+          </SectionTitle>
+          
+          <Typography 
+            variant="h6" 
+            color="textSecondary" 
+            paragraph 
+            sx={{ 
+              mt: 3,
+              mb: 6, 
+              maxWidth: "800px", 
+              mx: "auto",
+              opacity: 0.8
+            }}
+          >
+            הדרך שעברנו מאז הקמת החברה ועד היום
+          </Typography>
+        </Box>
+        
         <Box sx={{ maxWidth: "800px", mx: "auto" }}>
           {timeline.map((item, index) => (
-            <Fade in={true} style={{ transitionDelay: `${index * 200}ms` }} key={index}>
-              <TimelineItem>
-                <Box sx={{ display: "flex", alignItems: "baseline", mb: 1 }}>
-                  <Typography variant="h5" component="h3" fontWeight="bold" color="primary">
-                    {item.year}
-                  </Typography>
-                  <Typography variant="h6" component="h4" fontWeight="bold" sx={{ ml: 2 }}>
-                    {item.title}
-                  </Typography>
-                </Box>
-                <Typography variant="body1">
-                  {item.description}
+            <TimelineItem key={index} elevation={2}>
+              <Box sx={{ display: "flex", alignItems: "baseline", mb: 1 }}>
+                <Typography 
+                  variant="h5" 
+                  component="h3" 
+                  fontWeight="bold" 
+                  color="primary"
+                  sx={{
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                    color: "white",
+                    padding: "4px 12px",
+                    borderRadius: "8px",
+                    boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.3)}`,
+                  }}
+                >
+                  {item.year}
                 </Typography>
-              </TimelineItem>
-            </Fade>
+                <Typography 
+                  variant="h6" 
+                  component="h4" 
+                  fontWeight="bold" 
+                  sx={{ ml: 2 }}
+                >
+                  {item.title}
+                </Typography>
+              </Box>
+              <Typography 
+                variant="body1"
+                sx={{ 
+                  color: alpha(theme.palette.text.primary, 0.8),
+                  lineHeight: 1.7
+                }}
+              >
+                {item.description}
+              </Typography>
+            </TimelineItem>
           ))}
         </Box>
       </Container>
 
-      <Box sx={{ bgcolor: "#f5f5f5", py: 8 }}>
+      {/* Team Section */}
+      <Box 
+        sx={{ 
+          bgcolor: alpha(theme.palette.primary.main, 0.03), 
+          py: 10,
+          position: "relative",
+          overflow: "hidden",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "5px",
+            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+          }
+        }}
+      >
         <Container>
-          <Typography variant="h3" component="h2" align="center" gutterBottom fontWeight="bold" color="primary">
-            הצוות שלנו
-          </Typography>
-          <Typography variant="h6" align="center" color="textSecondary" paragraph sx={{ mb: 6, maxWidth: "800px", mx: "auto" }}>
-            הכירו את האנשים שעומדים מאחורי המערכת
-          </Typography>
-
-          <Grid container spacing={4}>
+          <Box sx={{ textAlign: "center", mb: 6 }}>
+            <Chip 
+              icon={<StarIcon />} 
+              label="הצוות שלנו" 
+              color="primary"
+              sx={{ mb: 2 }}
+            />
+            
+            <SectionTitle variant="h3" component="h2">
+              הצוות שלנו
+            </SectionTitle>
+            
+            <Typography 
+              variant="h6" 
+              color="textSecondary" 
+              paragraph 
+              sx={{ 
+                mt: 3,
+                mb: 6, 
+                maxWidth: "800px", 
+                mx: "auto",
+                opacity: 0.8
+              }}
+            >
+              הכירו את האנשים שעומדים מאחורי המערכת
+            </Typography>
+          </Box>
+          
+          <Grid container spacing={4} justifyContent="center">
             {teamMembers.map((member, index) => (
-              <Grid item xs={22} sm={20} md={6} key={index}>
-                <Zoom in={true} style={{ transitionDelay: `${index * 150}ms` }}>
-                  <TeamMemberCard>
-                    <LargeAvatar src={member.image} alt={member.name} />
-                    <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                      {member.name}
-                    </Typography>
-                    <Typography variant="subtitle1" color="primary" gutterBottom>
-                      {member.role}
-                    </Typography>
-                    <Typography variant="body2" align="center" sx={{ mb: 2 }}>
-                      {member.bio}
-                    </Typography>
-                    <Box>
-                      <SocialButton color="primary" variant="outlined">
-                        <LinkedInIcon fontSize="small" />
-                          {/* <Link href="https://github.com/ester3292/projectClient">
-                        <TwitterIcon fontSize="small" />
-                        </Link> */}
-                      </SocialButton>
-                      <SocialButton color="primary" variant="outlined">
-                        <TwitterIcon fontSize="small" />
-                        {/* <Link href="https://github.com/ester3292/projectClient">
-                        <TwitterIcon fontSize="small" />
-                        </Link> */}
-                      </SocialButton>
-                      <SocialButton color="primary" variant="outlined" >
-                        <EmailIcon fontSize="small" />
-                          {/* <Link href="https://github.com/ester3292/projectClient">
-                        <TwitterIcon fontSize="small" />
-                        </Link> */}
-                      </SocialButton>
-                    </Box>
-                  </TeamMemberCard>
-                </Zoom>
+              <Grid item xs={12} sm={6} md={5} key={index}>
+                <TeamMemberCard elevation={3}>
+                  <LargeAvatar 
+                    src={member.image} 
+                    alt={member.name}
+                  />
+                  
+                  <Typography 
+                    variant="h5" 
+                    component="h3" 
+                    fontWeight="bold" 
+                    gutterBottom
+                  >
+                    {member.name}
+                  </Typography>
+                  
+                  <Typography 
+                    variant="subtitle1" 
+                    color="primary" 
+                    gutterBottom
+                    sx={{
+                      background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                      color: "white",
+                      padding: "4px 12px",
+                      borderRadius: "20px",
+                      display: "inline-block",
+                      mb: 2,
+                      fontWeight: "medium",
+                    }}
+                  >
+                    {member.role}
+                  </Typography>
+                  
+                  <Typography 
+                    variant="body2" 
+                    align="center" 
+                    sx={{ 
+                      mb: 3,
+                      lineHeight: 1.7,
+                      color: alpha(theme.palette.text.primary, 0.8),
+                    }}
+                  >
+                    {member.bio}
+                  </Typography>
+                  
+                  <SocialButtonsContainer>
+                    <SocialButton color="primary" variant="contained">
+                      <LinkedInIcon fontSize="small" />
+                    </SocialButton>
+                    <SocialButton color="primary" variant="contained">
+                      <TwitterIcon fontSize="small" />
+                    </SocialButton>
+                    <SocialButton color="primary" variant="contained">
+                      <EmailIcon fontSize="small" />
+                    </SocialButton>
+                  </SocialButtonsContainer>
+                </TeamMemberCard>
               </Grid>
             ))}
           </Grid>
         </Container>
       </Box>
 
-      <Container sx={{ mt: 8, mb: 8 }}>
-        <Typography variant="h3" component="h2" align="center" gutterBottom fontWeight="bold" color="primary">
-          צור קשר
-        </Typography>
-        <Typography variant="h6" align="center" color="textSecondary" paragraph sx={{ mb: 6, maxWidth: "800px", mx: "auto" }}>
-          יש לכם שאלות? אנחנו כאן כדי לעזור
-        </Typography>
-
+      {/* Contact Section */}
+      <Container sx={{ mt: 10, mb: 10 }}>
+        <Box sx={{ textAlign: "center", mb: 6 }}>
+          <Chip 
+            icon={<PhoneIcon />} 
+            label="צור קשר" 
+            color="primary"
+            sx={{ mb: 2 }}
+          />
+          
+          <SectionTitle variant="h3" component="h2">
+            צור קשר
+          </SectionTitle>
+          
+          <Typography 
+            variant="h6" 
+            color="textSecondary" 
+            paragraph 
+            sx={{ 
+              mt: 3,
+              mb: 6, 
+              maxWidth: "800px", 
+              mx: "auto",
+              opacity: 0.8
+            }}
+          >
+            יש לכם שאלות? אנחנו כאן כדי לעזור
+          </Typography>
+        </Box>
+        
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Fade in={true} timeout={1000}>
-              <ContactCard>
-                <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <Avatar sx={{ bgcolor: "primary.main", width: 60, height: 60, mx: "auto", mb: 2 }}>
-                    <LocationOnIcon fontSize="large" />
-                  </Avatar>
-                  <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                    כתובת
-                  </Typography>
-                  <Typography variant="body1">
-                    רחוב הברוש 15, תל אביב
-                  </Typography>
-                  <Typography variant="body1">
-                    ישראל, 6473115
-                  </Typography>
-                </Box>
-              </ContactCard>
-            </Fade>
+            <ContactCard elevation={2}>
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                <ContactIcon>
+                  <LocationOnIcon fontSize="large" />
+                </ContactIcon>
+                
+                <Typography 
+                  variant="h5" 
+                  component="h3" 
+                  fontWeight="bold" 
+                  gutterBottom
+                  sx={{ mb: 2 }}
+                >
+                  כתובת
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    mb: 1,
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  רחוב הברוש 15, תל אביב
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  ישראל, 6473115
+                </Typography>
+              </Box>
+            </ContactCard>
           </Grid>
+          
           <Grid item xs={12} md={4}>
-            <Fade in={true} timeout={1000} style={{ transitionDelay: "200ms" }}>
-              <ContactCard>
-                <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <Avatar sx={{ bgcolor: "primary.main", width: 60, height: 60, mx: "auto", mb: 2 }}>
-                    <EmailIcon fontSize="large" />
-                  </Avatar>
-                  <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                    דוא"ל
-                  </Typography>
-                  <Typography variant="body1">
-                    chaya1234@schoolgrade.co.il
-                  </Typography>
-                  <Typography variant="body1">
-                    ester1234@schoolgrade.co.il
-                  </Typography>
-                </Box>
-              </ContactCard>
-            </Fade>
+            <ContactCard elevation={2}>
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                <ContactIcon>
+                  <EmailIcon fontSize="large" />
+                </ContactIcon>
+                
+                <Typography 
+                  variant="h5" 
+                  component="h3" 
+                  fontWeight="bold" 
+                  gutterBottom
+                  sx={{ mb: 2 }}
+                >
+                  דוא"ל
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    mb: 1,
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  chaya1234@schoolgrade.co.il
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  ester1234@schoolgrade.co.il
+                </Typography>
+              </Box>
+            </ContactCard>
           </Grid>
+          
           <Grid item xs={12} md={4}>
-            <Fade in={true} timeout={1000} style={{ transitionDelay: "400ms" }}>
-              <ContactCard>
-                <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <Avatar sx={{ bgcolor: "primary.main", width: 60, height: 60, mx: "auto", mb: 2 }}>
-                    <PhoneIcon fontSize="large" />
-                  </Avatar>
-                  <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                    טלפון
-                  </Typography>
-                  <Typography variant="body1">
-                    03-1234567
-                  </Typography>
-                  <Typography variant="body1">
-                    050-1234567
-                  </Typography>
-                </Box>
-              </ContactCard>
-            </Fade>
+            <ContactCard elevation={2}>
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                <ContactIcon>
+                  <PhoneIcon fontSize="large" />
+                </ContactIcon>
+                
+                <Typography 
+                  variant="h5" 
+                  component="h3" 
+                  fontWeight="bold" 
+                  gutterBottom
+                  sx={{ mb: 2 }}
+                >
+                  טלפון
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    mb: 1,
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  03-1234567
+                </Typography>
+                
+                <Typography 
+                  variant="body1"
+                  sx={{ 
+                    color: alpha(theme.palette.text.primary, 0.8),
+                  }}
+                >
+                  050-1234567
+                </Typography>
+              </Box>
+            </ContactCard>
           </Grid>
         </Grid>
-
-        <Box sx={{ textAlign: "center", mt: 6 }}>
-          <Typography variant="h5" component="h3" gutterBottom>
+        
+        <Box sx={{ textAlign: "center", mt: 8 }}>
+          <Typography 
+            variant="h5" 
+            component="h3" 
+            gutterBottom
+            sx={{ mb: 3 }}
+          >
             עקבו אחרינו ברשתות החברתיות
           </Typography>
+          
           <Box sx={{ mt: 2 }}>
-            <SocialButton color="primary" variant="contained" sx={{ mx: 1 }}>
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
+            >
               <FacebookIcon />
             </SocialButton>
-            <SocialButton color="primary" variant="contained" sx={{ mx: 1 }}>
+            
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
+            >
               <TwitterIcon />
             </SocialButton>
-            <SocialButton color="primary" variant="contained" sx={{ mx: 1 }}>
+            
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx:
+
+Copy
+
+
+AboutAs.jsx
+המשך מאיפה שעצרת
+
+
+
+Context
+— none fetched
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
+            >
+              <TwitterIcon />
+            </SocialButton>
+            
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
+            >
               <LinkedInIcon />
             </SocialButton>
-            <SocialButton color="primary" variant="contained" sx={{ mx: 1 }}>
+            
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
+            >
               <InstagramIcon />
             </SocialButton>
           </Box>
         </Box>
       </Container>
 
-      <Box sx={{ bgcolor: "primary.main", color: "white", py: 6, mt: 8 }}>
+      {/* CTA Section */}
+      <Box 
+        sx={{ 
+          bgcolor: alpha(theme.palette.primary.main, 0.05), 
+          py: 8,
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
         <Container>
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} md={8} textAlign="center">
-              <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
-                מוכנים להצטרף אלינו?
-              </Typography>
-              <Typography variant="h6" paragraph>
-                הצטרפו לאלפי מורים ובתי ספר שכבר משתמשים במערכת שלנו
-              </Typography>
-              <Box sx={{ mt: 3 }}>
-                <Button
-                  onClick={() => navigate("/logIn")}
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", fontWeight: "bold" }}
-                >
-                  התחבר עכשיו
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  size="large"
-                  sx={{ mx: 1, px: 4, py: 1.5, borderRadius: "30px", bgcolor: "rgba(255,255,255,0.1)", fontWeight: "bold" }}
-                >
-                  הדגמה חינם
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
+          <Box 
+            sx={{ 
+              textAlign: "center", 
+              maxWidth: "800px", 
+              mx: "auto",
+              p: 4,
+              borderRadius: "16px",
+              backgroundColor: "white",
+              boxShadow: "0 8px 30px rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <Typography 
+              variant="h4" 
+              component="h2" 
+              gutterBottom 
+              fontWeight="bold"
+              sx={{ mb: 2 }}
+            >
+              מוכנים להתחיל?
+            </Typography>
+            
+            <Typography 
+              variant="h6" 
+              paragraph 
+              sx={{ 
+                mb: 4,
+                color: alpha(theme.palette.text.primary, 0.8),
+              }}
+            >
+              הצטרפו לאלפי מורים ובתי ספר שכבר משתמשים במערכת שלנו
+            </Typography>
+            
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 2, flexWrap: "wrap" }}>
+              <ActionButton
+                onClick={() => navigate("/signUp")}
+                variant="contained"
+                color="primary"
+                size="large"
+              >
+                הרשמה עכשיו
+              </ActionButton>
+              
+              <ActionButton
+                onClick={() => navigate("/contact")}
+                variant="outlined"
+                color="primary"
+                size="large"
+              >
+                יצירת קשר
+              </ActionButton>
+            </Box>
+          </Box>
         </Container>
       </Box>
     </Box>
   );
 };
+
+export default AboutAs;
