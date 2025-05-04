@@ -270,7 +270,7 @@ export const Diploma = () => {
   };
 
   return (
-    <Fade in={true} timeout={800}>
+    <Fade in={true} timeout={800} width={1900}>
       <Box sx={{ p: 3, maxWidth: 1200, mx: "auto" }}>
         <Typography variant="h4" component="h1" fontWeight="bold" color="primary" sx={{ mb: 4, display: "flex", alignItems: "center" }}>
           <SchoolIcon sx={{ mr: 1, fontSize: 32 }} />

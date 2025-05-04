@@ -140,7 +140,7 @@ export const ShowTeachers = () => {
     };
 
     return (
-        <Fade in={true} timeout={800}>
+        <Fade in={true} timeout={800} width={1100}>
             <Box>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4 }}>
                     <Typography variant="h5" component="h2" fontWeight="bold" color="primary">

@@ -417,7 +417,7 @@ export const AboutAs = () => {
   return (
     <Box >
       {/* Hero Section with Particles */}
-      <HeroSection>
+      <HeroSection width={1900}>
         <MotionBox
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

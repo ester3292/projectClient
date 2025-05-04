@@ -131,7 +131,7 @@ export const UpdateMarks = () => {
   };
 
   return (
-    <Fade in={true} timeout={800}>
+    <Fade in={true} timeout={800} width={1500}>
       <Box>
         <Dialog 
           open={addMark} 
