@@ -506,7 +506,9 @@ export const Menu = () => {
               `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-          }}>
+          }}
+          onClick={() => navigate("/")}
+          >
             מערכת ניהול ציונים
           </Typography>
         </Box>
@@ -815,7 +817,9 @@ export const Menu = () => {
                 <Typography variant="h6" component="div" sx={{ 
                   fontWeight: "bold",
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)'
-                }}>
+                }}
+                onClick={() => navigate("/")}
+                >
                   מערכת ניהול ציונים
                 </Typography>
               </Box>
@@ -1340,8 +1344,10 @@ export const Menu = () => {
                       צריכים עזרה נוספת?
                     </Typography>
                     <Typography variant="body2">
-                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית בטלפון 03-1234567
-                      או בדוא"ל support@school-system.com
+                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית  
+                       בדוא"ל  ester1234@schoolgrade.co.il או 
+                       chaya1234@schoolgrade.co.il
+
                     </Typography>
                   </Box>
                 </DialogContent>
