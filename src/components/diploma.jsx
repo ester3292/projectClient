@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAchivmentsById } from "../redux/slices/getAchivmentsById";
 import { getAchivmentsByFullName } from "../redux/slices/getAchivmentsByFullName";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import {
   Box,
   Button,
@@ -28,6 +34,7 @@ import {
   CardContent,
   CardHeader,
   Avatar,
+  Tooltip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SaveIcon from '@mui/icons-material/Save';
@@ -38,6 +45,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SchoolIcon from '@mui/icons-material/School';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import StarIcon from '@mui/icons-material/Star';
+import PrintIcon from '@mui/icons-material/Print';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
@@ -92,11 +101,11 @@ const MarkChip = styled(Box)(({ theme, mark }) => ({
   borderRadius: "12px",
   fontWeight: "bold",
   fontSize: "1rem",
-  backgroundColor: 
+  backgroundColor:
     mark >= 90 ? theme.palette.success.main :
-    mark >= 70 ? theme.palette.info.main :
-    mark >= 55 ? theme.palette.warning.main :
-    theme.palette.error.main,
+      mark >= 70 ? theme.palette.info.main :
+        mark >= 55 ? theme.palette.warning.main :
+          theme.palette.error.main,
   color: theme.palette.common.white,
 }));
 
@@ -108,11 +117,11 @@ const AverageBox = styled(Box)(({ theme, avg }) => ({
   width: "100px",
   height: "100px",
   borderRadius: "50%",
-  backgroundColor: 
+  backgroundColor:
     avg >= 90 ? theme.palette.success.main :
-    avg >= 70 ? theme.palette.info.main :
-    avg >= 55 ? theme.palette.warning.main :
-    theme.palette.error.main,
+      avg >= 70 ? theme.palette.info.main :
+        avg >= 55 ? theme.palette.warning.main :
+          theme.palette.error.main,
   color: theme.palette.common.white,
   margin: "0 auto",
   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
@@ -121,7 +130,8 @@ const AverageBox = styled(Box)(({ theme, avg }) => ({
 export const Diploma = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const printRef = useRef();
+
   const [id, setId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -129,7 +139,7 @@ export const Diploma = () => {
   const [showTable, setShowTable] = useState(false);
   const [showDialog, setShowDialog] = useState(true);
   const [loading, setLoading] = useState(false);
-  
+
   const achivments = useSelector(state => state.student.achivments);
   const firstNameStudent = useSelector(state => state.student.firstName);
   const lastNameStudent = useSelector(state => state.student.lastName);
@@ -164,12 +174,100 @@ export const Diploma = () => {
 
   const calculateOverallAverage = () => {
     if (!achivments || !achivments.completeMark || achivments.completeMark.length === 0) return 0;
-    
+
     const sum = achivments.completeMark.reduce((total, subject) => total + subject.avg, 0);
     return (sum / achivments.completeMark.length).toFixed(1);
   };
 
   const overallAverage = calculateOverallAverage();
+
+
+  // const handlePrint = useReactToPrint({
+  //   content: () => printRef.current,
+  //   documentTitle: `תעודת_${firstNameStudent}_${lastNameStudent}`,
+  //   onAfterPrint: () => console.log('Print completed'),
+  // });
+  const handlePrint = () => {
+    window.print();
+  };
+  const exportToPdf = async () => {
+    if (!achivments || !achivments.completeMark) return;
+
+    const content = printRef.current;
+    if (!content) return;
+
+    try {
+      // הצג הודעת טעינה אם רוצים
+      // setLoading(true);
+
+      const canvas = await html2canvas(content, {
+        scale: 2, // איכות גבוהה יותר
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+
+      // יצירת PDF בגודל A4
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const imgWidth = 210; // רוחב דף A4 במ"מ
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+      // שמירת הקובץ
+      pdf.save(`תעודת_${firstNameStudent}_${lastNameStudent}.pdf`);
+    } catch (error) {
+      console.error('Error exporting to PDF:', error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+  // Export to Excel functionality
+  const exportToExcel = () => {
+    if (!achivments || !achivments.completeMark) return;
+
+    // Prepare data for Excel
+    const worksheetData = [
+      [`תעודת הישגים - ${firstNameStudent} ${lastNameStudent} - כיתה ${classStudent}`],
+      [`ממוצע כללי: ${overallAverage}`],
+      [], // Empty row
+      ['מקצוע', 'מחצית א\'', 'מחצית ב\'', 'ממוצע']
+    ];
+
+    // Add subject data
+    achivments.completeMark.forEach(subject => {
+      worksheetData.push([
+        subject.subject,
+        subject.markA ? subject.markA.mark : '-',
+        subject.markB ? subject.markB.mark : '-',
+        subject.avg
+      ]);
+    });
+
+    // Create worksheet
+    const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Set RTL direction for the worksheet
+    ws['!dir'] = 'rtl';
+
+    // Create workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "תעודה");
+
+    // Generate Excel file
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+    // Save file
+    saveAs(data, `תעודת_${firstNameStudent}_${lastNameStudent}.xlsx`);
+  };
 
   return (
     <Fade in={true} timeout={800}>
@@ -179,8 +277,8 @@ export const Diploma = () => {
           תעודות תלמידים
         </Typography>
 
-        <Dialog 
-          open={showDialog} 
+        <Dialog
+          open={showDialog}
           maxWidth="sm"
           fullWidth
           PaperProps={{
@@ -202,7 +300,7 @@ export const Diploma = () => {
                 {error}
               </Alert>
             )}
-            
+
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <FormField>
@@ -256,8 +354,8 @@ export const Diploma = () => {
             </Grid>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 3 }}>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               startIcon={<CloseIcon />}
               onClick={() => {
                 setReturnToAboutAs(true);
@@ -281,89 +379,127 @@ export const Diploma = () => {
         {showTable && (
           <Fade in={true} timeout={500}>
             <Box>
-              <DiplomaCard>
-                <DiplomaContent>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                    <Box>
-                      <Typography variant="h4" fontWeight="bold" gutterBottom>
-                        תעודת הישגים
-                      </Typography>
-                      <Typography variant="h6">
-                        {firstNameStudent} {lastNameStudent}
-                      </Typography>
-                      <Typography variant="subtitle1">
-                        כיתה {classStudent}
-                      </Typography>
+              {/* Action buttons for print and export */}
+              <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2, gap: 2 }}>
+                <Tooltip title="הדפסת תעודה">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<PrintIcon />}
+                    onClick={handlePrint}
+                  >
+                    הדפסה
+                  </Button>
+                </Tooltip>
+                <Tooltip title="ייצוא לאקסל">
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<FileDownloadIcon />}
+                    onClick={exportToExcel}
+                    disabled={!achivments || !achivments.completeMark || achivments.completeMark.length === 0}
+                  >
+                    ייצוא לאקסל
+                  </Button>
+                </Tooltip>
+                <Tooltip title="ייצוא ל-PDF">
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<PictureAsPdfIcon />}
+                    onClick={exportToPdf}
+                    disabled={!achivments || !achivments.completeMark || achivments.completeMark.length === 0}
+                  >
+                    ייצוא ל-PDF
+                  </Button>
+                </Tooltip>
+              </Box>
+              {/* Printable content */}
+              <Box ref={printRef} className="printable">
+                <DiplomaCard>
+                  <DiplomaContent>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+                      <Box>
+                        <Typography variant="h4" fontWeight="bold" gutterBottom>
+                          תעודת הישגים
+                        </Typography>
+                        <Typography variant="h6">
+                          {firstNameStudent} {lastNameStudent}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                          כיתה {classStudent}
+                        </Typography>
+                      </Box>
+                      <AverageBox avg={overallAverage}>
+                        <Typography variant="h3" fontWeight="bold">
+                          {overallAverage}
+                        </Typography>
+                        <Typography variant="caption">
+                          ממוצע כללי
+                        </Typography>
+                      </AverageBox>
                     </Box>
-                    <AverageBox avg={overallAverage}>
-                      <Typography variant="h3" fontWeight="bold">
-                        {overallAverage}
-                      </Typography>
-                      <Typography variant="caption">
-                        ממוצע כללי
-                      </Typography>
-                    </AverageBox>
-                  </Box>
-                </DiplomaContent>
-              </DiplomaCard>
+                  </DiplomaContent>
+                </DiplomaCard>
 
-              {achivments && achivments.completeMark && achivments.completeMark.length > 0 ? (
-                <TableContainer component={Paper} sx={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell>מקצוע</StyledTableCell>
-                        <StyledTableCell align="center">מחצית א'</StyledTableCell>
-                        <StyledTableCell align="center">מחצית ב'</StyledTableCell>
-                        <StyledTableCell align="center">ממוצע</StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {achivments.completeMark.map((subject, index) => (
-                        <StyledTableRow key={index}>
-                          <TableCell>
-                            <Typography variant="subtitle1" fontWeight="medium">
-                              {subject.subject}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="center">
-                            {subject.markA ? (
-                              <MarkChip mark={subject.markA.mark}>
-                                {subject.markA.mark}
-                              </MarkChip>
-                            ) : (
-                              "-"
-                            )}
-                          </TableCell>
-                          <TableCell align="center">
-                            {subject.markB ? (
-                              <MarkChip mark={subject.markB.mark}>
-                                {subject.markB.mark}
-                              </MarkChip>
-                            ) : (
-                              "-"
-                            )}
-                          </TableCell>
-                          <TableCell align="center">
-                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                              <MarkChip mark={subject.avg}>
-                                {subject.avg}
-                              </MarkChip>
-                              {subject.avg >= 90 && (
-                                <StarIcon sx={{ ml: 1, color: "gold" }} />
+                {achivments && achivments.completeMark && achivments.completeMark.length > 0 ? (
+                  <TableContainer component={Paper} sx={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>מקצוע</StyledTableCell>
+                          <StyledTableCell align="center">מחצית א'</StyledTableCell>
+                          <StyledTableCell align="center">מחצית ב'</StyledTableCell>
+                          <StyledTableCell align="center">ממוצע</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {achivments.completeMark.map((subject, index) => (
+                          <StyledTableRow key={index}>
+                            <TableCell>
+                              <Typography variant="subtitle1" fontWeight="medium">
+                                {subject.subject}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                              {subject.markA ? (
+                                <MarkChip mark={subject.markA.mark}>
+                                  {subject.markA.mark}
+                                </MarkChip>
+                              ) : (
+                                "-"
                               )}
-                            </Box>
-                          </TableCell>
-                        </StyledTableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : (
-                <Alert severity="info" icon={<EmojiEventsIcon />}>
-                  לא נמצאו ציונים עבור תלמיד זה
-                </Alert>
-              )}
+                            </TableCell>
+                            <TableCell align="center">
+                              {subject.markB ? (
+                                <MarkChip mark={subject.markB.mark}>
+                                  {subject.markB.mark}
+                                </MarkChip>
+                              ) : (
+                                "-"
+                              )}
+                            </TableCell>
+                            <TableCell align="center">
+                              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                <MarkChip mark={subject.avg}>
+                                  {subject.avg}
+                                </MarkChip>
+                                {subject.avg >= 90 && (
+                                  <StarIcon sx={{ ml: 1, color: "gold" }} />
+                                )}
+                              </Box>
+                            </TableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  <Alert severity="info" icon={<EmojiEventsIcon />}>
+                    לא נמצאו ציונים עבור תלמיד זה
+                  </Alert>
+                )}
+              </Box>
 
               <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
                 <Button
