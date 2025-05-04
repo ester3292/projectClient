@@ -182,7 +182,7 @@ const LeadershipBadge = styled(Box)(({ theme }) => ({
   border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
 }));
 
-const AboutAs = () => {
+export const AboutAs = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const timelineRef = useRef(null);
@@ -223,13 +223,13 @@ const AboutAs = () => {
 
   const teamMembers = [
     {
-      name: "דוד ישראלי",
+      name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       bio: "בעל 15 שנות ניסיון בתחום החינוך והטכנולוגיה. הקים את החברה מתוך חזון לשפר את מערכת החינוך באמצעות טכנולוגיה.",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
-      name: "מיכל כהן",
+      name: "חיה זנדר",
       role: "סמנכ\"לית פיתוח",
       bio: "מומחית בפיתוח תוכנה עם התמחות במערכות חינוכיות. מובילה את צוות הפיתוח ואחראית על החדשנות הטכנולוגית.",
       image: "https://randomuser.me/api/portraits/women/44.jpg",
@@ -361,20 +361,7 @@ const AboutAs = () => {
                   lineHeight: 1.8,
                   color: alpha(theme.palette.text.primary, 0.85)
                 }}
-              >
-                המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל
-
-Copy
-
-
-AboutAs.jsx
-המשך מאיפה שעצרת
-
-
-
-Context
-— none fetched
-                המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל את הציונים בצורה יעילה, להפיק תעודות מקצועיות ולקבל תובנות משמעותיות על הישגי התלמידים.
+              > המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל את הציונים בצורה יעילה, להפיק תעודות מקצועיות ולקבל תובנות משמעותיות על הישגי התלמידים.
               </Typography>
               
               <List>
@@ -832,13 +819,7 @@ Context
               <TwitterIcon />
             </SocialButton>
             
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
-              sx={{ mx: 1 }}
-            >
-              <TwitterIcon />
-            </SocialButton>
+           
             
             <SocialButton 
               color="primary" 
