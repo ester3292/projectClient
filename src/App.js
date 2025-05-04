@@ -13,6 +13,7 @@ import { AboutAs } from "./components/aboutAs";
 import { Login } from "./components/logIn";
 import { AllStudentsForEducatorTeacher } from "./components/allStudentsForEducatorTeacher";
 import { UpdateMarks } from "./components/updateMarks";
+import { AddTeacher } from "./components/addTeacher.jsx";
 import { StudentsByClassSub } from "./components/studentsByClassSub";
 import { ManageMenu } from "./components/manageMenu";
 import { Diploma } from "./components/diploma";
@@ -34,6 +35,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<AboutAs />} />
                 <Route path="/logIn" element={<Login />} />
+                <Route path="/addTeacher" element={<AddTeacher />} />
                 <Route path="/menu" element={<Menu />}>
                   <Route path="home" element={<Home />} />
                   <Route path="aboutAs" element={<AboutAs />} />
