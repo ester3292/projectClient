@@ -437,7 +437,6 @@ export const Menu = () => {
 
   const handleProfile = () => {
     handleClose();
-    // Navigate to profile page or show profile modal
   };
 
   const handleDarkModeToggle = () => {
@@ -452,7 +451,6 @@ export const Menu = () => {
     setNotificationsAnchorEl(null);
   };
 
-  // New handlers for help dialog
   const handleHelpClick = () => {
     setHelpDialogOpen(true);
   };
@@ -462,7 +460,6 @@ export const Menu = () => {
   };
 
   useEffect(() => {
-    // On initial load, navigate to home
     navigate("home");
   }, []);
 

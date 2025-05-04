@@ -286,7 +286,7 @@ export const AddTeacher = () => {
                                 <Button
                                     variant="outlined"
                                     color="primary"
-                                    onClick={() => navigate(-1)}
+                                    onClick={() => navigate("/")}
                                     sx={{ width: "48%", py: 1.2 }}
                                     startIcon={<ArrowBackIcon />}
                                 >
