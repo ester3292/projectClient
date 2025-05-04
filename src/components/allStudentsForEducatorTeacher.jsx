@@ -80,7 +80,7 @@ const StudentAvatar = styled(Box)(({ theme, index }) => {
     theme.palette.info.light,
     theme.palette.warning.light,
   ];
-  
+
   return {
     display: "flex",
     alignItems: "center",
@@ -100,10 +100,8 @@ export const AllStudentsForEducatorTeacher = () => {
   const students = useSelector(state => state.teacher.students);
   const loading = useSelector(state => state.teacher.loading);
   const error = useSelector(state => state.teacher.error);
-  
   const [myclass, setClass] = useState("");
   const [searchPerformed, setSearchPerformed] = useState(false);
-  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -190,14 +188,14 @@ export const AllStudentsForEducatorTeacher = () => {
                   <Typography variant="h6" color="primary">
                     תלמידים בכיתה {myclass}
                   </Typography>
-                  <Chip 
-                    label={`${students.length} תלמידים`} 
-                    color="primary" 
-                    variant="outlined" 
-                    icon={<PeopleAltIcon />} 
+                  <Chip
+                    label={`${students.length} תלמידים`}
+                    color="primary"
+                    variant="outlined"
+                    icon={<PeopleAltIcon />}
                   />
                 </Box>
-                
+
                 <TableContainer component={Paper} sx={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}>
                   <Table>
                     <TableHead>
@@ -230,11 +228,11 @@ export const AllStudentsForEducatorTeacher = () => {
                             </Box>
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={student.class} 
-                              size="small" 
-                              color="primary" 
-                              variant="outlined" 
+                            <Chip
+                              label={student.class}
+                              size="small"
+                              color="primary"
+                              variant="outlined"
                             />
                           </TableCell>
                           <TableCell align="center">
