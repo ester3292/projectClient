@@ -343,6 +343,7 @@ export const AboutAs = () => {
   const teamMembers = [
     {
       name: "אסתר מורגנשטרן",
+      name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/women/32.jpg",
       bio: "מפתחת Full Stack מעצבת מערכות מוכרת עם ניסיון עשיר בבניית מערכות ניהול מידע מורכבות, יזם טכנולוגי עם ניסיון עשיר בתחום החינוך והטכנולוגיה",
