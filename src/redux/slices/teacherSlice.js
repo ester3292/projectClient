@@ -16,13 +16,7 @@ export const INITAIL_STATE_TEACHER = {
     phone: "",
     email: "",
     educator: false,
-    arr: [{
-        id: 0,
-        firstName: "",
-        lastName: "",
-        phone: "",
-        class: -1
-    }],
+    arr: [],
     students: [{
         id: 0,
         firstName: "",
