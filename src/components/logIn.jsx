@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 // import { login } from "../redux/slices/teacherSlice";
 import Visibility from "@mui/icons-material/Visibility";
@@ -176,7 +176,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -184,37 +184,39 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [logoVisible, setLogoVisible] = useState(false);
-  
+  const id = useSelector((state) => state.teacher.id);
 
   // Animation sequence
   useEffect(() => {
     const timer1 = setTimeout(() => setLogoVisible(true), 300);
     const timer2 = setTimeout(() => setFormVisible(true), 800);
-    
+
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
   }, []);
 
+  useEffect(() => {
+    if (id > 2)
+     {navigate("/menu");} 
+    else if (id === -2)
+     {navigate("/addTeacher");} 
+  }, [id]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Simple validation
+
     if (!username || !password) {
       setError("אנא הזן שם משתמש וסיסמה");
       return;
     }
-    
+
     setLoading(true);
     setError("");
-    
+
     try {
-      // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       await dispatch(logInThunk(password));
-     
-      navigate("/menu");
     } catch (err) {
       setError("שם משתמש או סיסמה שגויים. אנא נסה שנית.");
     } finally {
@@ -283,16 +285,16 @@ export const Login = () => {
         <Fade in={true} timeout={800}>
           <LoginPaper elevation={6}>
             <BackgroundAnimation />
-            
+
             <Zoom in={logoVisible} timeout={800}>
               <LogoContainer>
                 <Logo />
-                <Typography 
-                  variant={isMobile ? "h5" : "h4"} 
-                  component="h1" 
-                  fontWeight="bold" 
+                <Typography
+                  variant={isMobile ? "h5" : "h4"}
+                  component="h1"
+                  fontWeight="bold"
                   color="primary"
-                  sx={{ 
+                  sx={{
                     textAlign: isMobile ? "center" : "left",
                     background: "linear-gradient(45deg, #001064 30%, #3949ab 90%)",
                     backgroundClip: "text",
@@ -305,16 +307,16 @@ export const Login = () => {
                 </Typography>
               </LogoContainer>
             </Zoom>
-            
+
             <Slide direction="up" in={formVisible} timeout={500}>
               <Box sx={{ width: "100%" }}>
-                <Typography 
-                  variant="h5" 
-                  component="h2" 
-                  gutterBottom 
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  gutterBottom
                   align="center"
-                  sx={{ 
-                    mb: 3, 
+                  sx={{
+                    mb: 3,
                     fontWeight: 600,
                     position: "relative",
                     "&::after": {
@@ -332,14 +334,14 @@ export const Login = () => {
                 >
                   התחברות למערכת
                 </Typography>
-                
+
                 <Grow in={error !== ""} timeout={500}>
                   <Box sx={{ width: "100%", mb: error ? 2 : 0 }}>
                     {error && (
-                      <Alert 
-                        severity="error" 
-                        sx={{ 
-                          width: "100%", 
+                      <Alert
+                        severity="error"
+                        sx={{
+                          width: "100%",
                           borderRadius: "8px",
                           animation: "shake 0.5s cubic-bezier(.36,.07,.19,.97) both",
                           "@keyframes shake": {
@@ -354,12 +356,12 @@ export const Login = () => {
                     )}
                   </Box>
                 </Grow>
-                
-                <Box 
-                  component="form" 
-                  onSubmit={handleSubmit} 
-                  sx={{ 
-                    width: "100%", 
+
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  sx={{
+                    width: "100%",
                     mt: 1,
                     "& .MuiTextField-root": {
                       transition: "transform 0.3s ease",
@@ -389,7 +391,7 @@ export const Login = () => {
                       ),
                     }}
                   />
-                  
+
                   <AnimatedTextField
                     margin="normal"
                     required
@@ -413,7 +415,7 @@ export const Login = () => {
                             aria-label="toggle password visibility"
                             onClick={() => setShowPassword(!showPassword)}
                             edge="end"
-                            sx={{ 
+                            sx={{
                               transition: "transform 0.3s ease",
                               "&:hover": { transform: "scale(1.1)" }
                             }}
@@ -425,7 +427,7 @@ export const Login = () => {
                     }}
                     sx={{ mb: 4 }}
                   />
-                  
+
                   <LoginButton
                     type="submit"
                     fullWidth
@@ -434,33 +436,33 @@ export const Login = () => {
                     size="large"
                     disabled={loading}
                     startIcon={loading ? undefined : <LoginIcon />}
-                    sx={{ 
-                      py: 1.5, 
-                      borderRadius: "8px", 
+                    sx={{
+                      py: 1.5,
+                      borderRadius: "8px",
                       fontWeight: "bold",
                       background: "linear-gradient(45deg, #001064 30%, #283593 90%)",
                       boxShadow: "0 4px 20px rgba(0, 16, 100, 0.4)",
                     }}
                   >
-                   
+
                     {loading ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
                       "התחבר"
                     )}
                   </LoginButton>
-                  
-                  <Grid 
-                    container 
-                    sx={{ 
+
+                  <Grid
+                    container
+                    sx={{
                       mt: 3,
                       opacity: loading ? 0.6 : 1,
                       transition: "opacity 0.3s ease",
                     }}
                   >
                     <Grid item xs>
-                      <Link 
-                        href="#" 
+                      <Link
+                        href="#"
                         variant="body2"
                         sx={{
                           position: "relative",
@@ -490,8 +492,8 @@ export const Login = () => {
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link 
-                        href="#" 
+                      <Link
+                        href="#"
                         variant="body2"
                         sx={{
                           position: "relative",
@@ -524,7 +526,7 @@ export const Login = () => {
                 </Box>
               </Box>
             </Slide>
-            
+
             {/* Decorative elements */}
             <Box
               sx={{
@@ -558,13 +560,13 @@ export const Login = () => {
             />
           </LoginPaper>
         </Fade>
-        
+
         {/* Version info */}
-        <Typography 
-          variant="body2" 
-          align="center" 
-          sx={{ 
-            mt: 4, 
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{
+            mt: 4,
             color: "rgba(255,255,255,0.7)",
             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             opacity: 0,
