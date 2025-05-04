@@ -26,6 +26,7 @@ import {
   CircularProgress,
   Divider,
   Grid,
+  Snackbar,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
@@ -86,6 +87,9 @@ export const ShowStudents = () => {
   const loading = useSelector(state => state.student.loading);
   const error = useSelector(state => state.student.error);
   const success = useSelector(state => state.student.success);
+  
+  // New state for student registration success message
+  const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 
   const refreshTable = () => {
     dispatch(getAllStudentsThunk());
@@ -99,7 +103,13 @@ export const ShowStudents = () => {
         lastName: lastName,
         phone: phone,
         class: parseInt(myclass, 10)
-      }));
+      })).then((result) => {
+        if (!result.error) {
+          // Show registration success message
+          setShowRegistrationSuccess(true);
+          refreshTable();
+        }
+      });
       setAddStudent(false);
       clearForm();
     }
@@ -116,6 +126,11 @@ export const ShowStudents = () => {
   const handleDeleteStudent = async (student) => {
     await dispatch(deleteStudentThunk({ details: student }));
     refreshTable();
+  };
+
+  // Handle closing the registration success message
+  const handleCloseRegistrationSuccess = () => {
+    setShowRegistrationSuccess(false);
   };
 
   return (
@@ -135,7 +150,6 @@ export const ShowStudents = () => {
             >
               הוספת תלמיד
             </Button>
-
             <Button
               variant="outlined"
               color="primary"
@@ -152,21 +166,36 @@ export const ShowStudents = () => {
             </Button>
           </Box>
         </Box>
+        
+        
+        <Snackbar
+          open={showRegistrationSuccess}
+          autoHideDuration={6000}
+          onClose={handleCloseRegistrationSuccess}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert 
+            onClose={handleCloseRegistrationSuccess} 
+            severity="success" 
+            variant="filled"
+            sx={{ width: '100%', fontWeight: 'bold' }}
+          >
+            רישום התלמיד בוצע בהצלחה!
+          </Alert>
+        </Snackbar>
 
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
         )}
-
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
             הפעולה בוצעה בהצלחה
           </Alert>
         )}
-
-        <Dialog 
-          open={addStudent} 
+        <Dialog
+          open={addStudent}
           onClose={() => setAddStudent(false)}
           maxWidth="sm"
           fullWidth
@@ -265,8 +294,8 @@ export const ShowStudents = () => {
             </Grid>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 3 }}>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               onClick={() => {
                 setAddStudent(false);
                 clearForm();
@@ -285,7 +314,6 @@ export const ShowStudents = () => {
             </Button>
           </DialogActions>
         </Dialog>
-
         {viewAllStudents && (
           <Box sx={{ position: "relative" }}>
             {loading ? (
@@ -334,8 +362,7 @@ export const ShowStudents = () => {
                 לא נמצאו תלמידים במערכת
               </Alert>
             )}
-            
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+                       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
               <Button
                 startIcon={<RefreshIcon />}
                 onClick={refreshTable}
