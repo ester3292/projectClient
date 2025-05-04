@@ -184,6 +184,7 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [logoVisible, setLogoVisible] = useState(false);
+  
 
   // Animation sequence
   useEffect(() => {
@@ -212,6 +213,7 @@ export const Login = () => {
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       await dispatch(logInThunk(password));
+     
       navigate("/menu");
     } catch (err) {
       setError("שם משתמש או סיסמה שגויים. אנא נסה שנית.");

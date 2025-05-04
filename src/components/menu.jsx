@@ -727,8 +727,8 @@ export const Menu = () => {
                       צריכים עזרה נוספת?
                     </Typography>
                     <Typography variant="body2">
-                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית בטלפון 03-1234567
-                      או בדוא"ל support@school-system.com
+                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית שלנו בכתובת:
+                     ester1234@schoolgrade.co.il  או chaya1234@schoolgrade.co.il
                     </Typography>
                   </Box>
                 </DialogContent>
