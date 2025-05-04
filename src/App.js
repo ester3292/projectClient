@@ -9,7 +9,7 @@ import { STORE } from './redux/store';
 
 import { Menu } from "./components/menu";
 import { Home } from "./components/home";
-import { AboutAs } from "./components/aboutAs";
+import { AboutAs } from "./components/aboutAs.jsx";
 import { Login } from "./components/logIn";
 import { AllStudentsForEducatorTeacher } from "./components/allStudentsForEducatorTeacher";
 import { UpdateMarks } from "./components/updateMarks";
