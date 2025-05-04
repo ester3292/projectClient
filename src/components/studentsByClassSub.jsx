@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentsByClassSubThunk } from "../redux/slices/getStudentsByClassSubThunk";
 import { resetFind } from "../redux/slices/teacherSlice";
+import AdvancedCharts from './AdvancedCharts';
 import { updateMarkThunk } from "../redux/slices/updateMarkThunk";
 import { addMarkForStudentThunk } from "../redux/slices/addMarkForStudentThunk";
 import { getStudentsByClassSubHalfThunk } from "../redux/slices/getStudentsByClassSubHalfThunk";
@@ -754,6 +755,7 @@ export const StudentsByClassSub = () => {
                               <TableCell>{student.phone}</TableCell>
                               <TableCell>{student.class}</TableCell>
                               <TableCell>
+
                                 {student.marksForStudent ? (
                                   <MarkChip
                                     label={student.marksForStudent.mark}
@@ -833,180 +835,39 @@ export const StudentsByClassSub = () => {
               </TabPanel>
 
               <TabPanel value={tabValue} index={1}>
-                {loading ? (
-                  <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
-                    <CircularProgress />
-                  </Box>
-                ) : find && find.length > 0 ? (
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <StyledCard>
-                        <CardContent>
-                          <Typography variant="h6" color="primary" gutterBottom fontWeight="bold">
-                            התפלגות ציונים
-                          </Typography>
-                          <Box sx={{ height: 300, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', mt: 3 }}>
-                            {/* Simple bar chart visualization */}
-                            {[
-                              { range: '0-54', color: '#f44336' },
-                              { range: '55-64', color: '#ff9800' },
-                              { range: '65-74', color: '#2196f3' },
-                              { range: '75-84', color: '#4caf50' },
-                              { range: '85-100', color: '#1a237e' }
-                            ].map((item) => {
-                              // Calculate count for each range
-                              let count = 0;
-                              if (find) {
-                                const marks = find.filter(s => s.marksForStudent).map(s => s.marksForStudent.mark);
-                                
-                                if (item.range === '0-54') {
-                                  count = marks.filter(m => m < 55).length;
-                                } else if (item.range === '55-64') {
-                                  count = marks.filter(m => m >= 55 && m < 65).length;
-                                } else if (item.range === '65-74') {
-                                  count = marks.filter(m => m >= 65 && m < 75).length;
-                                } else if (item.range === '75-84') {
-                                  count = marks.filter(m => m >= 75 && m < 85).length;
-                                } else if (item.range === '85-100') {
-                                  count = marks.filter(m => m >= 85).length;
-                                }
-                              }
-                              
-                              // Calculate height percentage (max 100%)
-                              const maxCount = Math.max(
-                                1,
-                                ...find
-                                  .filter(s => s.marksForStudent)
-                                  .map(s => s.marksForStudent.mark)
-                                  .reduce((acc, mark) => {
-                                    if (mark < 55) acc[0]++;
-                                    else if (mark < 65) acc[1]++;
-                                    else if (mark < 75) acc[2]++;
-                                    else if (mark < 85) acc[3]++;
-                                    else acc[4]++;
-                                    return acc;
-                                  }, [0, 0, 0, 0, 0])
-                              );
-                              
-                              const heightPercentage = Math.min(100, (count / maxCount) * 100);
-                              
-                              return (
-                                <Box key={item.range} sx={{ textAlign: 'center', width: '18%' }}>
-                                  <Box 
-                                    sx={{ 
-                                      height: `${Math.max(20, heightPercentage)}%`, 
-                                      backgroundColor: item.color,
-                                      borderRadius: '8px 8px 0 0',
-                                      minWidth: '30px',
-                                      mx: 'auto',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      color: '#fff',
-                                      fontWeight: 'bold'
-                                    }}
-                                  >
-                                    {count}
-                                  </Box>
-                                  <Typography variant="body2" sx={{ mt: 1 }}>
-                                    {item.range}
-                                  </Typography>
-                                </Box>
-                              );
-                            })}
-                          </Box>
-                        </CardContent>
-                      </StyledCard>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={6}>
-                      <StyledCard sx={{ height: '100%' }}>
-                        <CardContent>
-                          <Typography variant="h6" color="primary" gutterBottom fontWeight="bold">
-                            סיכום נתונים
-                          </Typography>
-                          
-                          <Box sx={{ mt: 3 }}>
-                            <Grid container spacing={2}>
-                              <Grid item xs={6}>
-                                <Box sx={{ p: 2, borderRadius: '12px', bgcolor: 'rgba(26, 35, 126, 0.05)' }}>
-                                  <Typography variant="subtitle2" color="text.secondary">
-                                    סך הכל תלמידים
-                                  </Typography>
-                                  <Typography variant="h5" fontWeight="bold" color="primary">
-                                    {stats.total || 0}
-                                  </Typography>
-                                </Box>
-                              </Grid>
-                              
-                              <Grid item xs={6}>
-                                <Box sx={{ p: 2, borderRadius: '12px', bgcolor: 'rgba(26, 35, 126, 0.05)' }}>
-                                  <Typography variant="subtitle2" color="text.secondary">
-                                    תלמידים עם ציון
-                                  </Typography>
-                                  <Typography variant="h5" fontWeight="bold" color="primary">
-                                    {stats.withMarks || 0}
-                                  </Typography>
-                                </Box>
-                              </Grid>
-                              
-                              <Grid item xs={6}>
-                                <Box sx={{ p: 2, borderRadius: '12px', bgcolor: 'rgba(76, 175, 80, 0.05)' }}>
-                                  <Typography variant="subtitle2" color="text.secondary">
-                                    אחוז מעבר
-                                  </Typography>
-                                  <Typography variant="h5" fontWeight="bold" color="success.main">
-                                    {stats.withMarks > 0 ? `${Math.round((stats.passing / stats.withMarks) * 100)}%` : '0%'}
-                                  </Typography>
-                                </Box>
-                              </Grid>
-                              
-                              <Grid item xs={6}>
-                                <Box sx={{ p: 2, borderRadius: '12px', bgcolor: 'rgba(244, 67, 54, 0.05)' }}>
-                                  <Typography variant="subtitle2" color="text.secondary">
-                                    אחוז כישלון
-                                  </Typography>
-                                  <Typography variant="h5" fontWeight="bold" color="error.main">
-                                    {stats.withMarks > 0 ? `${Math.round((stats.failing / stats.withMarks) * 100)}%` : '0%'}
-                                  </Typography>
-                                </Box>
-                              </Grid>
-                            </Grid>
-                            
-                            <Box sx={{ mt: 3, p: 2, borderRadius: '12px', bgcolor: 'rgba(26, 35, 126, 0.05)' }}>
-                              <Typography variant="subtitle1" fontWeight="medium" gutterBottom>
-                                הערות:
-                              </Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                • ציון עובר הינו 55 ומעלה
-                              </Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                • הנתונים מתייחסים לתלמידים שיש להם ציון במקצוע זה
-                              </Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                • ניתן להוסיף או לעדכן ציון על ידי לחיצה על שורת התלמיד
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </CardContent>
-                      </StyledCard>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  <Alert 
-                    severity="info" 
-                    sx={{ 
-                      borderRadius: '12px',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-                      py: 2
-                    }}
-                  >
-                    <Typography variant="body1">
-                      לא נמצאו נתונים להצגת סטטיסטיקה
-                    </Typography>
-                  </Alert>
-                )}
-              </TabPanel>
+  {loading ? (
+    <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+      <CircularProgress />
+    </Box>
+  ) : find && find.length > 0 ? (
+    <>
+      {/* Keep your existing stats cards */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {/* Your existing stats cards code */}
+      </Grid>
+      
+      {/* Add the advanced charts component */}
+      <AdvancedCharts 
+        students={find} 
+        marks={find.map(student => student.marksForStudent).filter(Boolean)} 
+        subject={sub} 
+      />
+    </>
+  ) : (
+    <Alert
+      severity="info"
+      sx={{
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        py: 2
+      }}
+    >
+      <Typography variant="body1">
+        לא נמצאו נתונים להצגת סטטיסטיקה
+      </Typography>
+    </Alert>
+  )}
+</TabPanel>
             </Box>
           </Fade>
         )}
