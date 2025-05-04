@@ -28,6 +28,7 @@ import {
     Divider,
     Grid,
     FormControlLabel,
+    Snackbar,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
@@ -90,6 +91,9 @@ export const ShowTeachers = () => {
     const success = useSelector(state => state.teacher.success);
     const [viewAllTeachers, setViewAllTeachers] = useState(false);
     const [addTeacher, setAddTeacher] = useState(false);
+    
+    // New state for teacher assignment success message
+    const [showAssignmentSuccess, setShowAssignmentSuccess] = useState(false);
 
     const refreshTable = () => {
         dispatch(getAllTeachersThunk());
@@ -104,7 +108,13 @@ export const ShowTeachers = () => {
                 phone: phone,
                 email: email,
                 educator: educator
-            }));
+            })).then((result) => {
+                if (!result.error) {
+                    // Show assignment success message
+                    setShowAssignmentSuccess(true);
+                    refreshTable();
+                }
+            });
             setAddTeacher(false);
             clearForm();
         }
@@ -122,6 +132,11 @@ export const ShowTeachers = () => {
     const handleDeleteTeacher = async (teacher) => {
         await dispatch(deleteTeacherThunk({ details: teacher }));
         refreshTable();
+    };
+
+    // Handle closing the assignment success message
+    const handleCloseAssignmentSuccess = () => {
+        setShowAssignmentSuccess(false);
     };
 
     return (
@@ -158,18 +173,33 @@ export const ShowTeachers = () => {
                     </Box>
                 </Box>
 
+                {/* Teacher assignment success message */}
+                <Snackbar
+                    open={showAssignmentSuccess}
+                    autoHideDuration={6000}
+                    onClose={handleCloseAssignmentSuccess}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert 
+                        onClose={handleCloseAssignmentSuccess} 
+                        severity="success" 
+                        variant="filled"
+                        sx={{ width: '100%', fontWeight: 'bold' }}
+                    >
+                        שיבוץ המורה בוצע בהצלחה!
+                    </Alert>
+                </Snackbar>
+
                 {error && (
                     <Alert severity="error" sx={{ mb: 3 }}>
                         {error}
                     </Alert>
                 )}
-
                 {success && (
                     <Alert severity="success" sx={{ mb: 3 }}>
                         הפעולה בוצעה בהצלחה
                     </Alert>
                 )}
-
                 <Dialog
                     open={addTeacher}
                     onClose={() => setAddTeacher(false)}
@@ -303,7 +333,6 @@ export const ShowTeachers = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
-
                 {viewAllTeachers && (
                     <Box sx={{ position: "relative" }}>
                         {loading ? (
@@ -362,7 +391,6 @@ export const ShowTeachers = () => {
                                 לא נמצאו מורים במערכת
                             </Alert>
                         )}
-
                         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
                             <Button
                                 startIcon={<RefreshIcon />}
