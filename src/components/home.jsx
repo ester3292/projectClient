@@ -828,7 +828,7 @@ export const Home = () => {
                     </Box>
                     
                     <Typography 
-                      variant="h3" 
+                      variant="h4" 
                       component="p" 
                       fontWeight="bold" 
                       className="stats-value"
@@ -998,38 +998,7 @@ export const Home = () => {
                     mt: 3
                   }}
                 >
-                  <IconButton 
-                    color={activeDevice === "laptop" ? "primary" : "default"}
-                    onClick={() => setActiveDevice("laptop")}
-                    sx={{ 
-                      transition: "all 0.3s ease",
-                      transform: activeDevice === "laptop" ? "scale(1.2)" : "scale(1)",
-                    }}
-                  >
-                    <LaptopMacIcon />
-                  </IconButton>
                   
-                  <IconButton 
-                    color={activeDevice === "tablet" ? "primary" : "default"}
-                    onClick={() => setActiveDevice("tablet")}
-                    sx={{ 
-                      transition: "all 0.3s ease",
-                      transform: activeDevice === "tablet" ? "scale(1.2)" : "scale(1)",
-                    }}
-                  >
-                    <TabletMacIcon />
-                  </IconButton>
-                  
-                  <IconButton 
-                    color={activeDevice === "mobile" ? "primary" : "default"}
-                    onClick={() => setActiveDevice("mobile")}
-                    sx={{ 
-                      transition: "all 0.3s ease",
-                      transform: activeDevice === "mobile" ? "scale(1.2)" : "scale(1)",
-                    }}
-                  >
-                    <PhoneIphoneIcon />
-                  </IconButton>
                 </Box>
               </DeviceFrame>
             </MotionBox>
