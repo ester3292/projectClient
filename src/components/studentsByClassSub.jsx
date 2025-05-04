@@ -192,7 +192,7 @@ export const StudentsByClassSub = () => {
             <Typography variant="h6" color="primary" gutterBottom>
               בחירת מחצית
             </Typography>
-            <ButtonGroup variant="contained" color="primary" sx={{ mb: 3 }}>
+            <ButtonGroup variant="contained" color="primary" sx={{ mb: 3.5 }}>
               <Button
                 onClick={() => handleSelectHalf(1)}
                 variant={halfA === 1 ? "contained" : "outlined"}

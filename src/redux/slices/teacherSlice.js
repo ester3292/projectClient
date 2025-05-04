@@ -108,7 +108,7 @@ export const teacherSlice = createSlice({
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(logInThunk.rejected, (state, action) => {
             state.id = -1;
-            state.firstName = "bad"
+            // state.firstName = "bad"
             console.log("נכשל");
         });
         //add teacher
