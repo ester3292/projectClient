@@ -94,7 +94,7 @@ export const teacherSlice = createSlice({
         // הוספת מקרה שהט'נק התחיל
         builder.addCase(logInThunk.pending, (state) => {
             console.log("startlogin");
-           
+
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(logInThunk.fulfilled, (state, action) => {
@@ -104,7 +104,7 @@ export const teacherSlice = createSlice({
             state.email = action.payload.email;
             state.educator = action.payload.educator;
             console.log("wowlogin");
-                   });
+        });
         // הוספת מקרה שהט'נק נכשל 
         builder.addCase(logInThunk.rejected, (state, action) => {
             state.id = -1;
