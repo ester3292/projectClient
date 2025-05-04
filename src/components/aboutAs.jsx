@@ -444,10 +444,10 @@ export const AboutAs = () => {
                     דוא"ל
                   </Typography>
                   <Typography variant="body1">
-                    chaya123@schoolgrade.co.il
+                    chaya1234@schoolgrade.co.il
                   </Typography>
                   <Typography variant="body1">
-                    ester12344@schoolgrade.co.il
+                    ester1234@schoolgrade.co.il
                   </Typography>
                 </Box>
               </ContactCard>

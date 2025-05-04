@@ -155,9 +155,7 @@ import { createTheme } from '@mui/material/styles';
       textTransform: 'none',
     },
   },
-  shape: {
-    borderRadius: 8,
-  },
+ 
   components: {
     MuiButton: {
       styleOverrides: {
