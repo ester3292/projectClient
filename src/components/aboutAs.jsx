@@ -836,20 +836,6 @@ Context
             <SocialButton 
               color="primary" 
               variant="contained" 
-              sx={{ mx:
-
-Copy
-
-
-AboutAs.jsx
-המשך מאיפה שעצרת
-
-
-
-Context
-— none fetched
-              color="primary" 
-              variant="contained" 
               sx={{ mx: 1 }}
             >
               <TwitterIcon />
