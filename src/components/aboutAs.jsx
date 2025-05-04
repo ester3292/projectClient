@@ -342,7 +342,7 @@ export const AboutAs = () => {
 
   const teamMembers = [
     {
-      name: "אסתר מורגנשטרן",
+     
       name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/women/32.jpg",
@@ -1209,10 +1209,15 @@ export const AboutAs = () => {
             <SocialButton 
               color="primary" 
               variant="contained" 
-              sx={{ 
-                mx: 1,
-                transition: "all 0.3s ease",
-              }}
+              sx={{ mx: 1 }}
+            >
+              <TwitterIcon />
+            </SocialButton>
+            
+            <SocialButton 
+              color="primary" 
+              variant="contained" 
+              sx={{ mx: 1 }}
             >
               <LinkedInIcon />
             </SocialButton>
