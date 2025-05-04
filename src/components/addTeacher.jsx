@@ -44,6 +44,7 @@ import { addTeacherThunk } from "../redux/slices/addTeacherThunk";
 import { CheckBox, Favorite, FavoriteBorder, Help } from "@mui/icons-material";
 import KeyIcon from "@mui/icons-material/Key";
 import { logInThunk } from "../redux/slices/logInThunk";
+import { editId } from "../redux/slices/studentSlice";
 
 // Styled components with animations
 const AddTeacherPaper = styled(Paper)(({ theme }) => ({
@@ -673,7 +674,8 @@ export const AddTeacher = () => {
                   <ActionButton
                     variant="outlined"
                     color="primary"
-                    onClick={() => navigate('/')}
+                    onClick={() => {navigate('/') ;
+                        dispatch(editId(-1))}}
                     sx={{ 
                       width: isMobile ? "100%" : "48%", 
                       py: 1.2,
