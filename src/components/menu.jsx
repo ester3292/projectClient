@@ -1282,107 +1282,75 @@ export const Menu = () => {
 
         {/* Help Dialog */}
         <Dialog
-          open={helpDialogOpen}
-          onClose={handleHelpClose}
-          maxWidth="md"
-          PaperProps={{
-            elevation: 5,
-            sx: {
-              borderRadius: 3,
-              overflow: 'hidden',
-              maxWidth: 700
-            }
-          }}
-        >
-          <DialogTitle sx={{ 
-            bgcolor: 'primary.main', 
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            py: 2
-          }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <HelpOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="h6" component="div">
-                מרכז העזרה
-              </Typography>
-            </Box>
-            <IconButton
-              edge="end"
-              color="inherit"
-              onClick={handleHelpClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent sx={{ p: 0 }}>
-            <Box sx={{ p: 3, bgcolor: alpha(theme.palette.primary.main, 0.05) }}>
-              <Typography variant="body1" gutterBottom>
-                ברוכים הבאים למרכז העזרה של מערכת ניהול הציונים. כאן תוכלו למצוא מידע שימושי על אופן השימוש במערכת.
-              </Typography>
-            </Box>
-            <Box sx={{ p: 3 }}>
-              <Grid container spacing={3}>
-                {helpTopics.map((topic, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Paper
-                      elevation={1}
-                      sx={{
-                        p: 2,
-                        height: '100%',
-                        borderRadius: 2,
-                        transition: 'all 0.2s',
-                        '&:hover': {
-                          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                          transform: 'translateY(-4px)'
-                        }
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1 }}>
-                        <Box sx={{ 
-                          mr: 2, 
-                          p: 1, 
-                          borderRadius: '50%', 
-                          bgcolor: alpha(theme.palette.primary.main, 0.1) 
-                        }}>
+                open={helpDialogOpen}
+                onClose={handleHelpClose}
+                maxWidth="md"
+                fullWidth
+                PaperProps={{
+                  sx: {
+                    borderRadius: 2,
+                    maxHeight: '80vh'
+                  }
+                }}
+              >
+                <DialogTitle sx={{ 
+                  bgcolor: 'primary.main', 
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1
+                }}>
+                  <LiveHelpIcon />
+                  <Typography variant="h6" component="div">
+                    עזרה ומדריך שימוש במערכת
+                  </Typography>
+                </DialogTitle>
+                <DialogContent dividers>
+                  <DialogContentText paragraph sx={{ mb: 3 }}>
+                    ברוכים הבאים למערכת ניהול הציונים והתעודות. להלן מידע שיעזור לך להשתמש במערכת ביעילות:
+                  </DialogContentText>
+                  
+                  {helpTopics.map((topic, index) => (
+                    <Accordion key={index} sx={{ mb: 1 }}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        sx={{ 
+                          '&.Mui-expanded': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08)
+                          }
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                           {topic.icon}
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" gutterBottom sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                          <Typography variant="subtitle1" fontWeight="bold">
                             {topic.title}
                           </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {topic.content}
-                          </Typography>
                         </Box>
-                      </Box>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </DialogContent>
-          <DialogActions sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider' }}>
-            <Button 
-              onClick={handleHelpClose} 
-              color="primary" 
-              variant="outlined"
-              sx={{ borderRadius: 2, px: 3 }}
-            >
-              סגור
-            </Button>
-            <Button 
-              color="primary" 
-              variant="contained"
-              startIcon={<EmailIcon />}
-              sx={{ borderRadius: 2, px: 3 }}
-            >
-              צור קשר עם התמיכה
-            </Button>
-          </DialogActions>
-        </Dialog>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography paragraph>
+                          {topic.content}
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+                  
+                  <Box sx={{ mt: 3, p: 2, bgcolor: alpha(theme.palette.primary.main, 0.05), borderRadius: 2 }}>
+                    <Typography variant="subtitle2" fontWeight="bold" color="primary.main" gutterBottom>
+                      צריכים עזרה נוספת?
+                    </Typography>
+                    <Typography variant="body2">
+                      אם נתקלתם בבעיה או שיש לכם שאלות נוספות, אנא פנו לצוות התמיכה הטכנית בטלפון 03-1234567
+                      או בדוא"ל support@school-system.com
+                    </Typography>
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleHelpClose} variant="contained" color="primary">
+                    סגור
+                  </Button>
+                </DialogActions>
+              </Dialog>
       </Box>
     </ThemeProvider>
   );
