@@ -773,3 +773,24 @@
  .w-100 {
    width: 100%;
  }
+
+
+
+
+ @media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable, .printable * {
+    visibility: visible;
+  }
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  button {
+    display: none !important;
+  }
+}
