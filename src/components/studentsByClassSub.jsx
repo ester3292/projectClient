@@ -417,10 +417,6 @@ export const StudentsByClassSub = () => {
                 sx: { borderRadius: '12px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)' }
               }}
             >
-              {/* <MenuItem onClick={handleExportData}>
-                <DownloadIcon sx={{ mr: 1 }} />
-                ייצוא לאקסל
-              </MenuItem> */}
               <MenuItem onClick={handlePrintData}>
                 <PrintIcon sx={{ mr: 1 }} />
                 הדפסה
