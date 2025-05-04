@@ -378,11 +378,11 @@ export const StudentsByClassSub = () => {
   const stats = calculateStats();
 
   return (
-    <Fade in={true} timeout={800}>
-      <Container maxWidth="xl" sx={{ py: 3 }}>
+    <Fade in={true} timeout={800} >
+      <Container maxWidth="xl" sx={{ py: 3 }} >
         <PageHeader>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <GradeIcon sx={{ fontSize: 32, color: "#1a237e", mr: 1.5 }} />
+          <Box sx={{ display: "flex", alignItems: "center" }} >
+            <GradeIcon sx={{ fontSize: 32, color: "#1a237e", mr: 1.5 }}  />
             <Typography variant="h5" component="h1" fontWeight="bold" color="#1a237e">
               ציונים לפי כיתה ומקצוע
             </Typography>

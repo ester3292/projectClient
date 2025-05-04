@@ -791,7 +791,7 @@ export const Menu = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh"}}>
         <StyledAppBar position="fixed">
           <StyledToolbar>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

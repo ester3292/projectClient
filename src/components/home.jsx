@@ -482,7 +482,7 @@ export const Home = () => {
   };
 
   return (
-    <Box component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+    <Box style={{width:"570vh"}} component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} >
       {/* Hero Section with Animated Background */}
       <HeroSection>
         <Container maxWidth="lg">

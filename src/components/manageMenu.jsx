@@ -45,7 +45,7 @@ export const ManageMenu = () => {
   const navigate = useNavigate();
 
   return (
-    <Fade in={true} timeout={800}>
+    <Fade in={true} timeout={800} >
       <Container maxWidth="lg">
         <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="primary" align="center">
           תפריט ניהול

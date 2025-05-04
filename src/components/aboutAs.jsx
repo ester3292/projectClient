@@ -409,7 +409,7 @@ export const AboutAs = () => {
   }, []);
 
   return (
-    <Box>
+    <Box style={{width:"570vh"}}>
       {/* Hero Section with Particles */}
       <HeroSection>
         <MotionBox
