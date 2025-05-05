@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   Avatar,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -16,7 +15,6 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-  Link,
   IconButton,
   Chip,
 } from "@mui/material";

@@ -1,8 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
- const theme = createTheme({
+const theme = createTheme({
   direction: 'rtl',
-  
+
   typography: {
     fontFamily: [
       'Rubik',
@@ -52,54 +52,7 @@ import { createTheme } from '@mui/material/styles';
   shape: {
     borderRadius: 8,
   },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          fontWeight: 500,
-        },
-        contained: {
-          boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .1)',
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-          borderRadius: 12,
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-        },
-      },
-    },
-  },
   palette: {
-    primary: {
-      main: '#1a237e',
-      light: '#534bae',
-      dark: '#000051',
-      contrastText: '#ffffff',
-    },
-    secondary: {
-      main: '#ff6f00',
-      light: '#ffa040',
-      dark: '#c43e00',
-      contrastText: '#ffffff',
-    },
     success: {
       main: '#2e7d32',
       light: '#4caf50',
@@ -155,11 +108,13 @@ import { createTheme } from '@mui/material/styles';
       textTransform: 'none',
     },
   },
- 
+
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
+          textTransform: 'none',
+          fontWeight: 500,
           borderRadius: 8,
           padding: '8px 16px',
           boxShadow: 'none',
@@ -174,19 +129,34 @@ import { createTheme } from '@mui/material/styles';
         },
       },
     },
-    MuiTextField: {
+    MuiCard: {
       styleOverrides: {
         root: {
-          '& .MuiOutlinedInput-root': {
-            borderRadius: 8,
-          },
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+          borderRadius: 12,
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          borderRadius: 12,
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 8,
+          },
         },
       },
     },
@@ -223,7 +193,7 @@ import { createTheme } from '@mui/material/styles';
     },
   },
 
-  
+
 });
 
 
