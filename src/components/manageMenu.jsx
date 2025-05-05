@@ -7,7 +7,6 @@ import {
   Paper,
   Typography,
   Button,
-  Divider,
   Fade,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";

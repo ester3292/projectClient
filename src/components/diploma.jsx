@@ -32,8 +32,6 @@ import {
   Grid,
   Card,
   CardContent,
-  CardHeader,
-  Avatar,
   Tooltip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -139,7 +137,6 @@ export const Diploma = () => {
   const [showTable, setShowTable] = useState(false);
   const [showDialog, setShowDialog] = useState(true);
   const [loading, setLoading] = useState(false);
-
   const achivments = useSelector(state => state.student.achivments);
   const firstNameStudent = useSelector(state => state.student.firstName);
   const lastNameStudent = useSelector(state => state.student.lastName);
@@ -192,13 +189,12 @@ export const Diploma = () => {
   };
   const exportToPdf = async () => {
     if (!achivments || !achivments.completeMark) return;
-
+    
     const content = printRef.current;
     if (!content) return;
 
     try {
-      // הצג הודעת טעינה אם רוצים
-      // setLoading(true);
+       setLoading(true);
 
       const canvas = await html2canvas(content, {
         scale: 2, // איכות גבוהה יותר
@@ -226,7 +222,7 @@ export const Diploma = () => {
     } catch (error) {
       console.error('Error exporting to PDF:', error);
     } finally {
-      // setLoading(false);
+       setLoading(false);
     }
   };
   // Export to Excel functionality

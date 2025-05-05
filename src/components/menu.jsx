@@ -283,19 +283,15 @@ const DarkModeSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export const Menu = () => {
-  // Get teacher details from Redux store
   const teacherData = useSelector((state) => state.teacher);
   const { firstName, lastName, email, phone, classes } = teacherData
   const navigate = useNavigate();
   const location = useLocation();
- 
-  // State
   const [darkMode, setDarkMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
-  // New state for help dialog
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
  
   // Create theme based on dark mode preference with navy blue color scheme
@@ -307,7 +303,7 @@ export const Menu = () => {
           mode: darkMode ? 'dark' : 'light',
           primary: {
             light: '#1565c0',
-            main: '#001064',  // Navy blue as main color
+            main: '#001064',  
             dark: '#000051',
             contrastText: '#fff',
           },
@@ -347,7 +343,7 @@ export const Menu = () => {
             styleOverrides: {
               root: {
                 color: darkMode ? '#1565c0' : '#001064',
-                minWidth: '56px', // Increased spacing for icons
+                minWidth: '56px', 
               },
             },
           },
@@ -361,7 +357,6 @@ export const Menu = () => {
   const notificationsOpen = Boolean(notificationsAnchorEl);
   const moreMenuOpen = Boolean(moreMenuAnchorEl);
 
-  // Mock notifications
   const notifications = [
     { id: 2, text: "תזכורת: יש להזין ציוני מבחן עד מחר", read: false },
    
@@ -378,7 +373,6 @@ export const Menu = () => {
     { text: "תעודות", icon: <SchoolIcon />, path: "diploma" },
   ];
 
-  // Help topics for the help dialog
   const helpTopics = [
     {
       title: "ניווט במערכת",
@@ -465,9 +459,7 @@ export const Menu = () => {
     return location.pathname === `/menu/${path}`;
   };
 
-  // Drawer content - שדרוג תפריט הצד
   const drawer = (
-    
     <Box sx={{ 
       width: drawerWidth, 
       height: '100%',
@@ -1281,8 +1273,6 @@ export const Menu = () => {
             <ListItemText>התנתק</ListItemText>
           </MenuItem>
         </MuiMenu>
-
-        {/* Help Dialog */}
         <Dialog
                 open={helpDialogOpen}
                 onClose={handleHelpClose}
