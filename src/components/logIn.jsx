@@ -218,7 +218,7 @@ export const Login = () => {
     setError("");
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
       await dispatch(logInThunk(password));
     } catch (err) {
       setError("שם משתמש או סיסמה שגויים. אנא נסה שנית.");
