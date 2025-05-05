@@ -1210,15 +1210,6 @@ export const AboutAs = () => {
             >
               <TwitterIcon />
             </SocialButton>
-
-            <SocialButton
-              color="primary"
-              variant="contained"
-              sx={{ mx: 1 }}
-            >
-              <TwitterIcon />
-            </SocialButton>
-
             <SocialButton
               color="primary"
               variant="contained"
