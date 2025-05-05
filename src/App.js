@@ -33,6 +33,7 @@ function App() {
           <Provider store={STORE}>
             <BrowserRouter>
               <Routes>
+                
                 <Route path="/" element={<AboutAs />} />
                 <Route path="/logIn" element={<Login />} />
                 <Route path="/addTeacher" element={<AddTeacher />} />
