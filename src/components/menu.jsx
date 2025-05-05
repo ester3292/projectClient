@@ -363,10 +363,8 @@ export const Menu = () => {
 
   // Mock notifications
   const notifications = [
-    { id: 1, text: "עדכון ציונים לכיתה ט'2 הושלם", read: false },
     { id: 2, text: "תזכורת: יש להזין ציוני מבחן עד מחר", read: false },
-    { id: 3, text: "הפקת תעודות לסמסטר א' זמינה כעת", read: true },
-    { id: 4, text: "יש לעדכן ציונים בסטטיסטיקה לכיתה י'1", read: false },
+   
   ];
 
   // Menu items
