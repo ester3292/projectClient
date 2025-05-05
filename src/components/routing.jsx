@@ -1,6 +1,6 @@
 import './design.css'
-import { Route, Routes } from "react-router-dom"
-import { LogIn } from "./logIn"
+import { Navigate, Route, Routes } from "react-router-dom"
+import Login, { LogIn } from "./logIn"
 import { AllStudentsForEducatorTeacher } from "./allStudentsForEducatorTeacher"
 import { Diploma } from "./diploma"
 import { UpdateMarks } from "./updateMarks"
@@ -12,26 +12,28 @@ import { ShowTeachers } from "./showTeachers"
 import { ShowStudents } from "./showStudents"
 import { AboutAs } from "./aboutAs"
 import { Home } from "./home" // Import from your local file, not from MUI icons
+import AddTeacher from './addTeacher'
 
 export const Routing = () => {
     return <>
         <Routes>
-            <Route path="/home" element={<Home />}> </Route>
-            <Route path="/logIn" element={<LogIn />}></Route>
-            <Route path="/menu" element={<Menu />}>
-                <Route path="aboutAs" element={<AboutAs />}></Route>
-                <Route path="updateMarks" element={<UpdateMarks />}></Route>
-                <Route path="diploma" element={<Diploma />}></Route>
-                <Route path="studentsByClassSub" element={<StudentsByClassSub />}></Route>
-                <Route path="showStudentMarks" element={<ShowStudentMarks />}></Route>
-                <Route path="allStudentsForEducatorTeacher" element={<AllStudentsForEducatorTeacher />}> </Route>
-                <Route path="home" element={<Home />}> </Route>
-                <Route path="manageMenu" element={<ManageMenu />}>
-                    <Route path="showTeachers" element={<ShowTeachers />}></Route>
-                    <Route path="showStudents" element={<ShowStudents />}></Route>
+                <Route path="/" element={<AboutAs />} />
+                <Route path="/logIn" element={<Login />} />
+                <Route path="/addTeacher" element={<AddTeacher />} />
+                <Route path="/menu" element={<Menu />}>
+                  <Route path="home" element={<Home />} />
+                  <Route path="aboutAs" element={<AboutAs />} />
+                  <Route path="allStudentsForEducatorTeacher" element={<AllStudentsForEducatorTeacher />} />
+                  <Route path="showStudentMarks" element={<ShowStudentMarks />}/>
+                  <Route path="updateMarks" element={<UpdateMarks />} />
+                  <Route path="studentsByClassSub" element={<StudentsByClassSub />} />
+                  <Route path="manageMenu" element={<ManageMenu />} />
+                  <Route path="showStudents" element={<ShowStudents />} />
+                  <Route path="showTeachers" element={<ShowTeachers />} />
+                  <Route path="diploma" element={<Diploma />} />
+                  <Route index element={<Navigate to="home" replace />} />
                 </Route>
-            </Route>
-            <Route path="/" element={<LogIn />}></Route>
-        </Routes>
+                <Route path="*" element={<Navigate to="/logIn" replace />} />
+              </Routes>
     </>
 }
