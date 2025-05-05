@@ -38,6 +38,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import StarIcon from "@mui/icons-material/Star";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { editId } from "../redux/slices/studentSlice";
 
 // Styled components with enhanced animations
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -311,7 +313,8 @@ export const AboutAs = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const timelineRef = useRef(null);
-
+  const id = useSelector((state) => state.teacher.id);
+  const dispatch = useDispatch();
   const features = [
     {
       title: "ניהול ציונים מתקדם",
@@ -342,7 +345,7 @@ export const AboutAs = () => {
 
   const teamMembers = [
     {
-     
+
       name: "אסתר מורגנשטרן",
       role: "מנכ\"ל ומייסד",
       image: "https://randomuser.me/api/portraits/women/32.jpg",
@@ -387,13 +390,16 @@ export const AboutAs = () => {
 
   // Parallax effect for timeline
   useEffect(() => {
+    if (id === -2) {
+      dispatch(editId(-1));
+    }
     const handleScroll = () => {
       if (timelineRef.current) {
         const timelineItems = timelineRef.current.querySelectorAll('.timeline-item');
         timelineItems.forEach((item, index) => {
           const rect = item.getBoundingClientRect();
           const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
-          
+
           if (isVisible) {
             const distance = window.innerHeight - rect.top;
             const percentage = Math.min(distance / window.innerHeight, 1);
@@ -425,18 +431,18 @@ export const AboutAs = () => {
               animate="visible"
             >
               <MotionBox variants={fadeInUpVariants}>
-                <HighlightChip 
-                  icon={<StarIcon />} 
-                  label="מובילים בתחום החינוך" 
+                <HighlightChip
+                  icon={<StarIcon />}
+                  label="מובילים בתחום החינוך"
                   size="medium"
                 />
               </MotionBox>
-              
-              <MotionTypography 
-                variant="h2" 
-                component="div" 
-                gutterBottom 
-                sx={{ 
+
+              <MotionTypography
+                variant="h2"
+                component="div"
+                gutterBottom
+                sx={{
                   fontWeight: "bold",
                   textShadow: "0 2px 10px rgba(0,0,0,0.2)"
                 }}
@@ -444,24 +450,24 @@ export const AboutAs = () => {
               >
                 מערכת ניהול ציונים
               </MotionTypography>
-              
-              <MotionTypography 
-                variant="h3" 
-                component="h1" 
-                gutterBottom 
+
+              <MotionTypography
+                variant="h3"
+                component="h1"
+                gutterBottom
                 fontWeight="bold"
                 sx={{ textShadow: "0 2px 10px rgba(0,0,0,0.2)" }}
                 variants={fadeInUpVariants}
               >
                 אודות המערכת
               </MotionTypography>
-              
-              <MotionTypography 
-                variant="h5" 
-                paragraph 
-                sx={{ 
-                  maxWidth: "800px", 
-                  mx: "auto", 
+
+              <MotionTypography
+                variant="h5"
+                paragraph
+                sx={{
+                  maxWidth: "800px",
+                  mx: "auto",
                   mb: 4,
                   opacity: 0.9
                 }}
@@ -469,7 +475,7 @@ export const AboutAs = () => {
               >
                 מערכת ניהול ציונים ותעודות מתקדמת המשרתת אלפי מורים ובתי ספר ברחבי הארץ
               </MotionTypography>
-              
+
               <MotionBox variants={fadeInUpVariants}>
                 <ActionButton
                   onClick={() => navigate("/logIn")}
@@ -484,7 +490,7 @@ export const AboutAs = () => {
             </MotionBox>
           </Container>
         </MotionBox>
-        
+
         {/* Animated particles */}
         <Box sx={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}>
           {[...Array(20)].map((_, i) => (
@@ -516,9 +522,9 @@ export const AboutAs = () => {
 
       {/* Vision Section */}
       <Container sx={{ mt: 10, mb: 10 }}>
-        <MotionGrid 
-          container 
-          spacing={6} 
+        <MotionGrid
+          container
+          spacing={6}
           alignItems="center"
           initial="hidden"
           whileInView="visible"
@@ -526,55 +532,55 @@ export const AboutAs = () => {
         >
           <Grid item xs={12} md={6}>
             <MotionBox variants={fadeInRightVariants}>
-              <HighlightChip 
-                icon={<StarIcon />} 
-                label="החזון שלנו" 
+              <HighlightChip
+                icon={<StarIcon />}
+                label="החזון שלנו"
                 size="medium"
               />
-              
-              <Typography 
-                variant="h3" 
-                component="h2" 
-                gutterBottom 
-                fontWeight="bold" 
+
+              <Typography
+                variant="h3"
+                component="h2"
+                gutterBottom
+                fontWeight="bold"
                 color="primary"
                 sx={{ mt: 2, mb: 3 }}
               >
                 החזון שלנו
               </Typography>
-              
-              <Typography 
-                variant="body1" 
-                paragraph 
+
+              <Typography
+                variant="body1"
+                paragraph
                 fontSize="1.1rem"
-                sx={{ 
-                  mb: 3, 
+                sx={{
+                  mb: 3,
                   lineHeight: 1.8,
                   color: alpha(theme.palette.text.primary, 0.85)
                 }}
               >
                 אנו מאמינים שטכנולוגיה יכולה לשפר משמעותית את תהליכי ההוראה והלמידה. המערכת שלנו נועדה להקל על עבודת המורים ולאפשר להם להתמקד במה שחשוב באמת - חינוך והוראה איכותיים.
               </Typography>
-              
-              <Typography 
-                variant="body1" 
-                paragraph 
+
+              <Typography
+                variant="body1"
+                paragraph
                 fontSize="1.1rem"
-                sx={{ 
-                  mb: 4, 
+                sx={{
+                  mb: 4,
                   lineHeight: 1.8,
                   color: alpha(theme.palette.text.primary, 0.85)
                 }}
               >
                 המטרה שלנו היא לספק כלים טכנולוגיים מתקדמים שיסייעו למורים לנהל את הציונים והתעודות בצורה יעילה, מדויקת ונוחה, תוך שמירה על סטנדרטים גבוהים של אבטחת מידע ופרטיות.
               </Typography>
-              
+
               <Box sx={{ mt: 3 }}>
                 <List>
                   {[
-                    "מעל 500 בתי ספר משתמשים במערכת", 
-                    "יותר מ-15,000 תלמידים מנוהלים במערכת", 
-                    "98% שביעות רצון בקרב המורים", 
+                    "מעל 500 בתי ספר משתמשים במערכת",
+                    "יותר מ-15,000 תלמידים מנוהלים במערכת",
+                    "98% שביעות רצון בקרב המורים",
                     "תמיכה טכנית זמינה 24/7"
                   ].map((item, index) => (
                     <MotionBox
@@ -588,12 +594,12 @@ export const AboutAs = () => {
                         <ListItemIcon sx={{ minWidth: 40 }}>
                           <CheckCircleIcon color="primary" />
                         </ListItemIcon>
-                        <ListItemText 
-                          primary={item} 
-                          primaryTypographyProps={{ 
+                        <ListItemText
+                          primary={item}
+                          primaryTypographyProps={{
                             fontSize: "1.1rem",
                             fontWeight: "medium"
-                          }} 
+                          }}
                         />
                       </StyledListItem>
                     </MotionBox>
@@ -602,7 +608,7 @@ export const AboutAs = () => {
               </Box>
             </MotionBox>
           </Grid>
-          
+
           <Grid item xs={12} md={6}>
             <MotionBox
               variants={fadeInLeftVariants}
@@ -630,9 +636,9 @@ export const AboutAs = () => {
       </Container>
 
       {/* Features Section */}
-      <Box 
-        sx={{ 
-          bgcolor: alpha(theme.palette.primary.main, 0.03), 
+      <Box
+        sx={{
+          bgcolor: alpha(theme.palette.primary.main, 0.03),
           py: 10,
           position: "relative",
           overflow: "hidden",
@@ -656,32 +662,32 @@ export const AboutAs = () => {
             sx={{ textAlign: "center", mb: 6 }}
           >
             <MotionBox variants={fadeInUpVariants}>
-              <HighlightChip 
-                icon={<StarIcon />} 
-                label="היתרונות שלנו" 
+              <HighlightChip
+                icon={<StarIcon />}
+                label="היתרונות שלנו"
                 size="medium"
               />
             </MotionBox>
-            
-            <MotionTypography 
-              variant="h3" 
-              component="h2" 
-              gutterBottom 
-              fontWeight="bold" 
+
+            <MotionTypography
+              variant="h3"
+              component="h2"
+              gutterBottom
+              fontWeight="bold"
               color="primary"
               variants={fadeInUpVariants}
               sx={{ mt: 2 }}
             >
               היתרונות שלנו
             </MotionTypography>
-            
-            <MotionTypography 
-              variant="h6" 
-              color="textSecondary" 
-              paragraph 
-              sx={{ 
-                mb: 6, 
-                maxWidth: "800px", 
+
+            <MotionTypography
+              variant="h6"
+              color="textSecondary"
+              paragraph
+              sx={{
+                mb: 6,
+                maxWidth: "800px",
                 mx: "auto",
                 opacity: 0.8
               }}
@@ -690,7 +696,7 @@ export const AboutAs = () => {
               המערכת שלנו מציעה מגוון יתרונות שהופכים את ניהול הציונים והתעודות לפשוט, יעיל ומדויק
             </MotionTypography>
           </MotionBox>
-          
+
           <Grid container spacing={4}>
             {features.map((feature, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
@@ -706,20 +712,20 @@ export const AboutAs = () => {
                       <FeatureIcon className="feature-icon">
                         {feature.icon}
                       </FeatureIcon>
-                      
-                      <Typography 
-                        gutterBottom 
-                        variant="h5" 
-                        component="h3" 
+
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="h3"
                         fontWeight="bold"
                         sx={{ mb: 2 }}
                       >
                         {feature.title}
                       </Typography>
-                      
-                      <Typography 
+
+                      <Typography
                         variant="body1"
-                        sx={{ 
+                        sx={{
                           color: alpha(theme.palette.text.primary, 0.8),
                           lineHeight: 1.7
                         }}
@@ -745,35 +751,35 @@ export const AboutAs = () => {
           sx={{ textAlign: "center", mb: 6 }}
         >
           <MotionBox variants={fadeInUpVariants}>
-            <HighlightChip 
-              icon={<TimelineIcon />} 
-              label="ההיסטוריה שלנו" 
+            <HighlightChip
+              icon={<TimelineIcon />}
+              label="ההיסטוריה שלנו"
               size="medium"
             />
           </MotionBox>
-          
+
           <MotionTypography
 
 
 
-            variant="h3" 
-            component="h2" 
-            gutterBottom 
-            fontWeight="bold" 
+            variant="h3"
+            component="h2"
+            gutterBottom
+            fontWeight="bold"
             color="primary"
             variants={fadeInUpVariants}
             sx={{ mt: 2 }}
           >
             ההיסטוריה שלנו
           </MotionTypography>
-          
-          <MotionTypography 
-            variant="h6" 
-            color="textSecondary" 
-            paragraph 
-            sx={{ 
-              mb: 6, 
-              maxWidth: "800px", 
+
+          <MotionTypography
+            variant="h6"
+            color="textSecondary"
+            paragraph
+            sx={{
+              mb: 6,
+              maxWidth: "800px",
               mx: "auto",
               opacity: 0.8
             }}
@@ -782,7 +788,7 @@ export const AboutAs = () => {
             הדרך שעברנו מאז הקמת החברה ועד היום
           </MotionTypography>
         </MotionBox>
-        
+
         <Box sx={{ maxWidth: "800px", mx: "auto" }}>
           {timeline.map((item, index) => (
             <MotionBox
@@ -795,10 +801,10 @@ export const AboutAs = () => {
             >
               <TimelineItem>
                 <Box sx={{ display: "flex", alignItems: "baseline", mb: 1 }}>
-                  <Typography 
-                    variant="h5" 
-                    component="h3" 
-                    fontWeight="bold" 
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    fontWeight="bold"
                     color="primary"
                     sx={{
                       background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
@@ -810,18 +816,18 @@ export const AboutAs = () => {
                   >
                     {item.year}
                   </Typography>
-                  <Typography 
-                    variant="h6" 
-                    component="h4" 
-                    fontWeight="bold" 
+                  <Typography
+                    variant="h6"
+                    component="h4"
+                    fontWeight="bold"
                     sx={{ ml: 2 }}
                   >
                     {item.title}
                   </Typography>
                 </Box>
-                <Typography 
+                <Typography
                   variant="body1"
-                  sx={{ 
+                  sx={{
                     color: alpha(theme.palette.text.primary, 0.8),
                     lineHeight: 1.7
                   }}
@@ -835,9 +841,9 @@ export const AboutAs = () => {
       </Container>
 
       {/* Team Section */}
-      <Box 
-        sx={{ 
-          bgcolor: alpha(theme.palette.primary.main, 0.03), 
+      <Box
+        sx={{
+          bgcolor: alpha(theme.palette.primary.main, 0.03),
           py: 10,
           position: "relative",
           overflow: "hidden",
@@ -861,32 +867,32 @@ export const AboutAs = () => {
             sx={{ textAlign: "center", mb: 6 }}
           >
             <MotionBox variants={fadeInUpVariants}>
-              <HighlightChip 
-                icon={<StarIcon />} 
-                label="הצוות שלנו" 
+              <HighlightChip
+                icon={<StarIcon />}
+                label="הצוות שלנו"
                 size="medium"
               />
             </MotionBox>
-            
-            <MotionTypography 
-              variant="h3" 
-              component="h2" 
-              gutterBottom 
-              fontWeight="bold" 
+
+            <MotionTypography
+              variant="h3"
+              component="h2"
+              gutterBottom
+              fontWeight="bold"
               color="primary"
               variants={fadeInUpVariants}
               sx={{ mt: 2 }}
             >
               הצוות שלנו
             </MotionTypography>
-            
-            <MotionTypography 
-              variant="h6" 
-              color="textSecondary" 
-              paragraph 
-              sx={{ 
-                mb: 6, 
-                maxWidth: "800px", 
+
+            <MotionTypography
+              variant="h6"
+              color="textSecondary"
+              paragraph
+              sx={{
+                mb: 6,
+                maxWidth: "800px",
                 mx: "auto",
                 opacity: 0.8
               }}
@@ -895,7 +901,7 @@ export const AboutAs = () => {
               הכירו את האנשים שעומדים מאחורי המערכת
             </MotionTypography>
           </MotionBox>
-          
+
           <Grid container spacing={4} justifyContent="center">
             {teamMembers.map((member, index) => (
               <Grid item xs={12} sm={6} md={5} key={index}>
@@ -907,24 +913,24 @@ export const AboutAs = () => {
                   transition={{ delay: index * 0.2 }}
                 >
                   <TeamMemberCard>
-                    <LargeAvatar 
-                      src={member.image} 
+                    <LargeAvatar
+                      src={member.image}
                       alt={member.name}
                       className="member-avatar"
                     />
-                    
-                    <Typography 
-                      variant="h5" 
-                      component="h3" 
-                      fontWeight="bold" 
+
+                    <Typography
+                      variant="h5"
+                      component="h3"
+                      fontWeight="bold"
                       gutterBottom
                     >
                       {member.name}
                     </Typography>
-                    
-                    <Typography 
-                      variant="subtitle1" 
-                      color="primary" 
+
+                    <Typography
+                      variant="subtitle1"
+                      color="primary"
                       gutterBottom
                       sx={{
                         background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
@@ -938,11 +944,11 @@ export const AboutAs = () => {
                     >
                       {member.role}
                     </Typography>
-                    
-                    <Typography 
-                      variant="body2" 
-                      align="center" 
-                      sx={{ 
+
+                    <Typography
+                      variant="body2"
+                      align="center"
+                      sx={{
                         mb: 3,
                         lineHeight: 1.7,
                         color: alpha(theme.palette.text.primary, 0.8),
@@ -950,7 +956,7 @@ export const AboutAs = () => {
                     >
                       {member.bio}
                     </Typography>
-                    
+
                     <SocialButtonsContainer className="social-buttons">
                       <SocialButton color="primary" variant="contained">
                         <LinkedInIcon fontSize="small" />
@@ -980,32 +986,32 @@ export const AboutAs = () => {
           sx={{ textAlign: "center", mb: 6 }}
         >
           <MotionBox variants={fadeInUpVariants}>
-            <HighlightChip 
-              icon={<PhoneIcon />} 
-              label="צור קשר" 
+            <HighlightChip
+              icon={<PhoneIcon />}
+              label="צור קשר"
               size="medium"
             />
           </MotionBox>
-          
-          <MotionTypography 
-            variant="h3" 
-            component="h2" 
-            gutterBottom 
-            fontWeight="bold" 
+
+          <MotionTypography
+            variant="h3"
+            component="h2"
+            gutterBottom
+            fontWeight="bold"
             color="primary"
             variants={fadeInUpVariants}
             sx={{ mt: 2 }}
           >
             צור קשר
           </MotionTypography>
-          
-          <MotionTypography 
-            variant="h6" 
-            color="textSecondary" 
-            paragraph 
-            sx={{ 
-              mb: 6, 
-              maxWidth: "800px", 
+
+          <MotionTypography
+            variant="h6"
+            color="textSecondary"
+            paragraph
+            sx={{
+              mb: 6,
+              maxWidth: "800px",
               mx: "auto",
               opacity: 0.8
             }}
@@ -1014,7 +1020,7 @@ export const AboutAs = () => {
             יש לכם שאלות? אנחנו כאן כדי לעזור
           </MotionTypography>
         </MotionBox>
-        
+
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
             <MotionBox
@@ -1026,36 +1032,36 @@ export const AboutAs = () => {
             >
               <ContactCard>
                 <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <ContactIcon 
+                  <ContactIcon
                     sx={{ bgcolor: "primary.main" }}
                     className="contact-icon"
                   >
                     <LocationOnIcon fontSize="large" />
                   </ContactIcon>
-                  
-                  <Typography 
-                    variant="h5" 
-                    component="h3" 
-                    fontWeight="bold" 
+
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    fontWeight="bold"
                     gutterBottom
                     sx={{ mb: 2 }}
                   >
                     כתובת
                   </Typography>
-                  
-                  <Typography 
+
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       mb: 1,
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
                     רחוב הברוש 15, תל אביב
                   </Typography>
-                  
-                  <Typography 
+
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
@@ -1065,7 +1071,7 @@ export const AboutAs = () => {
               </ContactCard>
             </MotionBox>
           </Grid>
-          
+
           <Grid item xs={12} md={4}>
             <MotionBox
               variants={fadeInUpVariants}
@@ -1076,36 +1082,35 @@ export const AboutAs = () => {
             >
               <ContactCard>
                 <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <ContactIcon 
+                  <ContactIcon
                     sx={{ bgcolor: "primary.main" }}
                     className="contact-icon"
                   >
                     <EmailIcon fontSize="large" />
                   </ContactIcon>
-                  
-                  <Typography 
-                    variant="h5" 
-                    component="h3" 
-                    fontWeight="bold" 
+
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    fontWeight="bold"
                     gutterBottom
                     sx={{ mb: 2 }}
                   >
                     דוא"ל
                   </Typography>
-                  
-                  <Typography 
+
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       mb: 1,
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
                     chaya1234@schoolgrade.co.il
                   </Typography>
-                  
-                  <Typography 
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
@@ -1115,7 +1120,7 @@ export const AboutAs = () => {
               </ContactCard>
             </MotionBox>
           </Grid>
-          
+
           <Grid item xs={12} md={4}>
             <MotionBox
               variants={fadeInUpVariants}
@@ -1126,36 +1131,36 @@ export const AboutAs = () => {
             >
               <ContactCard>
                 <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <ContactIcon 
+                  <ContactIcon
                     sx={{ bgcolor: "primary.main" }}
                     className="contact-icon"
                   >
                     <PhoneIcon fontSize="large" />
                   </ContactIcon>
-                  
-                  <Typography 
-                    variant="h5" 
-                    component="h3" 
-                    fontWeight="bold" 
+
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    fontWeight="bold"
                     gutterBottom
                     sx={{ mb: 2 }}
                   >
                     טלפון
                   </Typography>
-                  
-                  <Typography 
+
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       mb: 1,
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
                     03-1234567
                   </Typography>
-                  
-                  <Typography 
+
+                  <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       color: alpha(theme.palette.text.primary, 0.8),
                     }}
                   >
@@ -1166,7 +1171,7 @@ export const AboutAs = () => {
             </MotionBox>
           </Grid>
         </Grid>
-        
+
         <MotionBox
           variants={fadeInUpVariants}
           initial="hidden"
@@ -1174,58 +1179,58 @@ export const AboutAs = () => {
           viewport={{ once: true, amount: 0.2 }}
           sx={{ textAlign: "center", mt: 8 }}
         >
-          <Typography 
-            variant="h5" 
-            component="h3" 
+          <Typography
+            variant="h5"
+            component="h3"
             gutterBottom
             sx={{ mb: 3 }}
           >
             עקבו אחרינו ברשתות החברתיות
           </Typography>
-          
+
           <Box sx={{ mt: 2 }}>
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
-              sx={{ 
+            <SocialButton
+              color="primary"
+              variant="contained"
+              sx={{
                 mx: 1,
                 transition: "all 0.3s ease",
               }}
             >
               <FacebookIcon />
             </SocialButton>
-            
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
-              sx={{ 
+
+            <SocialButton
+              color="primary"
+              variant="contained"
+              sx={{
                 mx: 1,
                 transition: "all 0.3s ease",
               }}
             >
               <TwitterIcon />
             </SocialButton>
-            
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
+
+            <SocialButton
+              color="primary"
+              variant="contained"
               sx={{ mx: 1 }}
             >
               <TwitterIcon />
             </SocialButton>
-            
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
+
+            <SocialButton
+              color="primary"
+              variant="contained"
               sx={{ mx: 1 }}
             >
               <LinkedInIcon />
             </SocialButton>
-            
-            <SocialButton 
-              color="primary" 
-              variant="contained" 
-              sx={{ 
+
+            <SocialButton
+              color="primary"
+              variant="contained"
+              sx={{
                 mx: 1,
                 transition: "all 0.3s ease",
               }}
@@ -1237,22 +1242,22 @@ export const AboutAs = () => {
       </Container>
 
       {/* Call to Action Section */}
-      <Box 
-        sx={{ 
+      <Box
+        sx={{
           background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-          color: "white", 
-          py: 8, 
+          color: "white",
+          py: 8,
           mt: 8,
           position: "relative",
           overflow: "hidden",
         }}
       >
         <Container>
-          <MotionGrid 
-            container 
-            spacing={4} 
+          <MotionGrid
+            container
+            spacing={4}
             justifyContent="center"
-            
+
 
             initial="hidden"
             whileInView="visible"
@@ -1260,29 +1265,29 @@ export const AboutAs = () => {
           >
             <Grid item xs={12} md={8} sx={{ textAlign: "center" }}>
               <MotionBox variants={fadeInUpVariants}>
-                <Typography 
-                  variant="h3" 
-                  component="h2" 
-                  gutterBottom 
+                <Typography
+                  variant="h3"
+                  component="h2"
+                  gutterBottom
                   fontWeight="bold"
                   sx={{ textShadow: "0 2px 10px rgba(0,0,0,0.2)" }}
                 >
                   מוכנים להתחיל?
                 </Typography>
-                
-                <Typography 
-                  variant="h6" 
-                  paragraph 
-                  sx={{ 
-                    mb: 4, 
-                    maxWidth: "700px", 
+
+                <Typography
+                  variant="h6"
+                  paragraph
+                  sx={{
+                    mb: 4,
+                    maxWidth: "700px",
                     mx: "auto",
                     opacity: 0.9
                   }}
                 >
                   הצטרפו לאלפי מורים ובתי ספר שכבר משתמשים במערכת ניהול הציונים שלנו
                 </Typography>
-                
+
                 <Box sx={{ mt: 3 }}>
                   <ActionButton
                     onClick={() => navigate("/logIn")}
@@ -1290,7 +1295,7 @@ export const AboutAs = () => {
                     color="secondary"
                     size="large"
                     endIcon={<ArrowForwardIcon />}
-                    sx={{ 
+                    sx={{
                       mr: 2,
                       boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
                       "&:hover": {
@@ -1301,13 +1306,13 @@ export const AboutAs = () => {
                   >
                     התחבר עכשיו
                   </ActionButton>
-                  
+
                   <ActionButton
                     onClick={() => navigate("/contact")}
                     variant="outlined"
                     size="large"
-                    sx={{ 
-                      color: "white", 
+                    sx={{
+                      color: "white",
                       borderColor: "white",
                       "&:hover": {
                         borderColor: "white",
@@ -1321,7 +1326,7 @@ export const AboutAs = () => {
               </MotionBox>
             </Grid>
           </MotionGrid>
-          
+
           {/* Animated particles for CTA section */}
           {[...Array(15)].map((_, i) => (
             <MotionBox

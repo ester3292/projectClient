@@ -30,6 +30,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import PersonIcon from "@mui/icons-material/Person";
 import LoginIcon from "@mui/icons-material/Login";
 import { logInThunk } from "../redux/slices/logInThunk";
+import { editId } from "../redux/slices/studentSlice";
 
 // Styled components with animations
 const LoginPaper = styled(Paper)(({ theme }) => ({
@@ -201,7 +202,9 @@ export const Login = () => {
     if (id > 2)
      {navigate("/menu");} 
     else if (id === -2)
-     {navigate("/addTeacher");} 
+     {navigate("/addTeacher");
+      dispatch(editId(-1));
+     } 
   }, [id]);
   const handleSubmit = async (e) => {
     e.preventDefault();
