@@ -1,6 +1,6 @@
 import './design.css'
 import { Navigate, Route, Routes } from "react-router-dom"
-import Login, { LogIn } from "./logIn"
+import Login from "./logIn"
 import { AllStudentsForEducatorTeacher } from "./allStudentsForEducatorTeacher"
 import { Diploma } from "./diploma"
 import { UpdateMarks } from "./updateMarks"
@@ -11,7 +11,7 @@ import { ManageMenu } from "./manageMenu"
 import { ShowTeachers } from "./showTeachers"
 import { ShowStudents } from "./showStudents"
 import { AboutAs } from "./aboutAs"
-import { Home } from "./home" // Import from your local file, not from MUI icons
+import { Home } from "./home" 
 import AddTeacher from './addTeacher'
 
 export const Routing = () => {
