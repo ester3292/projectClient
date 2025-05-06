@@ -39,7 +39,6 @@ import {
   Tab,
   useTheme,
   alpha,
-  InputBase,
   Collapse,
   FormControl,
   InputLabel,
@@ -62,17 +61,13 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import PhoneIcon from "@mui/icons-material/Phone";
 import ClassIcon from "@mui/icons-material/Class";
 import KeyIcon from "@mui/icons-material/Key";
-import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import WarningIcon from "@mui/icons-material/Warning";
-import CloseIcon from "@mui/icons-material/Close";
 import GroupIcon from "@mui/icons-material/Group";
 import SchoolIcon from "@mui/icons-material/School";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import PrintIcon from "@mui/icons-material/Print";
 import InfoIcon from "@mui/icons-material/Info";
 
 // Styled components
@@ -96,58 +91,6 @@ const FormField = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginBottom: theme.spacing(2),
-}));
-
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginLeft: theme.spacing(1),
-  width: 40,
-  height: 40,
-  borderRadius: "50%",
-  backgroundColor: "rgba(26, 35, 126, 0.1)",
-}));
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    width: 'auto',
-  },
-  border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: theme.palette.primary.main,
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
 }));
 
 const StyledBadge = styled(Chip)(({ theme }) => ({
@@ -352,20 +295,6 @@ export const ShowStudents = () => {
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
-  };
-
-  const handleExportData = () => {
-    // Implementation for exporting data
-    setNotification({
-      open: true,
-      message: 'הנתונים יוצאו בהצלחה',
-      severity: 'success'
-    });
-  };
-
-  const handlePrintData = () => {
-    // Implementation for printing data
-    window.print();
   };
 
   return (
@@ -660,7 +589,7 @@ export const ShowStudents = () => {
           <Box sx={{ position: "relative" }}>
             {/* Stats Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4.5}>
                 <StatsCard color={theme.palette.primary.main}>
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -680,7 +609,7 @@ export const ShowStudents = () => {
                 </StatsCard>
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4.5}>
                 <StatsCard color={theme.palette.secondary.main}>
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -694,48 +623,6 @@ export const ShowStudents = () => {
                       </Box>
                       <Avatar sx={{ bgcolor: 'rgba(255, 255, 255, 0.2)' }}>
                         <ClassIcon />
-                      </Avatar>
-                    </Box>
-                  </CardContent>
-                </StatsCard>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <StatsCard>
-                  <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <Box>
-                        <Typography variant="h4" component="div" fontWeight="bold" color="primary">
-                          {uniqueClasses.length > 0 ? Math.max(...uniqueClasses) : 0}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          כיתה גבוהה ביותר
-                        </Typography>
-                      </Box>
-                      <Avatar sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1), color: theme.palette.primary.main }}>
-                        <SchoolIcon />
-                      </Avatar>
-                    </Box>
-                  </CardContent>
-                </StatsCard>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <StatsCard>
-                  <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <Box>
-                        <Typography variant="h4" component="div" fontWeight="bold" color="primary">
-                          {students && students.length > 0
-                            ? Math.round(students.reduce((acc, student) => acc + student.class, 0) / students.length * 10) / 10
-                            : 0}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          ממוצע כיתות
-                        </Typography>
-                      </Box>
-                      <Avatar sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1), color: theme.palette.primary.main }}>
-                        <InfoIcon />
                       </Avatar>
                     </Box>
                   </CardContent>
