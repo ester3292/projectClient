@@ -45,6 +45,7 @@ import { CheckBox, Favorite, FavoriteBorder, Help } from "@mui/icons-material";
 import KeyIcon from "@mui/icons-material/Key";
 import { logInThunk } from "../redux/slices/logInThunk";
 import { editId } from "../redux/slices/studentSlice";
+import { resetDetails } from "../redux/slices/teacherSlice";
 
 // Styled components with animations
 const AddTeacherPaper = styled(Paper)(({ theme }) => ({
@@ -675,7 +676,7 @@ export const AddTeacher = () => {
                                         variant="outlined"
                                         color="primary"
                                         onClick={async () => {
-                                           await dispatch(editId(-1));
+                                           await dispatch(resetDetails());
                                            await navigate('/');
                                         }}
                                         sx={{

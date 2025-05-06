@@ -200,11 +200,10 @@ export const Login = () => {
 
   useEffect(() => {
     if (id > 2)
-     {navigate("/menu");} 
+      navigate("/menu");
     else if (id === -2)
-     {navigate("/addTeacher");
-      dispatch(editId(-1));
-     } 
+      navigate("/addTeacher");
+
   }, [id]);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -492,6 +491,37 @@ export const Login = () => {
                         }}
                       >
                         שכחת סיסמה?
+                      </Link>
+                    </Grid>
+                    <Grid item xs>
+                      <Link
+                        href="/addTeacher"
+                        variant="body2"
+                        sx={{
+                          position: "relative",
+                          textDecoration: "none",
+                          color: theme.palette.primary.main,
+                          fontWeight: 500,
+                          transition: "all 0.3s ease",
+                          "&::after": {
+                            content: '""',
+                            position: "absolute",
+                            width: "0%",
+                            height: "2px",
+                            bottom: -2,
+                            left: 0,
+                            backgroundColor: theme.palette.primary.main,
+                            transition: "width 0.3s ease",
+                          },
+                          "&:hover": {
+                            color: theme.palette.primary.dark,
+                            "&::after": {
+                              width: "100%",
+                            },
+                          },
+                        }}
+                      >
+                        משתמש חדש?
                       </Link>
                     </Grid>
                     <Grid item>

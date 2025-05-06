@@ -67,6 +67,14 @@ export const teacherSlice = createSlice({
         },
         resetFind: (state) => {
             state.find = [{}]
+        },
+        resetDetails: (state) => {
+            state.id = -1;
+            state.firstName = "";
+            state.lastName = "";
+            state.phone = "";
+            state.email = "";
+            state.educator = false;
         }
     },
     extraReducers: (builder) => {
@@ -210,4 +218,4 @@ export const teacherSlice = createSlice({
     }
 });
 
-export const { editFirstName, editLastName, editClass, editPhone, editEmail, resetArr, resetStudents, resetFind } = teacherSlice.actions;
+export const { editFirstName, editLastName, editClass, editPhone, editEmail, resetArr, resetStudents, resetFind ,resetDetails} = teacherSlice.actions;

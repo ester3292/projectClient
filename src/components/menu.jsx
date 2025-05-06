@@ -38,7 +38,7 @@ import {
   Chip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 // Icons
 import MenuIcon from "@mui/icons-material/Menu";
@@ -65,6 +65,8 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import SearchIcon from "@mui/icons-material/Search";
 import GradeIcon from "@mui/icons-material/Grade";
 import PrintIcon from "@mui/icons-material/Print";
+import { editId } from "../redux/slices/studentSlice";
+import { resetDetails } from "../redux/slices/teacherSlice";
 
 const drawerWidth = 280;
 
@@ -293,7 +295,7 @@ export const Menu = () => {
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
- 
+ const dispatch = useDispatch();
   // Create theme based on dark mode preference with navy blue color scheme
   const theme = useMemo(
     () =>
@@ -424,6 +426,7 @@ export const Menu = () => {
 
   const handleLogout = () => {
     handleClose();
+    dispatch(resetDetails());
     navigate("/");
   };
 
