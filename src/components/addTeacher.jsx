@@ -7,11 +7,6 @@ import {
     TextField,
     Button,
     Grid,
-    Link,
-    MenuItem,
-    Select,
-    FormControl,
-    InputLabel,
     Alert,
     Fade,
     InputAdornment,
@@ -35,16 +30,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
-import SubjectIcon from "@mui/icons-material/Subject";
-import LockIcon from "@mui/icons-material/Lock";
-import LockResetIcon from "@mui/icons-material/LockReset";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
 import { addTeacherThunk } from "../redux/slices/addTeacherThunk";
-import { CheckBox, Favorite, FavoriteBorder, Help } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, Help } from "@mui/icons-material";
 import KeyIcon from "@mui/icons-material/Key";
 import { logInThunk } from "../redux/slices/logInThunk";
-import { editId } from "../redux/slices/studentSlice";
 import { resetDetails } from "../redux/slices/teacherSlice";
 
 // Styled components with animations
@@ -187,21 +178,6 @@ const BackgroundAnimation = styled(Box)(({ theme }) => ({
     },
 }));
 
-const AnimatedIconWrapper = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: theme.spacing(1),
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-    transition: "all 0.3s ease",
-    "&:hover": {
-        backgroundColor: alpha(theme.palette.primary.main, 0.2),
-        transform: "scale(1.1) rotate(5deg)",
-    },
-}));
 
 const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
     transition: "all 0.3s ease",

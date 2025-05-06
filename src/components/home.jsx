@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   Typography,
@@ -10,13 +10,9 @@ import {
   CardContent,
   CardMedia,
   CardActionArea,
-  Fade,
-  Zoom,
   useTheme,
   useMediaQuery,
-  Divider,
   IconButton,
-  Tooltip,
   Chip,
   alpha,
 } from "@mui/material";
@@ -37,9 +33,6 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import SecurityIcon from "@mui/icons-material/Security";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import TabletMacIcon from "@mui/icons-material/TabletMac";
-import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 
 // Animated components with framer-motion
 const MotionBox = ({ children, ...props }) => {
@@ -254,42 +247,6 @@ const HighlightChip = styled(Chip)(({ theme }) => ({
   },
 }));
 
-const ResponsiveImage = styled(Box)(({ theme }) => ({
-  width: "100%",
-  borderRadius: 16,
-  overflow: "hidden",
-  boxShadow: "0 15px 40px rgba(0, 0, 0, 0.15)",
-  transition: "all 0.5s ease",
-  position: "relative",
-  "&:hover": {
-    transform: "translateY(-10px)",
-    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.2)",
-    "& img": {
-      transform: "scale(1.05)",
-    },
-  },
-  "& img": {
-    width: "100%",
-    height: "auto",
-    display: "block",
-    transition: "transform 0.7s ease",
-  },
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: `linear-gradient(to bottom, transparent 0%, ${alpha(theme.palette.primary.dark, 0.2)} 100%)`,
-    zIndex: 1,
-    opacity: 0,
-    transition: "opacity 0.3s ease",
-  },
-  "&:hover::before": {
-    opacity: 1,
-  },
-}));
 
 const DeviceFrame = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -298,7 +255,7 @@ const DeviceFrame = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   "& .device-screen": {
     width: "100%",
-    borderRadius: 8,
+    // borderRadius: 8,
     boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
     border: "10px solid #333",
     borderRadius: 20,
@@ -322,8 +279,6 @@ export const Home = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-  const [activeDevice, setActiveDevice] = useState("laptop");
 
   const scrollToFeatures = () => {
     document.getElementById("features-section").scrollIntoView({ behavior: "smooth" });

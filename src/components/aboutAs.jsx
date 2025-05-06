@@ -14,7 +14,6 @@ import {
   Paper,
   Button,
   useTheme,
-  useMediaQuery,
   IconButton,
   Chip,
 } from "@mui/material";
@@ -308,7 +307,6 @@ const containerVariants = {
 
 export const AboutAs = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const timelineRef = useRef(null);
   const id = useSelector((state) => state.teacher.id);

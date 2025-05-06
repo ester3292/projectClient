@@ -11,7 +11,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Container,
   Avatar,
   Menu as MuiMenu,
   MenuItem,
@@ -65,18 +64,11 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import SearchIcon from "@mui/icons-material/Search";
 import GradeIcon from "@mui/icons-material/Grade";
 import PrintIcon from "@mui/icons-material/Print";
-import { editId } from "../redux/slices/studentSlice";
 import { resetDetails } from "../redux/slices/teacherSlice";
 
 const drawerWidth = 280;
 
 // Styled components
-const ContentContainer = styled(Container)(({ theme }) => ({
-  marginTop: theme.spacing(4),
-  marginBottom: theme.spacing(4),
-  minHeight: "calc(100vh - 64px - 56px)",
-  transition: "all 0.3s ease",
-}));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
