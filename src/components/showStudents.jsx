@@ -648,7 +648,7 @@ export const ShowStudents = () => {
               <>
                 {/* Search and Filter Bar */}
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', mb: 2, gap: 2 }}>
-                 
+
                   <Button
                     variant="outlined"
                     color="primary"
@@ -699,12 +699,6 @@ export const ShowStudents = () => {
                     selected={sortBy === "firstName"}
                   >
                     מיון לפי שם פרטי {sortBy === "firstName" && (sortDirection === "asc" ? "↑" : "↓")}
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => { handleSort("id"); setAnchorEl(null); }}
-                    selected={sortBy === "id"}
-                  >
-                    מיון לפי ת.ז. {sortBy === "id" && (sortDirection === "asc" ? "↑" : "↓")}
                   </MenuItem>
                   <MenuItem
                     onClick={() => { handleSort("class"); setAnchorEl(null); }}

@@ -798,12 +798,7 @@ export const ShowTeachers = () => {
                   >
                     מיון לפי שם פרטי {sortBy === "firstName" && (sortDirection === "asc" ? "↑" : "↓")}
                   </MenuItem>
-                  <MenuItem 
-                    onClick={() => { handleSort("id"); setAnchorEl(null); }}
-                    selected={sortBy === "id"}
-                  >
-                    מיון לפי ת.ז. {sortBy === "id" && (sortDirection === "asc" ? "↑" : "↓")}
-                  </MenuItem>
+                
                   <MenuItem 
                     onClick={() => { handleSort("email"); setAnchorEl(null); }}
                     selected={sortBy === "email"}
@@ -1073,7 +1068,7 @@ export const ShowTeachers = () => {
                               </Box>
                               <Box 
                                 sx={{ 
-                                  width: `${(regularTeacherCount / teachers.length) * 100}%`, 
+                                  width: `${(regularTeacherCount / teachers.length) * 200}%`, 
                                   height: '100%', 
                                   bgcolor: theme.palette.grey[400],
                                   display: 'flex',

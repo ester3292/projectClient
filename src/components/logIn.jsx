@@ -30,6 +30,8 @@ import SchoolIcon from "@mui/icons-material/School";
 import PersonIcon from "@mui/icons-material/Person";
 import LoginIcon from "@mui/icons-material/Login";
 import { logInThunk } from "../redux/slices/logInThunk";
+import ForgotPassword from "./forgotPassword";
+import ContactSupport from "./contactSupport";
 
 // Styled components with animations
 const LoginPaper = styled(Paper)(({ theme }) => ({
@@ -150,6 +152,8 @@ const BackgroundAnimation = styled(Box)(({ theme }) => ({
     right: "-150px",
   },
   "&::after": {
+
+
     background: theme.palette.secondary.main,
     bottom: "-150px",
     left: "-150px",
@@ -176,7 +180,6 @@ export const Login = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -184,13 +187,13 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [logoVisible, setLogoVisible] = useState(false);
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const id = useSelector((state) => state.teacher.id);
 
   // Animation sequence
   useEffect(() => {
     const timer1 = setTimeout(() => setLogoVisible(true), 300);
     const timer2 = setTimeout(() => setFormVisible(true), 800);
-
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
@@ -202,19 +205,16 @@ export const Login = () => {
       navigate("/menu");
     else if (id === -2)
       navigate("/addTeacher");
-
   }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!username || !password) {
       setError("אנא הזן שם משתמש וסיסמה");
       return;
     }
-
     setLoading(true);
     setError("");
-
     try {
       // await new Promise(resolve => setTimeout(resolve, 1000));
       await dispatch(logInThunk(password));
@@ -223,6 +223,27 @@ export const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+
+  const [contactSupportOpen, setContactSupportOpen] = useState(false);
+
+// Add these handlers
+const handleContactSupportOpen = (e) => {
+  e.preventDefault();
+  setContactSupportOpen(true);
+};
+
+const handleContactSupportClose = () => {
+  setContactSupportOpen(false);
+};
+  const handleForgotPasswordOpen = (e) => {
+    e.preventDefault();
+    setForgotPasswordOpen(true);
+  };
+
+  const handleForgotPasswordClose = () => {
+    setForgotPasswordOpen(false);
   };
 
   return (
@@ -281,12 +302,10 @@ export const Login = () => {
           />
         ))}
       </Box>
-
       <Container maxWidth="sm">
         <Fade in={true} timeout={800}>
           <LoginPaper elevation={6}>
             <BackgroundAnimation />
-
             <Zoom in={logoVisible} timeout={800}>
               <LogoContainer>
                 <Logo />
@@ -308,7 +327,6 @@ export const Login = () => {
                 </Typography>
               </LogoContainer>
             </Zoom>
-
             <Slide direction="up" in={formVisible} timeout={500}>
               <Box sx={{ width: "100%" }}>
                 <Typography
@@ -335,7 +353,6 @@ export const Login = () => {
                 >
                   התחברות למערכת
                 </Typography>
-
                 <Grow in={error !== ""} timeout={500}>
                   <Box sx={{ width: "100%", mb: error ? 2 : 0 }}>
                     {error && (
@@ -357,7 +374,6 @@ export const Login = () => {
                     )}
                   </Box>
                 </Grow>
-
                 <Box
                   component="form"
                   onSubmit={handleSubmit}
@@ -392,7 +408,6 @@ export const Login = () => {
                       ),
                     }}
                   />
-
                   <AnimatedTextField
                     margin="normal"
                     required
@@ -428,7 +443,6 @@ export const Login = () => {
                     }}
                     sx={{ mb: 4 }}
                   />
-
                   <LoginButton
                     type="submit"
                     fullWidth
@@ -445,14 +459,12 @@ export const Login = () => {
                       boxShadow: "0 4px 20px rgba(0, 16, 100, 0.4)",
                     }}
                   >
-
                     {loading ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
                       "התחבר"
                     )}
                   </LoginButton>
-
                   <Grid
                     container
                     sx={{
@@ -465,6 +477,7 @@ export const Login = () => {
                       <Link
                         href="#"
                         variant="body2"
+                        onClick={handleForgotPasswordOpen}
                         sx={{
                           position: "relative",
                           textDecoration: "none",
@@ -527,6 +540,7 @@ export const Login = () => {
                       <Link
                         href="#"
                         variant="body2"
+                        onClick={handleContactSupportOpen}
                         sx={{
                           position: "relative",
                           textDecoration: "none",
@@ -558,7 +572,6 @@ export const Login = () => {
                 </Box>
               </Box>
             </Slide>
-
             {/* Decorative elements */}
             <Box
               sx={{
@@ -577,6 +590,10 @@ export const Login = () => {
                 },
               }}
             />
+            <ContactSupport 
+  open={contactSupportOpen} 
+  onClose={handleContactSupportClose} 
+/>
             <Box
               sx={{
                 position: "absolute",
@@ -592,7 +609,6 @@ export const Login = () => {
             />
           </LoginPaper>
         </Fade>
-
         {/* Version info */}
         <Typography
           variant="body2"
@@ -603,6 +619,7 @@ export const Login = () => {
             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             opacity: 0,
             animation: "fadeIn 1s ease forwards 1.5s",
+
             "@keyframes fadeIn": {
               to: { opacity: 1 }
             }
@@ -611,6 +628,12 @@ export const Login = () => {
           גרסה 2.0 | {new Date().getFullYear()} © כל הזכויות שמורות
         </Typography>
       </Container>
+
+      {/* Forgot Password Dialog */}
+      <ForgotPassword
+        open={forgotPasswordOpen}
+        onClose={handleForgotPasswordClose}
+      />
     </Box>
   );
 };
