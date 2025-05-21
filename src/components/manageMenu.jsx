@@ -8,10 +8,19 @@ import {
   Typography,
   Button,
   Fade,
+  Dialog,
+  DialogTitle,
+  Divider,
+  DialogContent,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import SchoolIcon from "@mui/icons-material/School";
+import { useDispatch, useSelector } from "react-redux";
+import { div } from "framer-motion/m";
+import { resetDetails } from "../redux/slices/teacherSlice";
 
 const MenuCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -42,8 +51,18 @@ const ContentContainer = styled(Box)(({ theme }) => ({
 
 export const ManageMenu = () => {
   const navigate = useNavigate();
+  const educator = useSelector((state) => state.teacher.educator);
+  const dispatch = useDispatch();
 
-  return (
+  const handleEnd = () => {
+    dispatch(resetDetails());
+    navigate("/");
+  }
+  const handleClose = () => {
+    navigate(`../aboutAs`);
+  }
+
+  return <>{educator &&
     <Fade in={true} timeout={800} >
       <Container maxWidth="lg">
         <Typography variant="h4" component="h1" gutterBottom fontWeight="bold" color="primary" align="center">
@@ -65,9 +84,9 @@ export const ManageMenu = () => {
               <Typography variant="body1" color="textSecondary">
                 הוספה, עריכה וצפייה בפרטי המורים במערכת
               </Typography>
-              <Button 
-                variant="contained" 
-                color="primary" 
+              <Button
+                variant="contained"
+                color="primary"
                 sx={{ mt: 3, borderRadius: "30px", px: 4 }}
                 startIcon={<PeopleAltIcon />}
               >
@@ -75,7 +94,7 @@ export const ManageMenu = () => {
               </Button>
             </MenuCard>
           </Grid>
-          
+
           <Grid item xs={12} md={6}>
             <MenuCard onClick={() => navigate(`../showStudents`)}>
               <MenuIcon>
@@ -87,9 +106,9 @@ export const ManageMenu = () => {
               <Typography variant="body1" color="textSecondary">
                 הוספה, עריכה וצפייה בפרטי התלמידים במערכת
               </Typography>
-              <Button 
-                variant="contained" 
-                color="primary" 
+              <Button
+                variant="contained"
+                color="primary"
                 sx={{ mt: 3, borderRadius: "30px", px: 4 }}
                 startIcon={<SchoolIcon />}
               >
@@ -103,6 +122,53 @@ export const ManageMenu = () => {
           <Outlet />
         </ContentContainer>
       </Container>
-    </Fade>
-  );
+    </Fade>}
+
+    <Dialog
+      open={!educator}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: "16px",
+          p: 1
+        }
+      }}
+    >
+
+      <Divider />
+      <DialogContent sx={{ py: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            מתנצלים, אינך מורה בעל הרשאות גישה למערכת
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions sx={{ px: 3, pb: 3 }}>
+        <Button
+          variant="outlined"
+          onClick={handleEnd}
+        >
+          להתנתקות
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={handleClose}
+        >
+          לחזרה
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+
+
+
+
+
+
+
+
+
+
+  </>
 };
