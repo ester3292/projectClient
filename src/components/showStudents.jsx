@@ -68,6 +68,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import WarningIcon from "@mui/icons-material/Warning";
 import GroupIcon from "@mui/icons-material/Group";
 import InfoIcon from "@mui/icons-material/Info";
+import { GetClassNameByIdThunk } from "../redux/slices/getClassNameByCodeThunk";
 
 // Styled components
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -193,6 +194,7 @@ export const ShowStudents = () => {
 
   const classDistribution = uniqueClasses.map(classNum => ({
     class: classNum,
+    className: dispatch(GetClassNameByIdThunk(classNum)),
     count: students.filter(s => s.class === classNum).length
   }));
 
