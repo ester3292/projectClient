@@ -266,7 +266,7 @@ export const AddTeacher = () => {
 
         setLoading(true);
         try {
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulating network delay
+             await new Promise(resolve => setTimeout(resolve, 1000)); // Simulating network delay
             await dispatch(addTeacherThunk({
                 id: id,
                 firstName: firstName,

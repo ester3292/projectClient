@@ -745,8 +745,8 @@ export const ShowStudents = () => {
                             labelId="class-filter-label"
                             value={filterClass}
                             onChange={(e) => setFilterClass(e.target.value)}
-                            label="סינון לפי כיתה"
-                          >
+                            label="סינון לפי כיתה"  >
+
                             <MenuItem value="">
                               <em>כל הכיתות</em>
                             </MenuItem>
