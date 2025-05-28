@@ -311,19 +311,7 @@ export const ShowTeachers = () => {
     setShowFilters(!showFilters);
   };
   
-  const handleExportData = () => {
-    // Implementation for exporting data
-    setNotification({
-      open: true,
-      message: 'הנתונים יוצאו בהצלחה',
-      severity: 'success'
-    });
-  };
-  
-  const handlePrintData = () => {
-    // Implementation for printing data
-    window.print();
-  };
+
 
   return (
     <Fade in={true} timeout={800}>

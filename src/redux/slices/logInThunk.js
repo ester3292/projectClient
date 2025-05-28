@@ -8,8 +8,8 @@ export const logInThunk = createAsyncThunk(
         method: 'GET',
     })
     if (res.ok) {
-        setTimeout(()=>{
-        },2000)
+        // setTimeout(()=>{
+        // },2000)
         const data = await res.json();
         console.log("fetch");
         return data;
