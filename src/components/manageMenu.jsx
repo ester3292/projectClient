@@ -9,17 +9,14 @@ import {
   Button,
   Fade,
   Dialog,
-  DialogTitle,
   Divider,
   DialogContent,
-  TextField,
   DialogActions,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import SchoolIcon from "@mui/icons-material/School";
 import { useDispatch, useSelector } from "react-redux";
-import { div } from "framer-motion/m";
 import { resetDetails } from "../redux/slices/teacherSlice";
 
 const MenuCard = styled(Paper)(({ theme }) => ({
