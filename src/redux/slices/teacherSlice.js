@@ -138,7 +138,7 @@ export const teacherSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(getStudentsByClassThunk.fulfilled, (state, action) => {
-            debugger
+            
             if (action.payload) { state.students = action.payload; }
 
             console.log(state.students);
@@ -155,7 +155,7 @@ export const teacherSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(getStudentsByClassSubThunk.fulfilled, (state, action) => {
-            debugger
+            
             if (action.payload) { state.find = action.payload; }
 
             console.log(state.students);
@@ -172,7 +172,7 @@ export const teacherSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(getStudentsByClassSubHalfThunk.fulfilled, (state, action) => {
-            debugger
+            
             if (action.payload) { state.find = action.payload; }
 
             console.log(state.students);
@@ -189,7 +189,7 @@ export const teacherSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(deleteTeacherThunk.fulfilled, (state, action) => {
-            debugger
+            
             state.arr = action.payload;
             console.log("wow deleteTeacherThunk");
         });
@@ -204,7 +204,7 @@ export const teacherSlice = createSlice({
         });
         // הוספת מקרה שהט'נק הסתיים בהצלחה
         builder.addCase(updateTeacherThunk.fulfilled, (state, action) => {
-            debugger
+            
             if (action.payload) { state.find = action.payload; }
 
             console.log(state.students);

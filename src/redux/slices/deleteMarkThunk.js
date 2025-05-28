@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const deleteMarkThunk = createAsyncThunk(
     'deleteMark',
-    async ({details}) => {debugger
+    async ({details}) => {
         const res = await fetch('http://localhost:5244/api/Mark/Delete', {
             method: 'DELETE',
             body: JSON.stringify(details),

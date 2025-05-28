@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const deleteTeacherThunk = createAsyncThunk(
     'deleteTeacher',
-    async ({details}) => {debugger
+    async ({details}) => {
         const res = await fetch('http://localhost:5244/api/Teacher/Delete', {
 
             method: 'DELETE',

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const addStudentThunk = createAsyncThunk(
     'addStudent', 
     async (details) => {
-        debugger
+        
         const res = await fetch('http://localhost:5244/api/Student/Add', {
         
         method: 'POST',
